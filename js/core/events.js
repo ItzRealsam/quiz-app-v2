@@ -9,6 +9,9 @@ import {
 import { appState } 
   from './state.js';
 
+import { showToast }
+  from '../ui/toast.js';
+
 export function bindGlobalEvents() {
 
   document.addEventListener(
@@ -64,7 +67,7 @@ export function bindGlobalEvents() {
             'I just completed the Quiz App challenge!'
           );
 
-          alert(
+          showToast(
             'Score copied to clipboard!'
           );
 

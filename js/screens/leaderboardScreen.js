@@ -67,103 +67,133 @@ export function renderLeaderboardScreen() {
             class="quiz__leaderboard-list"
           >
 
-            ${visibleEntries
-              .map((entry, index) => {
+            ${leaderboard.length === 0
+            ? `
+              <div
+                class="
+                  quiz__leaderboard-empty
+                "
+              >
 
-                if (entry.type === 'ellipsis') {
+                <i
+                  data-feather="bar-chart-2"
+                ></i>
 
-                  return `
+                <p>
+                  No leaderboard entries yet.
+                </p>
 
-                    <li
-                      class="
-                        quiz__leaderboard-ellipsis
-                      "
-                    >
+              </div>
+            `
+            : `
+              <ul
+                class="
+                  quiz__leaderboard-list
+                "
+              >
 
-                      ...
+                ${visibleEntries
+                  .map((entry, index) => {
 
-                    </li>
+                    if (entry.type === 'ellipsis') {
 
-                  `;
-                }
+                      return `
 
-                const actualIndex =
-                  leaderboard.findIndex(
-                    item =>
-                      item.userId === entry.userId
-                  );
+                        <li
+                          class="
+                            quiz__leaderboard-ellipsis
+                          "
+                        >
 
-                const isCurrentUser =
-                  entry.userId === currentUserId;
+                          ...
 
-                return `
+                        </li>
 
-                  <li
-                    class="
-                      quiz__leaderboard-item
+                      `;
+                    }
 
-                      ${isCurrentUser
-                        ? 'quiz__leaderboard-item--current-user'
-                        : ''}
-                    "
-                  >
+                    const actualIndex =
+                      leaderboard.findIndex(
+                        item =>
+                          item.userId ===
+                          entry.userId
+                      );
 
-                    <div
-                      class="
-                        quiz__leaderboard-pos
+                    const isCurrentUser =
+                      entry.userId ===
+                      currentUserId;
 
-                        ${actualIndex === 0
-                          ? 'quiz__leaderboard-pos-first'
-                          : ''}
+                    return `
 
-                        ${actualIndex === 1
-                          ? 'quiz__leaderboard-pos-second'
-                          : ''}
-
-                        ${actualIndex === 2
-                          ? 'quiz__leaderboard-pos-third'
-                          : ''}
-                      "
-                    >
-
-                      ${actualIndex + 1}
-
-                    </div>
-
-                    <div
-                      class="
-                        quiz__leaderboard-details
-                      "
-                    >
-
-                      <span
+                      <li
                         class="
-                          quiz__leaderboard-name
+                          quiz__leaderboard-item
+
+                          ${isCurrentUser
+                            ? 'quiz__leaderboard-item--current-user'
+                            : ''}
                         "
                       >
 
-                        ${entry.displayName}
+                        <div
+                          class="
+                            quiz__leaderboard-pos
 
-                      </span>
+                            ${actualIndex === 0
+                              ? 'quiz__leaderboard-pos-first'
+                              : ''}
 
-                    </div>
+                            ${actualIndex === 1
+                              ? 'quiz__leaderboard-pos-second'
+                              : ''}
 
-                    <div
-                      class="
-                        quiz__leaderboard-score
-                      "
-                    >
+                            ${actualIndex === 2
+                              ? 'quiz__leaderboard-pos-third'
+                              : ''}
+                          "
+                        >
 
-                      ${entry.score}
+                          ${actualIndex + 1}
 
-                    </div>
+                        </div>
 
-                  </li>
+                        <div
+                          class="
+                            quiz__leaderboard-details
+                          "
+                        >
 
-                `;
+                          <span
+                            class="
+                              quiz__leaderboard-name
+                            "
+                          >
 
-              })
-              .join('')}
+                            ${entry.displayName}
+
+                          </span>
+
+                        </div>
+
+                        <div
+                          class="
+                            quiz__leaderboard-score
+                          "
+                        >
+
+                          ${entry.score}
+
+                        </div>
+
+                      </li>
+
+                    `;
+
+                  })
+                  .join('')}
+
+              </ul>
+            `}
 
           </ul>
 
@@ -176,6 +206,7 @@ export function renderLeaderboardScreen() {
         <button
           class="quiz__btn-secondary"
           data-action="share-score"
+          aria-label="Share Score"
         >
 
           <i data-feather="share-2"></i>
@@ -189,6 +220,7 @@ export function renderLeaderboardScreen() {
         <button
           class="quiz__btn-primary"
           data-action="restart-quiz"
+          aria-label="Restart quiz"
         >
 
           <i data-feather="rotate-ccw"></i>

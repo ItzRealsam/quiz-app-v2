@@ -49,3 +49,14 @@
 .quiz__btn-primary:active {
   transform: scale(0.98);
 }
+
+.quiz__btn-primary:focus-visible,
+.quiz__btn-secondary:focus-visible,
+.quiz__option-btn:focus-visible {
+
+  outline:
+    3px solid
+    rgba(0 153 255 / 0.35);
+
+  outline-offset: 2px;
+}

@@ -121,3 +121,30 @@
   padding:
     var(--space-sm);
 }
+
+/* EMPTY STATE */
+.quiz__leaderboard-empty {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: var(--space-sm);
+
+  padding:
+    var(--space-3xl)
+    var(--space-lg);
+
+  text-align: center;
+
+  color:
+    var(--color-text-secondary);
+}
+
+.quiz__leaderboard-empty svg {
+
+  width: 4rem;
+  height: 4rem;
+
+  opacity: 0.5;
+}

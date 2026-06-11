@@ -99,6 +99,7 @@ export function renderResultsScreen() {
         <button
           class="quiz__btn-secondary"
           data-action="view-leaderboard"
+          aria-label="See leaderboard"
         >
 
           Leaderboard
@@ -108,6 +109,7 @@ export function renderResultsScreen() {
         <button
           class="quiz__btn-primary"
           data-action="restart-quiz"
+          aria-label="Restart quiz"
         >
 
           Play Again

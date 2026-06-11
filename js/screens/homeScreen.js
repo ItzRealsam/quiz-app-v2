@@ -25,6 +25,7 @@ export function renderHomeScreen() {
         <button
           class="quiz__btn-primary"
           data-action="start-quiz"
+          aria-label="Start quiz"
         >
           Start Quiz
         </button>
