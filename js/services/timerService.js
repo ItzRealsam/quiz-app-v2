@@ -1,9 +1,6 @@
 import { appState }
   from '../core/state.js';
 
-import { renderCurrentScreen }
-  from '../core/render.js';
-
 import {
   handleTimeExpiration
 } from '../core/quizLogic.js';
@@ -20,7 +17,7 @@ export function startQuestionTimer() {
 
       appState.quiz.remainingTime--;
 
-      renderCurrentScreen();
+      updateTimerUI();
 
       if (
         appState.quiz.remainingTime <= 0
@@ -48,6 +45,43 @@ export function stopQuestionTimer() {
 
     appState.quiz.timerIntervalId =
       null;
+  }
+
+}
+
+function updateTimerUI() {
+
+  const timerValue =
+    document.querySelector(
+      '.quiz__timer-value'
+    );
+
+  const timerContainer =
+    document.querySelector(
+      '.quiz__timer'
+    );
+
+  if (!timerValue) {
+    return;
+  }
+
+  timerValue.textContent =
+    `${appState.quiz.remainingTime}s`;
+
+  if (
+    appState.quiz.remainingTime <= 5
+  ) {
+
+    timerContainer?.classList.add(
+      'quiz__timer--warning'
+    );
+
+  } else {
+
+    timerContainer?.classList.remove(
+      'quiz__timer--warning'
+    );
+
   }
 
 }
