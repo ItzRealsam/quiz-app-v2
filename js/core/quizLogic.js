@@ -94,6 +94,18 @@ export function selectAnswer(selectedIndex) {
 
     } else {
 
+      appState.quiz.finishedAt =
+        Date.now();
+
+      appState.quiz.totalDurationSeconds =
+        Math.floor(
+          (
+            appState.quiz.finishedAt
+            -
+            appState.quiz.startedAt
+          ) / 1000
+        );
+
       navigateTo('results');
 
     }

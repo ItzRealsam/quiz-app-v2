@@ -6,6 +6,9 @@ import {
   restartQuiz
 } from './quizLogic.js';
 
+import { appState } 
+  from './state.js';
+
 export function bindGlobalEvents() {
 
   document.addEventListener(
@@ -23,7 +26,12 @@ export function bindGlobalEvents() {
       switch (action) {
 
         case 'start-quiz':
+
+          appState.quiz.startedAt =
+            Date.now();
+
           navigateTo('quiz');
+
           break;
 
         case 'select-answer':

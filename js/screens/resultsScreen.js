@@ -5,11 +5,26 @@ export function renderResultsScreen() {
 
   const {
     score,
-    questions
+    questions,
+    answers,
+    bestStreak,
+    totalDurationSeconds
   } = appState.quiz;
+  
 
   const maxScore =
     questions.length * 10;
+  
+  const accuracy =
+    Math.round(
+      (
+        answers.filter(
+          answer => answer.isCorrect
+        ).length
+        /
+        questions.length
+      ) * 100
+    );
 
   return `
 
@@ -34,6 +49,46 @@ export function renderResultsScreen() {
           <p class="quiz__result-feedback">
             out of ${maxScore}
           </p>
+
+        </div>
+
+      </div>
+
+      <div class="quiz__analytics">
+
+        <div class="quiz__analytics-card">
+
+          <span class="quiz__analytics-label">
+            Accuracy
+          </span>
+
+          <span class="quiz__analytics-value">
+            ${accuracy}%
+          </span>
+
+        </div>
+
+        <div class="quiz__analytics-card">
+
+          <span class="quiz__analytics-label">
+            Best Streak
+          </span>
+
+          <span class="quiz__analytics-value">
+            ${bestStreak}
+          </span>
+
+        </div>
+
+        <div class="quiz__analytics-card">
+
+          <span class="quiz__analytics-label">
+            Time
+          </span>
+
+          <span class="quiz__analytics-value">
+            ${totalDurationSeconds}s
+          </span>
 
         </div>
 

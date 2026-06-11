@@ -24,6 +24,12 @@ export const appState = {
     streak: 0,
 
     bestStreak: 0,
+
+    startedAt: null,
+
+    finishedAt: null,
+
+    totalDurationSeconds: 0,
   },
 
   results: {
