@@ -14,7 +14,16 @@ export const appState = {
     questions,
     currentQuestionIndex: 0,
     score: 0,
-    answers: []
+    answers: [],
+    selectedAnswerIndex: null,
+
+    isAnswerLocked: false,
+
+    currentExplanation: '',
+
+    streak: 0,
+
+    bestStreak: 0,
   },
 
   results: {

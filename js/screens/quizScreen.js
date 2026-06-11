@@ -5,7 +5,10 @@ export function renderQuizScreen() {
 
   const {
     questions,
-    currentQuestionIndex
+    currentQuestionIndex,
+    selectedAnswerIndex,
+    isAnswerLocked,
+    currentExplanation
   } = appState.quiz;
 
   const currentQuestion =
@@ -63,30 +66,76 @@ export function renderQuizScreen() {
           <ul class="quiz__options-list">
 
             ${currentQuestion.options
-              .map(
-                (option, index) => `
-                  
-                  <li
-                    class="quiz__option-item"
-                  >
+              .map((option, index) => {
+
+                const isSelected =
+                  selectedAnswerIndex === index;
+
+                const isCorrect =
+                  currentQuestion.answer === index;
+
+                let modifierClass = '';
+
+                if (isAnswerLocked) {
+
+                  if (isCorrect) {
+                    modifierClass =
+                      'quiz__option-btn--correct';
+                  }
+
+                  if (
+                    isSelected &&
+                    !isCorrect
+                  ) {
+                    modifierClass =
+                      'quiz__option-btn--incorrect';
+                  }
+
+                }
+
+                return `
+
+                  <li class="quiz__option-item">
 
                     <button
-                      class="quiz__option-btn"
+                      class="
+                        quiz__option-btn
+                        ${modifierClass}
+                      "
+
                       data-action="select-answer"
+
                       data-index="${index}"
+
+                      ${isAnswerLocked
+                        ? 'disabled'
+                        : ''}
+
                     >
                       ${option}
                     </button>
 
                   </li>
 
-                `
-              )
+                `;
+
+              })
               .join('')}
 
           </ul>
 
         </fieldset>
+
+        ${isAnswerLocked ?
+        `
+          <div class="quiz__feedback">
+
+            <p class="quiz__feedback-text">
+              ${currentExplanation}
+            </p>
+
+          </div>
+        ` : ''}
 
       </div>
 

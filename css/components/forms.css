@@ -42,3 +42,73 @@
     rgb(248 248 248);
 
 }
+
+.quiz__option-btn--correct {
+
+  border-color:
+    var(--color-success);
+
+  background-color:
+    var(--color-success-soft);
+
+  color:
+    var(--color-success);
+}
+
+.quiz__option-btn--incorrect {
+
+  border-color:
+    var(--color-error);
+
+  background-color:
+    var(--color-error-soft);
+
+  color:
+    var(--color-error);
+}
+
+/* Feedback */
+
+.quiz__feedback {
+
+  margin-top: var(--space-lg);
+
+  padding: var(--space-md);
+
+  border-radius: var(--radius-lg);
+
+  background-color:
+    rgb(248 250 252);
+
+  border:
+    1px solid
+    rgb(235 235 235);
+
+  animation:
+    feedbackFadeIn 0.25s ease;
+}
+
+.quiz__feedback-text {
+
+  font-size:
+    var(--font-size-sm);
+
+  line-height: 1.6;
+
+  color:
+    var(--color-text-secondary);
+}
+
+@keyframes feedbackFadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}

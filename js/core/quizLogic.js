@@ -11,8 +11,11 @@ export function selectAnswer(selectedIndex) {
 
   const {
     questions,
-    currentQuestionIndex
+    currentQuestionIndex,
+    isAnswerLocked
   } = appState.quiz;
+
+  if (isAnswerLocked) return;
 
   const currentQuestion =
     questions[currentQuestionIndex];
@@ -20,32 +23,82 @@ export function selectAnswer(selectedIndex) {
   const isCorrect =
     selectedIndex === currentQuestion.answer;
 
+  appState.quiz.selectedAnswerIndex =
+    selectedIndex;
+
+  appState.quiz.isAnswerLocked =
+    true;
+
+  appState.quiz.currentExplanation =
+    currentQuestion.explanation;
+
+  console.log(
+    appState.quiz.currentExplanation
+  );
+
   if (isCorrect) {
+
     appState.quiz.score += 10;
-  }
 
-  appState.quiz.answers.push({
-    questionId: currentQuestion.id,
-    selectedIndex,
-    isCorrect
-  });
+    appState.quiz.streak++;
 
-  appState.quiz.currentQuestionIndex++;
+    if (
+      appState.quiz.streak >
+      appState.quiz.bestStreak
+    ) {
 
-  const hasMoreQuestions =
-    appState.quiz.currentQuestionIndex
-    <
-    questions.length;
-
-  if (hasMoreQuestions) {
-
-    renderCurrentScreen();
+      appState.quiz.bestStreak =
+        appState.quiz.streak;
+    }
 
   } else {
 
-    navigateTo('results');
+    appState.quiz.streak = 0;
 
   }
+
+  appState.quiz.answers.push({
+
+    questionId:
+      currentQuestion.id,
+
+    selectedIndex,
+
+    isCorrect
+
+  });
+
+  renderCurrentScreen();
+
+  setTimeout(() => {
+
+    appState.quiz.currentQuestionIndex++;
+
+    appState.quiz.selectedAnswerIndex =
+      null;
+
+    appState.quiz.isAnswerLocked =
+      false;
+
+    appState.quiz.currentExplanation =
+      '';
+
+    const hasMoreQuestions =
+      appState.quiz.currentQuestionIndex
+      <
+      questions.length;
+
+    if (hasMoreQuestions) {
+
+      renderCurrentScreen();
+
+    } else {
+
+      navigateTo('results');
+
+    }
+
+  }, 1800);
 
 }
 
