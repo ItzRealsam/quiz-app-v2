@@ -1,0 +1,114 @@
+:root {
+
+  /* =========================================================
+     COLORS
+     ========================================================= */
+
+  /* BACKGROUNDS */
+  --color-bg-canvas: rgb(240 240 240);
+  --color-bg-card: rgb(255 255 255);
+
+  /* TEXT */
+  --color-text-primary: rgb(0 0 0);
+  --color-text-secondary: rgb(128 128 128);
+  --color-text-inverse: rgb(255 255 255);
+
+  /* BRAND */
+  --color-accent: rgb(0 153 255);
+  --color-accent-hover: rgb(0 133 224);
+  --color-accent-soft: rgb(230 245 255);
+
+  /* STATES */
+  --color-success: rgb(25 136 19);
+  --color-success-soft: rgb(232 248 231);
+
+  --color-error: rgb(255 82 82);
+  --color-error-soft: rgb(255 240 240);
+
+  --color-warning: rgb(255 193 7);
+
+  /* BORDERS */
+  --color-border-default: rgb(222 222 222);
+
+  /* MEDALS */
+  --color-medal-gold: rgb(252 196 23);
+  --color-medal-silver: rgb(206 205 210);
+  --color-medal-bronze: rgb(247 148 41);
+
+  /* =========================================================
+     TYPOGRAPHY
+     ========================================================= */
+
+  --font-family-base:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  --font-size-xs: 1.2rem;
+  --font-size-sm: 1.4rem;
+  --font-size-md: 1.6rem;
+  --font-size-lg: 2rem;
+  --font-size-xl: 3.2rem;
+  --font-size-display: 4.8rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* =========================================================
+     SPACING SYSTEM
+     ========================================================= */
+
+  --space-xxs: 0.4rem;
+  --space-xs: 0.8rem;
+  --space-sm: 1.2rem;
+  --space-md: 1.6rem;
+  --space-lg: 2.4rem;
+  --space-xl: 3.2rem;
+  --space-2xl: 4.8rem;
+  --space-3xl: 6.4rem;
+
+  /* =========================================================
+     BORDER RADIUS
+     ========================================================= */
+
+  --radius-sm: 0.8rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-xl: 2.4rem;
+
+  /* =========================================================
+     SHADOWS
+     ========================================================= */
+
+  --shadow-card:
+    0 1px 12px rgba(0 0 0 / 0.03);
+
+  --shadow-button:
+    0 2px 2px rgba(0 0 0 / 0.20),
+    inset 0 4px 4px rgba(255 255 255 / 0.3),
+    inset 0 -4px 8px rgba(0 0 0 / 0.3);
+
+  /* =========================================================
+     TRANSITIONS
+     ========================================================= */
+
+  --transition-fast:
+    0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* =========================================================
+     LAYOUT
+     ========================================================= */
+
+  --container-width: 72rem;
+
+  /* =========================================================
+     Z-INDEX SCALE
+     ========================================================= */
+
+  --z-dropdown: 100;
+  --z-modal: 1000;
+  --z-toast: 1100;
+}
