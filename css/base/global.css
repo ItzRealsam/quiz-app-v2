@@ -1,5 +1,5 @@
 body {
-  background-color: var(--color-bg-canvas);
+  background-color: rgb(var(--color-bg-canvas));
   min-height: 100vh;
 
   display: flex;
@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  padding: var(--space-md);
+  padding: var(--space-lg);
 
   -webkit-font-smoothing: antialiased;
 }

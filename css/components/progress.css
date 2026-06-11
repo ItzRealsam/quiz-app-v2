@@ -8,7 +8,7 @@
   border-radius: 999px;
 
   background-color:
-    rgb(230 230 230);
+    rgba(var(--color-bg-canvas), 0.5);
 }
 
 .quiz__progress-fill {
@@ -16,7 +16,7 @@
   height: 100%;
 
   background-color:
-    var(--color-accent);
+    rgb(var(--color-accent));
 
   transition:
     width 0.4s ease;

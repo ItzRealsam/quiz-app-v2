@@ -1,5 +1,9 @@
 import { appState } from './state.js';
 
+import {
+  renderWelcomeScreen
+} from '../screens/welcomeScreen.js';
+
 import { renderHomeScreen }
   from '../screens/homeScreen.js';
 
@@ -30,6 +34,13 @@ export function renderCurrentScreen() {
         '<p>Screen not found</p>';
       
       initializeIcons();
+
+    case 'welcome':
+      screen.innerHTML =
+        renderWelcomeScreen();
+
+      initializeIcons();
+      break;
         
     case 'home':
       screen.innerHTML =

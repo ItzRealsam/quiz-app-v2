@@ -1,4 +1,10 @@
+import { appState }
+  from '../core/state.js';
+
 export function renderHomeScreen() {
+  const {
+    displayName
+  } = appState.user;
 
   return `
   
@@ -7,6 +13,26 @@ export function renderHomeScreen() {
     >
 
       <div class="quiz__contents">
+
+        <div class="quiz__greeting">
+
+          <span
+            class="quiz__greeting-eyebrow"
+          >
+
+            Welcome back 👋
+
+          </span>
+
+          <p
+            class="quiz__greeting-name"
+          >
+
+            ${displayName}
+
+          </p>
+
+        </div>
 
         <h1 class="quiz__title">
           Ready to Test Your Knowledge?

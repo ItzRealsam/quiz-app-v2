@@ -17,9 +17,9 @@
   width: 100%;
   max-width: var(--container-width);
 
-  background-color: var(--color-bg-card);
+  background-color: rgb(var(--color-bg-card));
 
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
 
   padding:
     clamp(
@@ -39,6 +39,29 @@
       5vw,
       var(--space-3xl)
     );
+  
+  animation:
+    cardEntrance 0.35s ease;
+}
+
+@keyframes cardEntrance {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
 }
 
 .quiz__card-header {

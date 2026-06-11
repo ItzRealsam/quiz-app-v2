@@ -3,14 +3,20 @@ import { questions }
 
 export const appState = {
 
-  currentScreen: 'home',
+  currentScreen: 'welcome',
 
   user: {
+
     id:
       localStorage.getItem(
         'quiz-user-id'
       ) || crypto.randomUUID(),
-    displayName: ''
+
+    displayName:
+      localStorage.getItem(
+        'quiz-display-name'
+      ) || ''
+
   },
 
   quiz: {

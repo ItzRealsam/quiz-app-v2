@@ -17,13 +17,13 @@
     var(--space-lg);
 
   border-radius:
-    var(--radius-lg);
+    var(--radius-md);
 
   background-color:
-    rgb(20 20 20);
+    rgb(var(--color-bg-inverse));
 
   color:
-    white;
+    rgb(var(--color-text-inverse));
 
   font-size:
     var(--font-size-sm);

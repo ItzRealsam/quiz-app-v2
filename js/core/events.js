@@ -28,6 +28,38 @@ export function bindGlobalEvents() {
 
       switch (action) {
 
+        case 'save-user': {
+
+          const input =
+            document.querySelector(
+              '#display-name'
+            );
+
+          const value =
+            input.value.trim();
+
+          if (!value) {
+
+            showToast(
+              'Please enter your name'
+            );
+
+            return;
+          }
+
+          appState.user.displayName =
+            value;
+
+          localStorage.setItem(
+            'quiz-display-name',
+            value
+          );
+
+          navigateTo('home');
+
+          break;
+        }
+
         case 'start-quiz':
 
           appState.quiz.startedAt =

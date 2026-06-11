@@ -86,113 +86,139 @@ export function renderLeaderboardScreen() {
               </div>
             `
             : `
-              <ul
-                class="
-                  quiz__leaderboard-list
-                "
-              >
 
-                ${visibleEntries
-                  .map((entry, index) => {
+            ${visibleEntries
+              .map((entry, index) => {
 
-                    if (entry.type === 'ellipsis') {
+                if (entry.type === 'ellipsis') {
 
-                      return `
+                  return `
 
-                        <li
-                          class="
-                            quiz__leaderboard-ellipsis
-                          "
-                        >
+                    <li
+                      class="
+                        quiz__leaderboard-ellipsis
+                      "
+                    >
 
-                          ...
+                      ...
 
-                        </li>
+                    </li>
 
-                      `;
-                    }
+                  `;
+                }
 
-                    const actualIndex =
-                      leaderboard.findIndex(
-                        item =>
-                          item.userId ===
-                          entry.userId
-                      );
+                const actualIndex =
+                  leaderboard.findIndex(
+                    item =>
+                      item.userId ===
+                      entry.userId
+                  );
 
-                    const isCurrentUser =
-                      entry.userId ===
-                      currentUserId;
+                const isCurrentUser =
+                  entry.userId ===
+                  currentUserId;
 
-                    return `
+                return `
 
-                      <li
+                  <li
+                    class="
+                      quiz__leaderboard-item
+
+                      ${isCurrentUser
+                        ? 'quiz__leaderboard-item--current-user'
+                        : ''}
+                    "
+                  >
+
+                    <div
+                      class="
+                        quiz__leaderboard-pos
+                        
+                        ${actualIndex === 0
+                          ? 'quiz__leaderboard-pos-first'
+                          : ''}
+
+                        ${actualIndex === 1
+                          ? 'quiz__leaderboard-pos-second'
+                          : ''}
+
+                        ${actualIndex === 2
+                          ? 'quiz__leaderboard-pos-third'
+                          : ''}
+                      "
+                    >
+
+                        ${actualIndex + 1}
+
+                    </div>
+
+                    <div
+                      class="
+                        quiz__leaderboard-details
+                      "
+                    >
+
+                      <span
                         class="
-                          quiz__leaderboard-item
-
-                          ${isCurrentUser
-                            ? 'quiz__leaderboard-item--current-user'
-                            : ''}
+                          quiz__leaderboard-name
                         "
                       >
 
-                        <div
-                          class="
-                            quiz__leaderboard-pos
+                        ${entry.displayName}
 
-                            ${actualIndex === 0
-                              ? 'quiz__leaderboard-pos-first'
-                              : ''}
+                      </span>
 
-                            ${actualIndex === 1
-                              ? 'quiz__leaderboard-pos-second'
-                              : ''}
+                    </div>
 
-                            ${actualIndex === 2
-                              ? 'quiz__leaderboard-pos-third'
-                              : ''}
-                          "
-                        >
+                    <div 
+                      class="
+                        quiz__leaderboard-score
+                      ">
 
-                          ${actualIndex + 1}
+                      ${actualIndex === 0
+                      ? `
+                        <img
+                          src="./assets/images/medals/gold.png"
+                          alt="1st place medal"
+                          class="quiz__leaderboard-medal"
+                        />
+                      `
+                      : actualIndex === 1
+                      ? `
+                        <img
+                          src="./assets/images/medals/silver.png"
+                          alt="2nd place medal"
+                          class="quiz__leaderboard-medal"
+                        />
+                      `
+                      : actualIndex === 2
+                      ? `
+                        <img
+                          src="./assets/images/medals/bronze.png"
+                          alt="3rd place medal"
+                          class="quiz__leaderboard-medal"
+                        />
+                      `
+                      : actualIndex + 1}
 
-                        </div>
+                      <span 
+                        class="
+                          quiz__score-digits
+                        ">
 
-                        <div
-                          class="
-                            quiz__leaderboard-details
-                          "
-                        >
+                        ${entry.score}
 
-                          <span
-                            class="
-                              quiz__leaderboard-name
-                            "
-                          >
+                      </span>
+                    </div>
 
-                            ${entry.displayName}
+                  </li>
 
-                          </span>
+                `;
 
-                        </div>
+              })
+              .join('')}
 
-                        <div
-                          class="
-                            quiz__leaderboard-score
-                          "
-                        >
-
-                          ${entry.score}
-
-                        </div>
-
-                      </li>
-
-                    `;
-
-                  })
-                  .join('')}
-
-              </ul>
+            
             `}
 
           </ul>

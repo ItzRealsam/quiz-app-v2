@@ -1,3 +1,14 @@
+.quiz__options-fieldset {
+
+  border: none;
+
+  padding: 0;
+
+  margin: 0;
+
+  min-inline-size: 0;
+}
+
 .quiz__options-list {
   list-style: none;
 
@@ -17,12 +28,12 @@
 
   border:
     1px solid
-    var(--color-border-default);
+    rgb(var(--color-border-default));
 
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 
   background-color:
-    var(--color-bg-card);
+    rgb(var(--color-bg-card));
 
   text-align: left;
 
@@ -36,35 +47,35 @@
 .quiz__option-btn:hover {
 
   border-color:
-    var(--color-text-primary);
+    rgb(var(--color-text-primary));
 
   background-color:
-    rgb(248 248 248);
+    rgb(var(--color-surface-muted));
 
 }
 
 .quiz__option-btn--correct {
 
   border-color:
-    var(--color-success);
+    rgb(var(--color-success));
 
   background-color:
-    var(--color-success-soft);
+    rgb(var(--color-success-soft));
 
   color:
-    var(--color-success);
+    rgb(var(--color-success));
 }
 
 .quiz__option-btn--incorrect {
 
   border-color:
-    var(--color-error);
+    rgb(var(--color-error));
 
   background-color:
-    var(--color-error-soft);
+    rgb(var(--color-error-soft));
 
   color:
-    var(--color-error);
+    rgb(var(--color-error));
 }
 
 /* Feedback */
@@ -75,14 +86,12 @@
 
   padding: var(--space-md);
 
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 
   background-color:
-    rgb(248 250 252);
+    rgb(var(--color-surface-muted-hover));
 
-  border:
-    1px solid
-    rgb(235 235 235);
+  border: 1px solid rgb(var(--color-surface-subtle));
 
   animation:
     feedbackFadeIn 0.25s ease;
@@ -96,7 +105,7 @@
   line-height: 1.6;
 
   color:
-    var(--color-text-secondary);
+    rgb(var(--color-text-secondary));
 }
 
 @keyframes feedbackFadeIn {
