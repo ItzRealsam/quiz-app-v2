@@ -20,62 +20,72 @@
   margin-top: var(--space-lg);
 }
 
-.quiz__option-btn {
+.quiz__option-item {
+  position: relative;
+}
 
-  width: 100%;
+.quiz__status-icon img {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: none;
+}
 
-  padding: var(--space-md);
-
-  border:
-    1px solid
-    rgb(var(--color-border-default));
-
+.quiz__option-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem;
+  border: 0.5px solid rgb(var(--color-border-default));
   border-radius: var(--radius-md);
-
-  background-color:
-    rgb(var(--color-bg-card));
-
-  text-align: left;
-
-  font-size: var(--font-size-md);
-
-  transition: var(--transition-fast);
-
   cursor: pointer;
+  transition: var(--transition);
 }
 
-.quiz__option-btn:hover {
-
-  border-color:
-    rgb(var(--color-text-primary));
-
-  background-color:
-    rgb(var(--color-surface-muted));
-
+.quiz__option-label:hover {
+  background-color: rgba(var(--color-bg-canvas), 0.9);
+  border-color: rgb(var(--color-text-primary));
 }
 
-.quiz__option-btn--correct {
-
-  border-color:
-    rgb(var(--color-success));
-
-  background-color:
-    rgb(var(--color-success-soft));
-
-  color:
-    rgb(var(--color-success));
+.quiz__option-label:active {
+  transform: scale(0.98);
 }
 
-.quiz__option-btn--incorrect {
+/* Completely safely screen-hide native input elements */
+.quiz__option-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  border-color:
-    rgb(var(--color-error));
+/* Clean keyboard access safety rings */
+.quiz__option-input:focus-visible + .quiz__option-label {
+  outline: 2px solid rgb(var(--color-accent));
+}
 
-  background-color:
-    rgb(var(--color-error-soft));
+/* Option States mapped cleanly via BEM Modifiers */
+.quiz__option-input:checked + .quiz__option-label .quiz__status-icon img {
+  display: initial;
+}
 
-  color:
-    rgb(var(--color-error));
+.quiz__option-input:checked + .quiz__option-label {
+  border: 2px solid rgb(var(--color-accent-hover));
+  background-color: rgba(var(--color-accent-hover), 0.1);
+}
+
+/* Force correct and incorrect states to override standard checked selectors */
+.quiz__option-item--correct .quiz__option-input:checked + .quiz__option-label,
+.quiz__option-item--correct .quiz__option-label {
+  border: 2px solid rgb(var(--color-success));
+  background-color: rgba(var(--color-success), 0.1);
+  color: rgb(var(--color-success));
+}
+
+.quiz__option-item--incorrect .quiz__option-input:checked + .quiz__option-label,
+.quiz__option-item--incorrect .quiz__option-label {
+  border: 2px solid rgb(var(--color-error));
+  background-color: rgba(var(--color-error), 0.1);
+  color: rgb(var(--color-error));
 }
 
 /* Feedback */

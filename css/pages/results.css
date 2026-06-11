@@ -14,14 +14,14 @@
 
   padding: var(--space-md);
 
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 
   background-color:
-    rgb(248 250 252);
+    rgba(var(--color-bg-canvas), 0.4);
 
   border:
     1px solid
-    rgb(235 235 235);
+    rgb(var(--color-border-default));
 
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
     var(--font-size-xs);
 
   color:
-    var(--color-text-secondary);
+    rgb(var(--color-text-secondary));
 
   text-transform: uppercase;
 

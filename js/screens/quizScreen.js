@@ -90,7 +90,11 @@ export function renderQuizScreen() {
                 data-feather="clock"
               ></i>
 
-              <span>
+              <span
+                class="
+                  quiz__timer-value
+                "
+              >
 
                 ${appState.quiz.remainingTime}s
 
@@ -130,48 +134,73 @@ export function renderQuizScreen() {
                 const isCorrect =
                   currentQuestion.answer === index;
 
-                let modifierClass = '';
-
-                if (isAnswerLocked) {
-
-                  if (isCorrect) {
-                    modifierClass =
-                      'quiz__option-btn--correct';
-                  }
-
-                  if (
-                    isSelected &&
-                    !isCorrect
-                  ) {
-                    modifierClass =
-                      'quiz__option-btn--incorrect';
-                  }
-
-                }
-
                 return `
 
-                  <li class="quiz__option-item">
+                  <li
+                    class="
+                      quiz__option-item
 
-                    <button
+                      ${isAnswerLocked && isCorrect
+                        ? 'quiz__option-item--correct'
+                        : ''}
+
+                      ${isAnswerLocked &&
+                        isSelected &&
+                        !isCorrect
+                        ? 'quiz__option-item--incorrect'
+                        : ''}
+                    "
+                  >
+
+                    <input
+
                       class="
-                        quiz__option-btn
-                        ${modifierClass}
+                        quiz__option-input
                       "
 
-                      data-action="select-answer"
+                      type="radio"
 
-                      data-index="${index}"
+                      name="quiz-option"
+
+                      id="option-${index}"
+
+                      value="${index}"
+
+                      ${isSelected
+                        ? 'checked'
+                        : ''}
 
                       ${isAnswerLocked
                         ? 'disabled'
                         : ''}
 
+                    />
+
+                    <label
+
+                      class="
+                        quiz__option-label
+                      "
+
+                      for="option-${index}"
+
+                      data-action="select-answer"
+
+                      data-index="${index}"
+
                     >
-                      ${option}
-                    </button>
+                      <span>
+                        ${option}
+                      </span>
+
+                      <span class="quiz__status-icon">
+                        <img src="./assets/images/quiz__options/quiz__option-select.png" alt="Indicator" aria-hidden="true">
+                      </span>
+
+                    </label>
 
                   </li>
+
 
                 `;
 
