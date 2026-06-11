@@ -1,6 +1,11 @@
 import { navigateTo }
   from './navigation.js';
 
+import {
+  selectAnswer,
+  restartQuiz
+} from './quizLogic.js';
+
 export function bindGlobalEvents() {
 
   document.addEventListener(
@@ -21,6 +26,21 @@ export function bindGlobalEvents() {
           navigateTo('quiz');
           break;
 
+        case 'select-answer':
+
+          selectAnswer(
+            Number(
+              actionTarget.dataset.index
+            )
+          );
+
+          break;
+
+        case 'restart-quiz':
+
+          restartQuiz();
+
+          break;
       }
 
     }

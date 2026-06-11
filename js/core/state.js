@@ -1,3 +1,6 @@
+import { questions }
+  from '../../data/questions.js';
+
 export const appState = {
 
   currentScreen: 'home',
@@ -8,10 +11,14 @@ export const appState = {
   },
 
   quiz: {
-    questions: [],
+    questions,
     currentQuestionIndex: 0,
     score: 0,
     answers: []
+  },
+
+  results: {
+    completed: false
   }
 
 };

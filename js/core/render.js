@@ -6,6 +6,9 @@ import { renderHomeScreen }
 import { renderQuizScreen }
   from '../screens/quizScreen.js';
 
+import { renderResultsScreen }
+  from '../screens/resultsScreen.js';
+
 export function renderCurrentScreen() {
 
   const screen = document.querySelector(
@@ -14,6 +17,10 @@ export function renderCurrentScreen() {
 
   switch (appState.currentScreen) {
 
+    default:
+      screen.innerHTML =
+        '<p>Screen not found</p>';
+        
     case 'home':
       screen.innerHTML =
         renderHomeScreen();
@@ -23,10 +30,11 @@ export function renderCurrentScreen() {
       screen.innerHTML =
         renderQuizScreen();
       break;
-
-    default:
+    
+    case 'results':
       screen.innerHTML =
-        '<p>Screen not found</p>';
+        renderResultsScreen();
+      break;
 
   }
 
