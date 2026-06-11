@@ -8,6 +8,12 @@
 .quiz__btn-primary,
 .quiz__btn-secondary {
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: var(--space-xs);
+
   flex: 1;
 
   height: 4.8rem;

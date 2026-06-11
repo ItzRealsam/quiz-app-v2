@@ -178,7 +178,11 @@ export function renderLeaderboardScreen() {
           data-action="share-score"
         >
 
-          📤 Share
+          <i data-feather="share-2"></i>
+
+          <span>
+            Share
+          </span>
 
         </button>
 
@@ -187,7 +191,11 @@ export function renderLeaderboardScreen() {
           data-action="restart-quiz"
         >
 
-          🔄 Play Again
+          <i data-feather="rotate-ccw"></i>
+
+          <span>
+            Play Again
+          </span>
 
         </button>
 
