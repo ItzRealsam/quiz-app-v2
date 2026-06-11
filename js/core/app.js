@@ -1,3 +1,9 @@
+import { renderAppShell } from '../ui/renderAppShell.js';
+
 export function initializeApp() {
-  console.log('Quiz App v2 Initialized');
+
+  const app = document.querySelector('#app');
+
+  app.innerHTML = renderAppShell();
+
 }
