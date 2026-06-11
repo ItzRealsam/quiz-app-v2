@@ -57,6 +57,19 @@ export function bindGlobalEvents() {
           );
 
           break;
+
+        case 'share-score':
+
+          navigator.clipboard.writeText(
+            'I just completed the Quiz App challenge!'
+          );
+
+          alert(
+            'Score copied to clipboard!'
+          );
+
+          break;
+
       }
 
     }

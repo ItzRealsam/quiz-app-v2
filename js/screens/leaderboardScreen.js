@@ -13,8 +13,35 @@ export function renderLeaderboardScreen() {
   const currentUserId =
     appState.user.id;
 
-  const topTen =
-    leaderboard.slice(0, 10);
+  const currentUserIndex =
+    leaderboard.findIndex(
+      entry =>
+        entry.userId === currentUserId
+    );
+
+  let visibleEntries = [];
+
+  if (currentUserIndex <= 9) {
+
+    visibleEntries =
+      leaderboard.slice(0, 10);
+
+  } else {
+
+    visibleEntries = [
+
+      ...leaderboard.slice(0, 10),
+
+      { type: 'ellipsis' },
+
+      ...leaderboard.slice(
+        currentUserIndex - 1,
+        currentUserIndex + 2
+      )
+
+    ];
+
+  }
 
   return `
 
@@ -40,8 +67,31 @@ export function renderLeaderboardScreen() {
             class="quiz__leaderboard-list"
           >
 
-            ${topTen
+            ${visibleEntries
               .map((entry, index) => {
+
+                if (entry.type === 'ellipsis') {
+
+                  return `
+
+                    <li
+                      class="
+                        quiz__leaderboard-ellipsis
+                      "
+                    >
+
+                      ...
+
+                    </li>
+
+                  `;
+                }
+
+                const actualIndex =
+                  leaderboard.findIndex(
+                    item =>
+                      item.userId === entry.userId
+                  );
 
                 const isCurrentUser =
                   entry.userId === currentUserId;
@@ -56,28 +106,27 @@ export function renderLeaderboardScreen() {
                         ? 'quiz__leaderboard-item--current-user'
                         : ''}
                     "
-
                   >
 
                     <div
                       class="
                         quiz__leaderboard-pos
 
-                        ${index === 0
+                        ${actualIndex === 0
                           ? 'quiz__leaderboard-pos-first'
                           : ''}
 
-                        ${index === 1
+                        ${actualIndex === 1
                           ? 'quiz__leaderboard-pos-second'
                           : ''}
 
-                        ${index === 2
+                        ${actualIndex === 2
                           ? 'quiz__leaderboard-pos-third'
                           : ''}
                       "
                     >
 
-                      ${index + 1}
+                      ${actualIndex + 1}
 
                     </div>
 
@@ -105,15 +154,7 @@ export function renderLeaderboardScreen() {
                       "
                     >
 
-                      <span
-                        class="
-                          quiz__score-digits
-                        "
-                      >
-
-                        ${entry.score}
-
-                      </span>
+                      ${entry.score}
 
                     </div>
 
@@ -133,11 +174,20 @@ export function renderLeaderboardScreen() {
       <div class="quiz__actions">
 
         <button
+          class="quiz__btn-secondary"
+          data-action="share-score"
+        >
+
+          📤 Share
+
+        </button>
+
+        <button
           class="quiz__btn-primary"
           data-action="restart-quiz"
         >
 
-          Play Again
+          🔄 Play Again
 
         </button>
 
