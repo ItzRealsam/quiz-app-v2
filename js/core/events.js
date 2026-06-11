@@ -49,6 +49,14 @@ export function bindGlobalEvents() {
           restartQuiz();
 
           break;
+
+        case 'view-leaderboard':
+
+          navigateTo(
+            'leaderboard'
+          );
+
+          break;
       }
 
     }

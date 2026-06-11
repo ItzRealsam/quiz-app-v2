@@ -9,6 +9,10 @@ import { renderQuizScreen }
 import { renderResultsScreen }
   from '../screens/resultsScreen.js';
 
+import {
+  renderLeaderboardScreen
+} from '../screens/leaderboardScreen.js';
+
 export function renderCurrentScreen() {
 
   const screen = document.querySelector(
@@ -34,6 +38,13 @@ export function renderCurrentScreen() {
     case 'results':
       screen.innerHTML =
         renderResultsScreen();
+      break;
+
+    case 'leaderboard':
+
+      screen.innerHTML =
+        renderLeaderboardScreen();
+
       break;
 
   }

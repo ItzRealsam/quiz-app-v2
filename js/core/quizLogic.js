@@ -7,6 +7,10 @@ import { renderCurrentScreen }
 import { navigateTo }
   from './navigation.js';
 
+import {
+  submitScore
+} from '../services/leaderboardService.js';
+
 export function selectAnswer(selectedIndex) {
 
   const {
@@ -105,6 +109,38 @@ export function selectAnswer(selectedIndex) {
             appState.quiz.startedAt
           ) / 1000
         );
+
+      const accuracy =
+        Math.round(
+          (
+            appState.quiz.answers.filter(
+              answer => answer.isCorrect
+            ).length
+            /
+            questions.length
+          ) * 100
+        );
+
+      submitScore({
+
+        userId:
+          appState.user.id,
+
+        displayName:
+          'You',
+
+        score:
+          appState.quiz.score,
+
+        accuracy,
+
+        bestStreak:
+          appState.quiz.bestStreak,
+
+        totalDurationSeconds:
+          appState.quiz.totalDurationSeconds
+
+      });
 
       navigateTo('results');
 

@@ -97,10 +97,21 @@ export function renderResultsScreen() {
       <div class="quiz__actions">
 
         <button
+          class="quiz__btn-secondary"
+          data-action="view-leaderboard"
+        >
+
+          Leaderboard
+
+        </button>
+
+        <button
           class="quiz__btn-primary"
           data-action="restart-quiz"
         >
+
           Play Again
+
         </button>
 
       </div>

@@ -6,7 +6,10 @@ export const appState = {
   currentScreen: 'home',
 
   user: {
-    id: null,
+    id:
+      localStorage.getItem(
+        'quiz-user-id'
+      ) || crypto.randomUUID(),
     displayName: ''
   },
 
@@ -37,3 +40,8 @@ export const appState = {
   }
 
 };
+
+localStorage.setItem(
+  'quiz-user-id',
+  appState.user.id
+);
