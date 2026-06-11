@@ -3,14 +3,33 @@ const STORAGE_KEY =
 
 export function getLeaderboard() {
 
-  const stored =
-    localStorage.getItem(
-      STORAGE_KEY
+  try {
+
+    const stored =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+    if (!stored) {
+      return [];
+    }
+
+    const parsed =
+      JSON.parse(stored);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      'Failed to parse leaderboard:',
+      error
     );
 
-  return stored
-    ? JSON.parse(stored)
-    : [];
+    return [];
+  }
 
 }
 
@@ -18,10 +37,23 @@ export function saveLeaderboard(
   leaderboard
 ) {
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(leaderboard)
-  );
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        leaderboard
+      )
+    );
+
+  } catch (error) {
+
+    console.error(
+      'Failed to save leaderboard:',
+      error
+    );
+
+  }
 
 }
 

@@ -23,54 +23,96 @@ import {
 
 export function renderCurrentScreen() {
 
-  const screen = document.querySelector(
-    '#quiz-screen'
-  );
+  const screen =
+    document.querySelector(
+      '#quiz-screen'
+    );
 
-  switch (appState.currentScreen) {
+  try {
 
-    default:
-      screen.innerHTML =
-        '<p>Screen not found</p>';
-      
-      initializeIcons();
+    switch (
+      appState.currentScreen
+    ) {
 
-    case 'welcome':
-      screen.innerHTML =
-        renderWelcomeScreen();
+      case 'welcome':
 
-      initializeIcons();
-      break;
-        
-    case 'home':
-      screen.innerHTML =
-        renderHomeScreen();
-      
-      initializeIcons();
-      break;      
+        screen.innerHTML =
+          renderWelcomeScreen();
 
-    case 'quiz':
-      screen.innerHTML =
-        renderQuizScreen();
-      
-      initializeIcons();
-      break;
-    
-    case 'results':
-      screen.innerHTML =
-        renderResultsScreen();
-        
-      initializeIcons();
-      break;
+        break;
 
-    case 'leaderboard':
+      case 'home':
 
-      screen.innerHTML =
-        renderLeaderboardScreen();
-      
-      initializeIcons();
-      break;
+        screen.innerHTML =
+          renderHomeScreen();
 
+        break;
+
+      case 'quiz':
+
+        screen.innerHTML =
+          renderQuizScreen();
+
+        break;
+
+      case 'results':
+
+        screen.innerHTML =
+          renderResultsScreen();
+
+        break;
+
+      case 'leaderboard':
+
+        screen.innerHTML =
+          renderLeaderboardScreen();
+
+        break;
+
+      default:
+
+        screen.innerHTML = `
+          <p>
+            Screen not found
+          </p>
+        `;
+
+    }
+
+    initializeIcons();
+
+  } catch (error) {
+
+    console.error(
+      'Render failure:',
+      error
+    );
+
+    screen.innerHTML = `
+
+      <div
+        class="
+          quiz__fatal-error
+        "
+      >
+
+        <h2>
+          Something went wrong
+        </h2>
+
+        <button
+          class="quiz__btn-primary"
+
+          onclick="window.location.reload()"
+        >
+
+          Reload App
+
+        </button>
+
+      </div>
+
+    `;
   }
 
 }

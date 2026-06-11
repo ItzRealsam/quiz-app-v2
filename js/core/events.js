@@ -12,6 +12,10 @@ import { appState }
 import { showToast }
   from '../ui/toast.js';
 
+import {
+  startQuestionTimer
+} from '../services/timerService.js';
+
 export function bindGlobalEvents() {
 
   document.addEventListener(
@@ -62,10 +66,19 @@ export function bindGlobalEvents() {
 
         case 'start-quiz':
 
+          if (
+            appState.quiz.startedAt &&
+            !appState.quiz.finishedAt
+          ) {
+            return;
+          }
+
           appState.quiz.startedAt =
             Date.now();
 
           navigateTo('quiz');
+
+          startQuestionTimer();
 
           break;
 
@@ -95,16 +108,28 @@ export function bindGlobalEvents() {
 
         case 'share-score':
 
-          navigator.clipboard.writeText(
-            'I just completed the Quiz App challenge!'
-          );
+          navigator.clipboard
+            .writeText(
+              'I just completed the Quiz challenge!'
+            )
 
-          showToast(
-            'Score copied to clipboard!'
-          );
+            .then(() => {
+
+              showToast(
+                'Score copied to clipboard!'
+              );
+
+            })
+
+            .catch(() => {
+
+              showToast(
+                'Clipboard unavailable'
+              );
+
+            });
 
           break;
-
       }
 
     }

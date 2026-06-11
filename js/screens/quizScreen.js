@@ -14,6 +14,25 @@ export function renderQuizScreen() {
   const currentQuestion =
     questions[currentQuestionIndex];
 
+  if (!currentQuestion) {
+
+    return `
+
+      <div
+        class="
+          quiz__fatal-error
+        "
+      >
+
+        <h2>
+          Invalid quiz state
+        </h2>
+
+      </div>
+
+    `;
+  }
+
   const progress =
     (
       (currentQuestionIndex + 1)
@@ -32,14 +51,51 @@ export function renderQuizScreen() {
           <div class="quiz__metrics-row">
 
             <div>
+
               Question
-              <span class="quiz__progress-current">
+
+              <span
+                class="
+                  quiz__progress-current
+                "
+              >
                 ${currentQuestionIndex + 1}
               </span>
+
               /
-              <span class="quiz__progress-length">
+
+              <span
+                class="
+                  quiz__progress-length
+                "
+              >
                 ${questions.length}
               </span>
+
+            </div>
+
+            <div
+
+              class="
+                quiz__timer
+
+                ${appState.quiz.remainingTime <= 5
+                  ? 'quiz__timer--warning'
+                  : ''}
+              "
+
+            >
+
+              <i
+                data-feather="clock"
+              ></i>
+
+              <span>
+
+                ${appState.quiz.remainingTime}s
+
+              </span>
+
             </div>
 
           </div>

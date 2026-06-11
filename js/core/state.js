@@ -39,6 +39,12 @@ export const appState = {
     finishedAt: null,
 
     totalDurationSeconds: 0,
+
+    questionTimeLimit: 15,
+
+    remainingTime: 15,
+
+    timerIntervalId: null,
   },
 
   results: {

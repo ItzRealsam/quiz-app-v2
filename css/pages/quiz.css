@@ -1,0 +1,38 @@
+.quiz__timer {
+
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-xs);
+
+  font-weight:
+    var(--font-weight-semibold);
+
+  color:
+    rgb(var(--color-text-secondary));
+}
+
+.quiz__timer--warning {
+
+  color:
+    rgb(var(--color-warning));
+
+  animation:
+    timerPulse 1s infinite;
+}
+
+@keyframes timerPulse {
+
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
