@@ -4,6 +4,9 @@ import { renderAppShell }
 import { renderCurrentScreen }
   from './render.js';
 
+import { bindGlobalEvents }
+  from './events.js';
+
 export function initializeApp() {
 
   const app =
@@ -13,5 +16,7 @@ export function initializeApp() {
     renderAppShell();
 
   renderCurrentScreen();
+
+  bindGlobalEvents();
 
 }

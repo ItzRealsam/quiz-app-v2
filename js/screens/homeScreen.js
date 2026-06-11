@@ -24,6 +24,7 @@ export function renderHomeScreen() {
 
         <button
           class="quiz__btn-primary"
+          data-action="start-quiz"
         >
           Start Quiz
         </button>
