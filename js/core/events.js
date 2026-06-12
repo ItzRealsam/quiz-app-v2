@@ -3,7 +3,8 @@ import { navigateTo }
 
 import {
   selectAnswer,
-  restartQuiz
+  restartQuiz,
+  moveToNextQuestion
 } from './quizLogic.js';
 
 import { appState } 
@@ -13,7 +14,8 @@ import { showToast }
   from '../ui/toast.js';
 
 import {
-  startQuestionTimer
+  startQuestionTimer,
+  startQuizTimer
 } from '../services/timerService.js';
 
 export function bindGlobalEvents() {
@@ -80,6 +82,8 @@ export function bindGlobalEvents() {
 
           startQuestionTimer();
 
+          startQuizTimer();
+
           break;
 
         case 'select-answer':
@@ -89,6 +93,12 @@ export function bindGlobalEvents() {
               actionTarget.dataset.index
             )
           );
+
+          break;
+
+        case 'next-question':
+
+          moveToNextQuestion();
 
           break;
 

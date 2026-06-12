@@ -16,6 +16,8 @@
 .quiz__card {
   width: 100%;
   max-width: var(--container-width);
+  
+  min-height: 4rem;
 
   background-color: rgb(var(--color-bg-card));
 
@@ -42,6 +44,8 @@
   
   animation:
     cardEntrance 0.35s ease;
+  
+  overflow: hidden;
 }
 
 @keyframes cardEntrance {
@@ -65,7 +69,7 @@
 }
 
 .quiz__card-header {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-lg);
 }
 
 .quiz__brand {

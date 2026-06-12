@@ -10,7 +10,7 @@
 @import url('./layout/section.css');
 
 /* Components */
-@import url('./components/button.css');
+@import url('./components/actions.css');
 @import url('./components/cards.css');
 @import url('./components/leaderboard.css');
 @import url('./components/modal.css');
@@ -20,6 +20,7 @@
 @import url('./components/progress.css');
 
 /* Pages */
+@import url('./pages/welcome.css');
 @import url('./pages/home.css');
 @import url('./pages/quiz.css');
 @import url('./pages/results.css');

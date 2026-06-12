@@ -1,0 +1,4 @@
+.quiz__greeting-name {
+  font-weight: var(--font-weight-bold);
+  color: rgb(var(--color-text-primary));
+}

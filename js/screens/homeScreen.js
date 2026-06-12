@@ -15,22 +15,17 @@ export function renderHomeScreen() {
       <div class="quiz__contents">
 
         <div class="quiz__greeting">
+          Hello,
 
-          <span
-            class="quiz__greeting-eyebrow"
-          >
+            <span
+              class="quiz__greeting-name"
+            >
 
-            Welcome back 👋
+               ${displayName}
 
-          </span>
+            </span>
 
-          <p
-            class="quiz__greeting-name"
-          >
-
-            ${displayName}
-
-          </p>
+          👋
 
         </div>
 

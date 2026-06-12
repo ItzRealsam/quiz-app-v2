@@ -13,10 +13,20 @@ import {
 
 import {
   startQuestionTimer,
-  stopQuestionTimer
+  stopQuestionTimer,
+  stopQuizTimer
 } from '../services/timerService.js';
 
-export function selectAnswer(selectedIndex) {
+let autoAdvanceTimeoutId =
+  null;
+
+/* =========================================================
+   ANSWER SELECTION
+   ========================================================= */
+
+export function selectAnswer(
+  selectedIndex
+) {
 
   const {
     questions,
@@ -24,13 +34,16 @@ export function selectAnswer(selectedIndex) {
     isAnswerLocked
   } = appState.quiz;
 
-  if (isAnswerLocked) return;
+  if (isAnswerLocked) {
+    return;
+  }
 
   const currentQuestion =
     questions[currentQuestionIndex];
 
   const isCorrect =
-    selectedIndex === currentQuestion.answer;
+    selectedIndex ===
+    currentQuestion.answer;
 
   appState.quiz.selectedAnswerIndex =
     selectedIndex;
@@ -40,10 +53,6 @@ export function selectAnswer(selectedIndex) {
 
   appState.quiz.currentExplanation =
     currentQuestion.explanation;
-
-  console.log(
-    appState.quiz.currentExplanation
-  );
 
   if (isCorrect) {
 
@@ -79,10 +88,32 @@ export function selectAnswer(selectedIndex) {
 
   renderCurrentScreen();
 
-  setTimeout(() => {
+  scheduleAutoAdvance();
+
+}
+
+/* =========================================================
+   NEXT QUESTION FLOW
+   ========================================================= */
+
+export function moveToNextQuestion() {
+
+  clearTimeout(
+    autoAdvanceTimeoutId
+  );
+
+  const {
+    questions,
+    currentQuestionIndex
+  } = appState.quiz;
+
+  const hasMoreQuestions =
+    currentQuestionIndex <
+    questions.length - 1;
+
+  if (hasMoreQuestions) {
 
     appState.quiz.currentQuestionIndex++;
-    startQuestionTimer();
 
     appState.quiz.selectedAnswerIndex =
       null;
@@ -93,74 +124,126 @@ export function selectAnswer(selectedIndex) {
     appState.quiz.currentExplanation =
       '';
 
-    const hasMoreQuestions =
-      appState.quiz.currentQuestionIndex
-      <
-      questions.length;
+    startQuestionTimer();
 
-    if (hasMoreQuestions) {
+    renderCurrentScreen();
 
-      renderCurrentScreen();
+    return;
+  }
 
-    } else {
-
-      appState.quiz.finishedAt =
-        Date.now();
-
-      appState.quiz.totalDurationSeconds =
-        Math.floor(
-          (
-            appState.quiz.finishedAt
-            -
-            appState.quiz.startedAt
-          ) / 1000
-        );
-
-      const accuracy =
-        Math.round(
-          (
-            appState.quiz.answers.filter(
-              answer => answer.isCorrect
-            ).length
-            /
-            questions.length
-          ) * 100
-        );
-
-      submitScore({
-
-        userId:
-          appState.user.id,
-
-        displayName:
-          'You',
-
-        score:
-          appState.quiz.score,
-
-        accuracy,
-
-        bestStreak:
-          appState.quiz.bestStreak,
-
-        totalDurationSeconds:
-          appState.quiz.totalDurationSeconds
-
-      });
-
-      stopQuestionTimer();
-
-      navigateTo('results');
-
-    }
-
-  }, 1800);
+  completeQuiz();
 
 }
 
-export function restartQuiz() {
+/* =========================================================
+   QUIZ COMPLETION
+   ========================================================= */
+
+function completeQuiz() {
 
   stopQuestionTimer();
+
+  stopQuizTimer();
+
+  appState.quiz.finishedAt =
+    Date.now();
+
+  appState.quiz.totalDurationSeconds =
+    Math.floor(
+      (
+        appState.quiz.finishedAt
+        -
+        appState.quiz.startedAt
+      ) / 1000
+    );
+
+  const accuracy =
+    Math.round(
+      (
+        appState.quiz.answers.filter(
+          answer => answer.isCorrect
+        ).length
+        /
+        appState.quiz.questions.length
+      ) * 100
+    );
+
+  submitScore({
+
+    userId:
+      appState.user.id,
+
+    displayName:
+      appState.user.displayName ||
+      'Anonymous',
+
+    score:
+      appState.quiz.score,
+
+    accuracy,
+
+    bestStreak:
+      appState.quiz.bestStreak,
+
+    totalDurationSeconds:
+      appState.quiz.totalDurationSeconds
+
+  });
+
+  navigateTo('results');
+
+}
+
+/* =========================================================
+   TIMEOUT FLOW
+   ========================================================= */
+
+export function handleTimeExpiration() {
+
+  appState.quiz.isAnswerLocked =
+    true;
+
+  appState.quiz.currentExplanation =
+    'Time expired!';
+
+  renderCurrentScreen();
+
+  scheduleAutoAdvance();
+
+}
+
+/* =========================================================
+   AUTO ADVANCE
+   ========================================================= */
+
+export function scheduleAutoAdvance() {
+
+  clearTimeout(
+    autoAdvanceTimeoutId
+  );
+
+  autoAdvanceTimeoutId =
+    setTimeout(() => {
+
+      moveToNextQuestion();
+
+    }, 1800);
+
+}
+
+/* =========================================================
+   QUIZ RESET
+   ========================================================= */
+
+export function restartQuiz() {
+
+  clearTimeout(
+    autoAdvanceTimeoutId
+  );
+
+  stopQuestionTimer();
+  
+  stopQuizTimer();
 
   appState.quiz.currentQuestionIndex =
     0;
@@ -195,73 +278,9 @@ export function restartQuiz() {
   appState.quiz.totalDurationSeconds =
     0;
 
+  appState.quiz.elapsedTime =
+    0;
+
   navigateTo('home');
-
-}
-
-function moveToNextQuestion() {
-
-  const {
-    questions,
-    currentQuestionIndex
-  } = appState.quiz;
-
-  if (
-    currentQuestionIndex <
-    questions.length - 1
-  ) {
-
-    appState.quiz.currentQuestionIndex++;
-
-    appState.quiz.selectedAnswerIndex =
-      null;
-
-    appState.quiz.isAnswerLocked =
-      false;
-
-    appState.quiz.currentExplanation =
-      '';
-
-    startQuestionTimer();
-
-    renderCurrentScreen();
-
-  } else {
-
-    stopQuestionTimer();
-
-    appState.quiz.finishedAt =
-      Date.now();
-
-    appState.quiz.totalDurationSeconds =
-      Math.floor(
-        (
-          appState.quiz.finishedAt
-          -
-          appState.quiz.startedAt
-        ) / 1000
-      );
-
-    navigateTo('results');
-
-  }
-
-}
-
-export function handleTimeExpiration() {
-
-  appState.quiz.isAnswerLocked =
-    true;
-
-  appState.quiz.currentExplanation =
-    'Time expired!';
-
-  renderCurrentScreen();
-
-  setTimeout(() => {
-
-    moveToNextQuestion();
-
-  }, 1200);
 
 }

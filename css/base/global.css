@@ -7,11 +7,23 @@ body {
   justify-content: center;
   align-items: center;
 
-  padding: var(--space-lg);
-
   -webkit-font-smoothing: antialiased;
 }
 
 #app {
   width: 100%;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY OVERRIDES (Screen Reader Utilities)
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

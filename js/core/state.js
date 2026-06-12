@@ -45,6 +45,13 @@ export const appState = {
     remainingTime: 15,
 
     timerIntervalId: null,
+
+    quizTimeLimit: 300,
+
+    remainingQuizTime: 300,
+
+    quizTimerIntervalId:
+      null,
   },
 
   results: {

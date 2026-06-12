@@ -1,3 +1,37 @@
+/* ==========================================================================
+   8. ENDGAME VIEWS: SCORING / LEADERBOARD COMPONENTS
+   ========================================================================== */
+
+.quiz__score-box {
+  background-color: rgba(var(--color-accent), 0.05);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  margin-top: var(--space-lg);
+  color: rgb(var(--color-text-secondary));
+}
+
+/*
+.quiz__score-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: .8rem;
+}
+
+.quiz__score-container .quiz__btn-icon {
+  right: -.8rem;
+  height: fit-content;
+  gap: .8rem;
+} */
+
+.quiz__score-value {
+  font-size: clamp(4.8rem, 5vw, 6.4rem);
+  font-weight: 700;
+  color: rgb(var(--color-accent));
+  margin: var(--space-xxs) 0;
+}
+
 .quiz__analytics {
 
   display: grid;
@@ -30,6 +64,7 @@
   text-align: center;
 }
 
+.quiz__score-label,
 .quiz__analytics-label {
 
   font-size:

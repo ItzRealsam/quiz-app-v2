@@ -85,3 +85,106 @@ function updateTimerUI() {
   }
 
 }
+
+
+function updateQuizTimerUI() {
+
+  const quizTimerValue =
+    document.querySelector(
+      '.quiz__quiz-timer-value'
+    );
+
+  const quizTimerContainer =
+    document.querySelector(
+      '.quiz__quiz-timer'
+    );
+
+  if (!quizTimerValue) {
+    return;
+  }
+
+  const minutes =
+    Math.floor(
+      appState.quiz
+        .remainingQuizTime / 60
+    );
+
+  const seconds =
+    appState.quiz
+      .remainingQuizTime % 60;
+
+  quizTimerValue.textContent =
+    `${minutes}:${
+      seconds
+        .toString()
+        .padStart(2, '0')
+    }`;
+
+  if (
+    appState.quiz
+      .remainingQuizTime <= 30
+  ) {
+
+    quizTimerContainer?.classList.add(
+      'quiz__quiz-timer--warning'
+    );
+
+  } else {
+
+    quizTimerContainer?.classList.remove(
+      'quiz__quiz-timer--warning'
+    );
+
+  }
+
+}
+
+
+export function startQuizTimer() {
+
+  stopQuizTimer();
+
+  appState.quiz.remainingQuizTime =
+    appState.quiz.quizTimeLimit;
+
+  appState.quiz.quizTimerIntervalId =
+    setInterval(() => {
+
+      appState.quiz
+        .remainingQuizTime--;
+
+      updateQuizTimerUI();
+
+      if (
+        appState.quiz
+          .remainingQuizTime <= 0
+      ) {
+
+        stopQuizTimer();
+
+        handleTimeExpiration();
+
+      }
+
+    }, 1000);
+
+}
+
+export function stopQuizTimer() {
+
+  if (
+    appState.quiz
+      .quizTimerIntervalId
+  ) {
+
+    clearInterval(
+      appState.quiz
+        .quizTimerIntervalId
+    );
+
+    appState.quiz
+      .quizTimerIntervalId =
+      null;
+  }
+
+}

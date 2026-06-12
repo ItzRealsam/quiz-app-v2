@@ -1,4 +1,24 @@
-.quiz__timer {
+/* ==========================================================================
+   4. INTERACTIVE QUIZ ELEMENTS
+   ========================================================================== */
+
+/* Metrics Dashboard Panel */
+.quiz__metrics-bar {
+  margin-bottom: 20px;
+}
+
+.quiz__metrics-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(1.4rem, 5vw, 1.6rem);
+  font-weight: 400;
+  color: rgb(var(--text-primary));
+  margin-bottom: 8px;
+}
+
+.quiz__timer,
+.quiz__quiz-timer {
 
   display: flex;
   align-items: center;
@@ -12,7 +32,8 @@
     rgb(var(--color-text-secondary));
 }
 
-.quiz__timer--warning {
+.quiz__timer--warning,
+.quiz__quiz-timer--warning {
 
   color:
     rgb(var(--color-warning));

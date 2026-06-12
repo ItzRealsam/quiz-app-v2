@@ -102,6 +102,24 @@ export function renderQuizScreen() {
 
             </div>
 
+            <div class="quiz__quiz-timer">
+
+              <i
+                data-feather="activity"
+              ></i>
+
+              <span
+                class="
+                  quiz__quiz-timer-value
+                "
+              >
+
+                5:00
+
+              </span>
+
+            </div>
+
           </div>
 
           <div class="quiz__progress-track">
@@ -220,6 +238,37 @@ export function renderQuizScreen() {
             </p>
 
           </div>
+
+          ${isAnswerLocked
+            ? `
+              <div
+                class="
+                  quiz__actions
+                "
+              >
+
+                <button
+
+                  class="
+                    quiz__btn-primary
+                  "
+
+                  data-action="next-question"
+                >
+
+                  <i
+                    data-feather="arrow-right"
+                  ></i>
+
+                  <span>
+                    Next Question
+                  </span>
+
+                </button>
+
+              </div>
+            `
+            : ''}
         ` : ''}
 
       </div>
