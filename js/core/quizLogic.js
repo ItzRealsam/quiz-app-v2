@@ -17,24 +17,62 @@ import {
   stopQuizTimer
 } from '../services/timerService.js';
 
-let autoAdvanceTimeoutId =
-  null;
-
 /* =========================================================
    ANSWER SELECTION
+   ---------------------------------------------------------
+   Handles temporary answer selection ONLY.
+
+   No scoring.
+   No locking.
+   No feedback.
+
+   Users may continue changing answers
+   until they explicitly submit.
    ========================================================= */
 
 export function selectAnswer(
   selectedIndex
 ) {
 
+  if (
+    appState.quiz.isAnswerLocked
+  ) {
+    return;
+  }
+
+  appState.quiz.selectedAnswerIndex =
+    selectedIndex;
+
+  renderCurrentScreen();
+
+}
+
+/* =========================================================
+   ANSWER SUBMISSION
+   ---------------------------------------------------------
+   Finalizes answer selection.
+
+   - Locks question
+   - Stops per-question timer
+   - Calculates score/streak
+   - Shows feedback
+   ========================================================= */
+
+export function submitAnswer() {
+
   const {
     questions,
     currentQuestionIndex,
-    isAnswerLocked
+    selectedAnswerIndex
   } = appState.quiz;
 
-  if (isAnswerLocked) {
+  /* -----------------------------------------
+     Safety Guard
+     ----------------------------------------- */
+
+  if (
+    selectedAnswerIndex === null
+  ) {
     return;
   }
 
@@ -42,17 +80,33 @@ export function selectAnswer(
     questions[currentQuestionIndex];
 
   const isCorrect =
-    selectedIndex ===
+    selectedAnswerIndex ===
     currentQuestion.answer;
 
-  appState.quiz.selectedAnswerIndex =
-    selectedIndex;
+  /* -----------------------------------------
+     Lock Answer State
+     ----------------------------------------- */
 
   appState.quiz.isAnswerLocked =
     true;
 
+  /* -----------------------------------------
+     Stop Per-Question Timer
+     Global quiz timer still continues.
+     ----------------------------------------- */
+
+  stopQuestionTimer();
+
+  /* -----------------------------------------
+     Show Feedback
+     ----------------------------------------- */
+
   appState.quiz.currentExplanation =
     currentQuestion.explanation;
+
+  /* -----------------------------------------
+     Score Handling
+     ----------------------------------------- */
 
   if (isCorrect) {
 
@@ -75,12 +129,17 @@ export function selectAnswer(
 
   }
 
+  /* -----------------------------------------
+     Persist Question Analytics
+     ----------------------------------------- */
+
   appState.quiz.answers.push({
 
     questionId:
       currentQuestion.id,
 
-    selectedIndex,
+    selectedIndex:
+      selectedAnswerIndex,
 
     isCorrect
 
@@ -88,19 +147,16 @@ export function selectAnswer(
 
   renderCurrentScreen();
 
-  scheduleAutoAdvance();
-
 }
 
 /* =========================================================
    NEXT QUESTION FLOW
+   ---------------------------------------------------------
+   Resets temporary question state
+   and advances quiz progression.
    ========================================================= */
 
 export function moveToNextQuestion() {
-
-  clearTimeout(
-    autoAdvanceTimeoutId
-  );
 
   const {
     questions,
@@ -110,6 +166,10 @@ export function moveToNextQuestion() {
   const hasMoreQuestions =
     currentQuestionIndex <
     questions.length - 1;
+
+  /* -----------------------------------------
+     Continue Quiz
+     ----------------------------------------- */
 
   if (hasMoreQuestions) {
 
@@ -131,12 +191,18 @@ export function moveToNextQuestion() {
     return;
   }
 
+  /* -----------------------------------------
+     Otherwise finish quiz
+     ----------------------------------------- */
+
   completeQuiz();
 
 }
 
 /* =========================================================
    QUIZ COMPLETION
+   ---------------------------------------------------------
+   Final analytics + leaderboard submission
    ========================================================= */
 
 function completeQuiz() {
@@ -195,10 +261,34 @@ function completeQuiz() {
 }
 
 /* =========================================================
-   TIMEOUT FLOW
+   QUESTION TIMER EXPIRATION
+   ---------------------------------------------------------
+   If user already selected an answer,
+   auto-submit it.
+
+   Otherwise treat question as skipped.
    ========================================================= */
 
 export function handleTimeExpiration() {
+
+  /* -----------------------------------------
+     Auto-submit selected answer
+     ----------------------------------------- */
+
+  if (
+    appState.quiz.selectedAnswerIndex
+    !== null
+  ) {
+
+    submitAnswer();
+
+    return;
+
+  }
+
+  /* -----------------------------------------
+     Handle unanswered timeout
+     ----------------------------------------- */
 
   appState.quiz.isAnswerLocked =
     true;
@@ -208,41 +298,18 @@ export function handleTimeExpiration() {
 
   renderCurrentScreen();
 
-  scheduleAutoAdvance();
-
-}
-
-/* =========================================================
-   AUTO ADVANCE
-   ========================================================= */
-
-export function scheduleAutoAdvance() {
-
-  clearTimeout(
-    autoAdvanceTimeoutId
-  );
-
-  autoAdvanceTimeoutId =
-    setTimeout(() => {
-
-      moveToNextQuestion();
-
-    }, 1800);
-
 }
 
 /* =========================================================
    QUIZ RESET
+   ---------------------------------------------------------
+   Fully resets quiz lifecycle state.
    ========================================================= */
 
 export function restartQuiz() {
 
-  clearTimeout(
-    autoAdvanceTimeoutId
-  );
-
   stopQuestionTimer();
-  
+
   stopQuizTimer();
 
   appState.quiz.currentQuestionIndex =
@@ -278,8 +345,8 @@ export function restartQuiz() {
   appState.quiz.totalDurationSeconds =
     0;
 
-  appState.quiz.elapsedTime =
-    0;
+  appState.quiz.remainingQuizTime =
+    appState.quiz.quizTimeLimit;
 
   navigateTo('home');
 

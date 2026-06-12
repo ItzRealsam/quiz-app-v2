@@ -139,7 +139,6 @@ function updateQuizTimerUI() {
 
 }
 
-
 export function startQuizTimer() {
 
   stopQuizTimer();

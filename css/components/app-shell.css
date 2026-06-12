@@ -70,6 +70,13 @@
 
 .quiz__card-header {
   margin-bottom: var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+}
+
+.quiz__user--hidden {
+
+  visibility: hidden;
 }
 
 .quiz__brand {
@@ -83,4 +90,13 @@
 
 .quiz__brand-logo {
   font-size: 2.4rem;
+}
+
+.quiz__brand-logo-image {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.quiz__user-name {
+  font-weight: var(--font-weight-semibold);
 }

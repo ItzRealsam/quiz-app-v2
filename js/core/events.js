@@ -3,11 +3,12 @@ import { navigateTo }
 
 import {
   selectAnswer,
+  submitAnswer,
   restartQuiz,
   moveToNextQuestion
 } from './quizLogic.js';
 
-import { appState } 
+import { appState }
   from './state.js';
 
 import { showToast }
@@ -18,53 +19,39 @@ import {
   startQuizTimer
 } from '../services/timerService.js';
 
+/* =========================================================
+   GLOBAL EVENT BINDINGS
+   ---------------------------------------------------------
+   Centralized event delegation architecture.
+   ========================================================= */
+
 export function bindGlobalEvents() {
+
+  /* =======================================================
+     CLICK EVENTS
+     ======================================================= */
 
   document.addEventListener(
     'click',
-    (event) => {
+    event => {
 
       const actionTarget =
-        event.target.closest('[data-action]');
+        event.target.closest(
+          '[data-action]'
+        );
 
-      if (!actionTarget) return;
+      if (!actionTarget) {
+        return;
+      }
 
       const action =
         actionTarget.dataset.action;
 
       switch (action) {
 
-        case 'save-user': {
-
-          const input =
-            document.querySelector(
-              '#display-name'
-            );
-
-          const value =
-            input.value.trim();
-
-          if (!value) {
-
-            showToast(
-              'Please enter your name'
-            );
-
-            return;
-          }
-
-          appState.user.displayName =
-            value;
-
-          localStorage.setItem(
-            'quiz-display-name',
-            value
-          );
-
-          navigateTo('home');
-
-          break;
-        }
+        /* ---------------------------------------------------
+           START QUIZ
+           --------------------------------------------------- */
 
         case 'start-quiz':
 
@@ -86,6 +73,10 @@ export function bindGlobalEvents() {
 
           break;
 
+        /* ---------------------------------------------------
+           ANSWER SELECTION
+           --------------------------------------------------- */
+
         case 'select-answer':
 
           selectAnswer(
@@ -96,17 +87,39 @@ export function bindGlobalEvents() {
 
           break;
 
+        /* ---------------------------------------------------
+           SUBMIT ANSWER
+           --------------------------------------------------- */
+
+        case 'submit-answer':
+
+          submitAnswer();
+
+          break;
+
+        /* ---------------------------------------------------
+           NEXT QUESTION
+           --------------------------------------------------- */
+
         case 'next-question':
 
           moveToNextQuestion();
 
           break;
 
+        /* ---------------------------------------------------
+           RESTART QUIZ
+           --------------------------------------------------- */
+
         case 'restart-quiz':
 
           restartQuiz();
 
           break;
+
+        /* ---------------------------------------------------
+           VIEW LEADERBOARD
+           --------------------------------------------------- */
 
         case 'view-leaderboard':
 
@@ -115,6 +128,10 @@ export function bindGlobalEvents() {
           );
 
           break;
+
+        /* ---------------------------------------------------
+           SHARE SCORE
+           --------------------------------------------------- */
 
         case 'share-score':
 
@@ -140,7 +157,143 @@ export function bindGlobalEvents() {
             });
 
           break;
+
       }
+
+    }
+  );
+
+  /* =======================================================
+     FORM SUBMISSION EVENTS
+     -------------------------------------------------------
+     Welcome screen form submission.
+     ======================================================= */
+
+  document.addEventListener(
+    'submit',
+    event => {
+
+      const form =
+        event.target;
+
+      if (
+        !form.matches(
+          '.quiz__welcome-form'
+        )
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const input =
+        document.querySelector(
+          '#display-name'
+        );
+
+      const value =
+        input.value.trim();
+
+      if (!value) {
+
+        showToast(
+          'Please enter your name'
+        );
+
+        return;
+      }
+
+      appState.user.displayName =
+        value;
+
+      localStorage.setItem(
+        'quiz-display-name',
+        value
+      );
+
+      navigateTo('home');
+
+    }
+  );
+
+  /* =======================================================
+     KEYBOARD ACCESSIBILITY
+     -------------------------------------------------------
+     A/B/C/D = select option
+     ENTER = submit answer
+     ======================================================= */
+
+  document.addEventListener(
+    'keydown',
+    event => {
+
+      /* ---------------------------------------------------
+         Only active during quiz screen
+         --------------------------------------------------- */
+
+      if (
+        appState.currentScreen !==
+        'quiz'
+      ) {
+        return;
+      }
+
+      /* ---------------------------------------------------
+         ENTER → Submit Answer
+         --------------------------------------------------- */
+
+      if (
+        event.key === 'Enter'
+      ) {
+
+        if (
+          !appState.quiz.isAnswerLocked &&
+          appState.quiz.selectedAnswerIndex
+            !== null
+        ) {
+
+          submitAnswer();
+
+        }
+
+        return;
+
+      }
+
+      /* ---------------------------------------------------
+         Ignore key selection after lock
+         --------------------------------------------------- */
+
+      if (
+        appState.quiz.isAnswerLocked
+      ) {
+        return;
+      }
+
+      /* ---------------------------------------------------
+         A/B/C/D Key Mapping
+         --------------------------------------------------- */
+
+      const key =
+        event.key.toLowerCase();
+
+      const keyMap = {
+        a: 0,
+        b: 1,
+        c: 2,
+        d: 3
+      };
+
+      const selectedIndex =
+        keyMap[key];
+
+      if (
+        selectedIndex === undefined
+      ) {
+        return;
+      }
+
+      selectAnswer(selectedIndex);
 
     }
   );

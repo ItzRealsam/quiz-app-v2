@@ -1,6 +1,10 @@
 import { appState } from './state.js';
 
 import {
+  renderHeader
+} from '../ui/renderHeader.js';
+
+import {
   renderWelcomeScreen
 } from '../screens/welcomeScreen.js';
 
@@ -22,6 +26,8 @@ import {
 } from '../ui/icons.js';
 
 export function renderCurrentScreen() {
+  
+  renderHeader();
 
   const screen =
     document.querySelector(

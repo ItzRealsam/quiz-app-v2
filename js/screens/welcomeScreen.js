@@ -39,7 +39,7 @@ export function renderWelcomeScreen() {
       </div>
 
       <form
-        class="quiz__actions quiz__actions--vertical"
+        class="quiz__welcome-form quiz__actions quiz__actions--vertical"
       > 
 
         <label
@@ -72,8 +72,6 @@ export function renderWelcomeScreen() {
           type="submit"
 
           class="quiz__btn-primary"
-
-          data-action="save-user"
         >
 
           <i

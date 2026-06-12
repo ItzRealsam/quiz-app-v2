@@ -207,8 +207,23 @@ export function renderQuizScreen() {
                       data-index="${index}"
 
                     >
-                      <span>
+
+                      <span
+                        class="
+                          quiz__option-letter
+                        "
+                      >
+
+                        ${
+                          ['A', 'B', 'C', 'D'][index]
+                        }
+
+                      </span>
+
+                      <span class="quiz__option-content">
+
                         ${option}
+                      
                       </span>
 
                       <span class="quiz__status-icon">
@@ -229,47 +244,70 @@ export function renderQuizScreen() {
 
         </fieldset>
 
-        ${isAnswerLocked ?
-        `
-          <div class="quiz__feedback">
+        <div class="quiz__actions">
 
-            <p class="quiz__feedback-text">
-              ${currentExplanation}
-            </p>
+          <button
 
-          </div>
+            type="button"
 
-          ${isAnswerLocked
-            ? `
-              <div
+            class="
+              quiz__btn-primary
+            "
+
+            data-action="${
+              isAnswerLocked
+                ? 'next-question'
+                : 'submit-answer'
+            }"
+
+            ${
+              !isAnswerLocked &&
+              selectedAnswerIndex === null
+                ? 'disabled'
+                : ''
+            }
+
+          >
+
+            <i
+              data-feather="${
+                isAnswerLocked
+                  ? 'arrow-right'
+                  : 'check'
+              }"
+            ></i>
+
+            <span>
+
+              ${
+                isAnswerLocked
+                  ? 'Next Question'
+                  : 'Submit Answer'
+              }
+
+            </span>
+
+          </button>
+
+        </div>
+
+        ${isAnswerLocked
+          ? `
+            <div class="quiz__feedback">
+
+              <p
                 class="
-                  quiz__actions
+                  quiz__feedback-text
                 "
               >
 
-                <button
+                ${currentExplanation}
 
-                  class="
-                    quiz__btn-primary
-                  "
+              </p>
 
-                  data-action="next-question"
-                >
-
-                  <i
-                    data-feather="arrow-right"
-                  ></i>
-
-                  <span>
-                    Next Question
-                  </span>
-
-                </button>
-
-              </div>
-            `
-            : ''}
-        ` : ''}
+            </div>
+          `
+          : ''}
 
       </div>
 
