@@ -80,6 +80,12 @@
   color: rgb(var(--color-text-primary));
 }
 
+.quiz__btn-primary:disabled,
+.quiz__btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 .quiz__btn-primary:not(:disabled):hover,
 .quiz__btn-secondary:not(:disabled):hover {

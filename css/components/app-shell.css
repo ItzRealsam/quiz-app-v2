@@ -9,7 +9,7 @@
     clamp(
       var(--space-sm),
       4vw,
-      var(--space-lg)
+      var(--space-md)
     );
 }
 
@@ -25,22 +25,15 @@
 
   padding:
     clamp(
-      var(--space-lg),
+      var(--space-sm),
       5vw,
-      var(--space-3xl)
+      var(--space-md)
     );
 
   box-shadow: var(--shadow-card);
 
   display: flex;
   flex-direction: column;
-
-  padding:
-    clamp(
-      var(--space-lg),
-      5vw,
-      var(--space-3xl)
-    );
   
   animation:
     cardEntrance 0.35s ease;
