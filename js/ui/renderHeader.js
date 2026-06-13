@@ -1,6 +1,10 @@
 import { appState }
   from '../core/state.js';
 
+import {
+  escapeHTML
+} from '../utils/sanitizer.js';
+
 export function renderHeader() {
 
   const header =
@@ -75,11 +79,13 @@ export function renderHeader() {
             quiz__user-name
           "
         >
-
           ${
-            appState.user.displayName
+            escapeHTML(
+              appState.user.displayName
+            )
             || 'Guest'
           }
+          
 
         </span>
           👋

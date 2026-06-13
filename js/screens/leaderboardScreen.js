@@ -5,13 +5,15 @@ import {
   getLeaderboard
 } from '../services/leaderboardService.js';
 
+import { escapeHTML } from '../utils/sanitizer.js';
+
 export function renderLeaderboardScreen() {
 
   const leaderboard =
     getLeaderboard();
 
   const currentUserId =
-    appState.user.id;
+    escapeHTML(appState.user.id);
 
   const currentUserIndex =
     leaderboard.findIndex(

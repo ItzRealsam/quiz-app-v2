@@ -1,6 +1,8 @@
 import { appState }
   from '../core/state.js';
 
+import { escapeHTML } from '../utils/sanitizer.js';
+
 export function renderWelcomeScreen() {
 
   return `
@@ -64,7 +66,11 @@ export function renderWelcomeScreen() {
 
           maxlength="20"
 
-          value="${appState.user.displayName}"
+          value="${
+            escapeHTML(
+              appState.user.displayName
+            )
+          }"
 
         />
 

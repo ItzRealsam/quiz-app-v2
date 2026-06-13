@@ -1,10 +1,14 @@
 import { appState }
   from '../core/state.js';
 
+import {
+  escapeHTML
+} from '../utils/sanitizer.js';
+
 export function renderHomeScreen() {
-  const {
+  const
     displayName
-  } = appState.user;
+   = escapeHTML(appState.user.displayName);
 
   return `
   
