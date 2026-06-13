@@ -1,6 +1,16 @@
 import { appState }
   from '../core/state.js';
 
+import {
+
+  renderQuestionTimer,
+  renderQuizTimer,
+  renderQuizFeedback,
+  renderQuizAction,
+  renderQuizOption
+
+} from '../ui/renderQuiz.js';
+
 export function renderQuizScreen() {
 
   const {
@@ -74,60 +84,14 @@ export function renderQuizScreen() {
 
             </div>
 
-            <div
+            ${renderQuestionTimer({
+              remainingTime: appState.quiz.remainingTime
+            })}
 
-              class="
-                quiz__timer
-
-                ${appState.quiz.remainingTime <= 5
-                  ? 'quiz__timer--warning'
-                  : ''}
-              "
-
-            >
-
-              <i
-                data-feather="clock"
-              ></i>
-
-              <span
-                class="
-                  quiz__timer-value
-                "
-              >
-
-                ${appState.quiz.remainingTime}s
-
-              </span>
-
-            </div>
-
-            <div class="quiz__quiz-timer">
-
-              <i
-                data-feather="activity"
-              ></i>
-
-              <span
-                class="
-                  quiz__quiz-timer-value
-                "
-              >
-
-                ${Math.floor(
-                  appState.quiz.remainingQuizTime / 60
-                )}:${
-                  (
-                    appState.quiz.remainingQuizTime % 60
-                  )
-                    .toString()
-                    .padStart(2, '0')
-                }
-
-              </span>
-
-            </div>
-
+            ${renderQuizTimer({
+              remainingQuizTime: appState.quiz.remainingQuizTime
+            })}
+            
           </div>
 
           <div class="quiz__progress-track">
@@ -160,90 +124,13 @@ export function renderQuizScreen() {
                 const isCorrect =
                   currentQuestion.answer === index;
 
-                return `
-
-                  <li
-                    class="
-                      quiz__option-item
-
-                      ${isAnswerLocked && isCorrect
-                        ? 'quiz__option-item--correct'
-                        : ''}
-
-                      ${isAnswerLocked &&
-                        isSelected &&
-                        !isCorrect
-                        ? 'quiz__option-item--incorrect'
-                        : ''}
-                    "
-                  >
-
-                    <input
-
-                      class="
-                        quiz__option-input
-                      "
-
-                      type="radio"
-
-                      name="quiz-option"
-
-                      id="option-${index}"
-
-                      value="${index}"
-
-                      ${isSelected
-                        ? 'checked'
-                        : ''}
-
-                      ${isAnswerLocked
-                        ? 'disabled'
-                        : ''}
-
-                    />
-
-                    <label
-
-                      class="
-                        quiz__option-label
-                      "
-
-                      for="option-${index}"
-
-                      data-action="select-answer"
-
-                      data-index="${index}"
-
-                    >
-
-                      <span
-                        class="
-                          quiz__option-letter
-                        "
-                      >
-
-                        ${
-                          ['A', 'B', 'C', 'D'][index]
-                        }
-
-                      </span>
-
-                      <span class="quiz__option-content">
-
-                        ${option}
-                      
-                      </span>
-
-                      <span class="quiz__status-icon">
-                        <img src="./assets/images/quiz__options/quiz__option-select.png" alt="Indicator" aria-hidden="true">
-                      </span>
-
-                    </label>
-
-                  </li>
-
-
-                `;
+                return renderQuizOption({
+                  option,
+                  index,
+                  isSelected,
+                  isCorrect,
+                  isAnswerLocked
+                });
 
               })
               .join('')}
@@ -252,69 +139,15 @@ export function renderQuizScreen() {
 
         </fieldset>
 
-        <div class="quiz__actions">
-
-          <button
-
-            type="button"
-
-            class="
-              quiz__btn-primary
-            "
-
-            data-action="${
-              isAnswerLocked
-                ? 'next-question'
-                : 'submit-answer'
-            }"
-
-            ${
-              !isAnswerLocked &&
-              selectedAnswerIndex === null
-                ? 'disabled'
-                : ''
-            }
-
-          >
-
-            <i
-              data-feather="${
-                isAnswerLocked
-                  ? 'arrow-right'
-                  : 'check'
-              }"
-            ></i>
-
-            <span>
-
-              ${
-                isAnswerLocked
-                  ? 'Next Question'
-                  : 'Submit Answer'
-              }
-
-            </span>
-
-          </button>
-
-        </div>
+        ${renderQuizAction({
+          isAnswerLocked,
+          selectedAnswerIndex
+        })}
 
         ${isAnswerLocked
-          ? `
-            <div class="quiz__feedback">
-
-              <p
-                class="
-                  quiz__feedback-text
-                "
-              >
-
-                ${currentExplanation}
-
-              </p>
-
-            </div>
-          `
+          ? renderQuizFeedback({
+            currentExplanation
+          })
           : ''}
 
       </div>
