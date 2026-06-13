@@ -71,7 +71,7 @@ export function renderLeaderboardScreen() {
 
             ${leaderboard.length === 0
             ? `
-              <div
+              <li
                 class="
                   quiz__leaderboard-empty
                 "
@@ -85,7 +85,7 @@ export function renderLeaderboardScreen() {
                   No leaderboard entries yet.
                 </p>
 
-              </div>
+              </li>
             `
             : `
 
