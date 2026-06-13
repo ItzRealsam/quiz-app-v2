@@ -59,6 +59,11 @@ export function selectAnswer(
    ========================================================= */
 
 export function submitAnswer() {
+  if (
+    appState.quiz.isAnswerLocked
+  ) {
+    return;
+  }
 
   const {
     questions,
