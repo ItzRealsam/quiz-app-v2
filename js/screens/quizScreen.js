@@ -114,7 +114,15 @@ export function renderQuizScreen() {
                 "
               >
 
-                5:00
+                ${Math.floor(
+                  appState.quiz.remainingQuizTime / 60
+                )}:${
+                  (
+                    appState.quiz.remainingQuizTime % 60
+                  )
+                    .toString()
+                    .padStart(2, '0')
+                }
 
               </span>
 
