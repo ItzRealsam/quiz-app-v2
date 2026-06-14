@@ -34,6 +34,16 @@ export function renderCurrentScreen() {
       '#quiz-screen'
     );
 
+  if (!screen) {
+
+    console.error(
+      'Screen container not found'
+    );
+
+    return;
+
+  }
+
   try {
 
     switch (

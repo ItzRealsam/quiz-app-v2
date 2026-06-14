@@ -17,6 +17,13 @@ import {
   stopQuizTimer
 } from '../services/timerService.js';
 
+import {
+
+  processAnswerScore,
+  calculateAccuracy
+
+} from '../services/scoreService.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -112,27 +119,14 @@ export function submitAnswer() {
   /* -----------------------------------------
      Score Handling
      ----------------------------------------- */
+  processAnswerScore({
 
-  if (isCorrect) {
+    isCorrect,
 
-    appState.quiz.score += 10;
+    remainingTime:
+      appState.quiz.remainingTime
 
-    appState.quiz.streak++;
-
-    if (
-      appState.quiz.streak >
-      appState.quiz.bestStreak
-    ) {
-
-      appState.quiz.bestStreak =
-        appState.quiz.streak;
-    }
-
-  } else {
-
-    appState.quiz.streak = 0;
-
-  }
+  });
 
   /* -----------------------------------------
      Persist Question Analytics
@@ -227,18 +221,9 @@ function completeQuiz() {
         appState.quiz.startedAt
       ) / 1000
     );
-
   const accuracy =
-    Math.round(
-      (
-        appState.quiz.answers.filter(
-          answer => answer.isCorrect
-        ).length
-        /
-        appState.quiz.questions.length
-      ) * 100
-    );
-
+    calculateAccuracy();
+  
   submitScore({
 
     userId:

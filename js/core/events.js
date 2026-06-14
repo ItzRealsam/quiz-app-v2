@@ -19,6 +19,14 @@ import {
   startQuizTimer
 } from '../services/timerService.js';
 
+import { 
+  STORAGE_KEYS
+ } from '../utils/config.js';
+
+import { 
+  setStorageItem
+ } from '../utils/storage.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -206,8 +214,8 @@ export function bindGlobalEvents() {
       appState.user.displayName =
         value;
 
-      localStorage.setItem(
-        'quiz-display-name',
+      setStorageItem(
+        STORAGE_KEYS.DISPLAY_NAME,
         value
       );
 

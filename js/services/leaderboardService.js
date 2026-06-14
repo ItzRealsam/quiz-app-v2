@@ -1,25 +1,51 @@
-const STORAGE_KEY =
-  'quiz-leaderboard';
+import { 
+  STORAGE_KEYS
+ } from '../utils/config.js';
+
+import { 
+  getStorageItem,
+  removeStorageItem,
+  setStorageItem
+} from "../utils/storage.js";
 
 export function getLeaderboard() {
 
   try {
 
-    const stored =
-      localStorage.getItem(
-        STORAGE_KEY
+    const leaderboard =
+      getStorageItem(
+        STORAGE_KEYS.LEADERBOARD,
+        []
       );
 
-    if (!stored) {
+    if (!leaderboard) {
       return [];
     }
 
-    const parsed =
-      JSON.parse(stored);
+    try {
 
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
+      const parsedLeaderboard =
+        JSON.parse(leaderboard);
+
+      return Array.isArray(
+        parsedLeaderboard
+      )
+        ? parsedLeaderboard
+        : [];
+
+    } catch {
+
+      console.warn(
+        'Invalid leaderboard format detected. Resetting leaderboard.'
+      );
+      
+      removeStorageItem(
+        STORAGE_KEYS.LEADERBOARD
+      );
+
+      return [];
+
+    }
 
   } catch (error) {
 
@@ -29,6 +55,7 @@ export function getLeaderboard() {
     );
 
     return [];
+
   }
 
 }
@@ -39,11 +66,9 @@ export function saveLeaderboard(
 
   try {
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(
-        leaderboard
-      )
+    setStorageItem(
+      STORAGE_KEYS.LEADERBOARD,
+      leaderboard
     );
 
   } catch (error) {

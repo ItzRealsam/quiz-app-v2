@@ -1,14 +1,11 @@
-import { appState }
-  from './state.js';
+import {
+  navigateToRoute
+} from './router.js';
 
-import { renderCurrentScreen }
-  from './render.js';
+export function navigateTo(
+  screen
+) {
 
-export function navigateTo(screenName) {
-
-  appState.currentScreen =
-    screenName;
-
-  renderCurrentScreen();
+  navigateToRoute(screen);
 
 }
