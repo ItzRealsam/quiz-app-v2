@@ -33,17 +33,40 @@ export function getLeaderboard() {
         ? parsedLeaderboard
         : [];
 
-    } catch {
+    } 
+    
+    /* catch {
 
       console.warn(
         'Invalid leaderboard format detected. Resetting leaderboard.'
       );
-      
+
       removeStorageItem(
         STORAGE_KEYS.LEADERBOARD
       );
 
       return [];
+
+    }
+    */
+
+    catch {
+
+      /* ---------------------------------------
+        Corrupted / legacy leaderboard format
+        detected.
+        
+        Reset safely.
+        --------------------------------------- */
+
+      const emptyLeaderboard = [];
+
+      setStorageItem(
+        STORAGE_KEYS.LEADERBOARD,
+        emptyLeaderboard
+      );
+
+      return emptyLeaderboard;
 
     }
 
