@@ -71,8 +71,26 @@ export function navigateToRoute(
     return;
   }
 
+  const nextHash =
+    `#/${route}`;
+
+  /* -----------------------------------------
+     Prevent duplicate hash updates
+     ----------------------------------------- */
+
+  if (
+    window.location.hash ===
+    nextHash
+  ) {
+
+    syncRoute();
+
+    return;
+
+  }
+
   window.location.hash =
-    `/${route}`;
+    nextHash;
 
 }
 

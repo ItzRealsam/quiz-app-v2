@@ -31,3 +31,8 @@ body {
 img {
   object-fit: cover;
 }
+
+button {
+  border: none;
+  cursor: pointer;
+}

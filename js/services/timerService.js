@@ -2,22 +2,48 @@ import { appState }
   from '../core/state.js';
 
 import {
-  handleTimeExpiration
+  handleTimeExpiration,
+  handleQuizExpiration
 } from '../core/quizLogic.js';
+
+import {
+  saveQuizSession
+} from './sessionService.js';
 
 export function startQuestionTimer() {
 
   stopQuestionTimer();
 
-  appState.quiz.remainingTime =
-    appState.quiz.questionTimeLimit;
-
+  appState.quiz.questionStartedAt =
+    Date.now();
+  
   appState.quiz.timerIntervalId =
     setInterval(() => {
 
-      appState.quiz.remainingTime--;
+      const elapsedSeconds =
+        Math.floor(
+          (
+            Date.now()
+            -
+            appState.quiz
+              .questionStartedAt
+          ) / 1000
+        );
+
+      appState.quiz.remainingTime =
+        Math.max(
+
+          0,
+
+          appState.quiz.questionTimeLimit
+          -
+          elapsedSeconds
+
+        );
 
       updateTimerUI();
+
+      saveQuizSession();
 
       if (
         appState.quiz.remainingTime <= 0
@@ -149,19 +175,37 @@ export function startQuizTimer() {
   appState.quiz.quizTimerIntervalId =
     setInterval(() => {
 
-      appState.quiz
-        .remainingQuizTime--;
+      const elapsedSeconds =
+        Math.floor(
+          (
+            Date.now()
+            -
+            appState.quiz.startedAt
+          ) / 1000
+        );
+
+      appState.quiz.remainingQuizTime =
+        Math.max(
+
+          0,
+
+          appState.quiz.quizTimeLimit
+          -
+          elapsedSeconds
+
+        );
 
       updateQuizTimerUI();
 
+      saveQuizSession();
+
       if (
-        appState.quiz
-          .remainingQuizTime <= 0
+        appState.quiz.remainingQuizTime <= 0
       ) {
 
         stopQuizTimer();
 
-        handleTimeExpiration();
+        handleQuizExpiration();
 
       }
 

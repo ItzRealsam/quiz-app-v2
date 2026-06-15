@@ -63,15 +63,36 @@ export function bindGlobalEvents() {
 
         case 'start-quiz':
 
+          /* -----------------------------------------
+            Prevent duplicate navigation
+            only if already actively inside quiz
+            ----------------------------------------- */
+
           if (
-            appState.quiz.startedAt &&
-            !appState.quiz.finishedAt
+            appState.currentScreen ===
+            'quiz'
           ) {
             return;
           }
 
-          appState.quiz.startedAt =
-            Date.now();
+          /* -----------------------------------------
+            Initialize fresh quiz session
+            only if quiz not already active
+            ----------------------------------------- */
+
+          if (
+            !appState.quiz.startedAt
+            ||
+            appState.quiz.finishedAt
+          ) {
+
+            appState.quiz.startedAt =
+              Date.now();
+
+            appState.quiz.finishedAt =
+              null;
+
+          }
 
           navigateTo('quiz');
 
@@ -163,6 +184,15 @@ export function bindGlobalEvents() {
               );
 
             });
+
+          break;
+        /* ---------------------------------------------------
+           GO BACK
+           --------------------------------------------------- */
+        
+        case 'go-back':
+
+          window.history.back();
 
           break;
 

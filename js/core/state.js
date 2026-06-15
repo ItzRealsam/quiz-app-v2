@@ -21,9 +21,13 @@ export const appState = {
 
   quiz: {
     questions,
+
     currentQuestionIndex: 0,
+
     score: 0,
+
     answers: [],
+    
     selectedAnswerIndex: null,
 
     isAnswerLocked: false,
@@ -50,8 +54,9 @@ export const appState = {
 
     remainingQuizTime: 300,
 
-    quizTimerIntervalId:
-      null,
+    quizTimerIntervalId: null,
+    
+    questionStartedAt: null
   },
 
   results: {

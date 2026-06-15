@@ -13,6 +13,9 @@ export const STORAGE_KEYS = {
   QUIZ_SETTINGS:
     'quiz-settings',
   
+  QUIZ_SESSION:
+    'quiz-session',
+  
   LEADERBOARD:    
     'quiz-leaderboard'
 

@@ -28,6 +28,16 @@ import {
   initializeRouter
 } from './router.js';
 
+import {
+  restoreQuizSession
+} from '../services/sessionService.js';
+
+import {
+  startQuestionTimer,
+  startQuizTimer
+} from '../services/timerService.js';
+
+
 export function initializeApp() {
 
   const app =
@@ -67,6 +77,50 @@ export function initializeApp() {
 
   app.innerHTML =
     renderAppShell();
+
+  const savedSession =
+    restoreQuizSession();
+
+  if (savedSession) {
+
+    appState.currentScreen =
+      savedSession.currentScreen;
+
+    Object.assign(
+
+      appState.quiz,
+
+      savedSession.quiz
+
+    );
+
+    /* -----------------------------------------
+      Question timer should NOT persist
+      across refreshes/navigation.
+      ----------------------------------------- */
+
+    appState.quiz.questionStartedAt =
+      null;
+
+    appState.quiz.remainingTime =
+      appState.quiz.questionTimeLimit;
+
+  }
+
+  /* =========================================================
+    Restart Active Timers After Session Restore
+    ========================================================= */
+
+  if (
+    appState.currentScreen ===
+    'quiz'
+  ) {
+
+    startQuestionTimer();
+
+    startQuizTimer();
+
+  }
 
   initializeRouter();
 

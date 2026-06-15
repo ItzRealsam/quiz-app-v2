@@ -24,6 +24,10 @@ import {
 
 } from '../services/scoreService.js';
 
+import {
+  clearQuizSession
+} from '../services/sessionService.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -246,6 +250,8 @@ function completeQuiz() {
 
   });
 
+  clearQuizSession();
+
   navigateTo('results');
 
 }
@@ -289,6 +295,35 @@ export function handleTimeExpiration() {
   renderCurrentScreen();
 
 }
+
+/* =========================================================
+   QUIZ TIMER EXPIRATION
+   ---------------------------------------------------------
+   Handles TOTAL quiz timer completion.
+   ========================================================= */
+
+export function handleQuizExpiration() {
+
+  stopQuestionTimer();
+
+  stopQuizTimer();
+
+  appState.quiz.isAnswerLocked =
+    true;
+
+  appState.quiz.currentExplanation =
+    'Quiz time expired!';
+
+  renderCurrentScreen();
+
+  setTimeout(() => {
+
+    completeQuiz();
+
+  }, 1200);
+
+}
+
 
 /* =========================================================
    QUIZ RESET

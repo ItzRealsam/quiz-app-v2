@@ -18,6 +18,43 @@ export function renderHeader() {
 
   header.innerHTML = `
 
+    ${
+      appState.currentScreen !==
+        'welcome'
+
+      &&
+      appState.currentScreen !==
+        'home'
+
+        ? `
+
+          <button
+
+            class="
+              quiz__header-back
+            "
+
+            type="button"
+
+            data-action="go-back"
+
+            aria-label="
+              Go back
+            "
+          >
+
+            <i
+              data-feather="arrow-left"
+            ></i>
+
+            Back
+            
+          </button>
+
+        `
+        : ''
+    }
+
     <div class="quiz__brand">
 
       <span
