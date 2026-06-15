@@ -29,7 +29,8 @@ import {
 } from './router.js';
 
 import {
-  restoreQuizSession
+  restoreQuizSession,
+  clearQuizSession
 } from '../services/sessionService.js';
 
 import {
@@ -37,6 +38,13 @@ import {
   startQuizTimer
 } from '../services/timerService.js';
 
+import {
+  isSessionValid
+} from '../utils/sessionValidator.js';
+
+import { 
+  showToast
+ } from '../ui/toast.js';
 
 export function initializeApp() {
 
@@ -81,7 +89,9 @@ export function initializeApp() {
   const savedSession =
     restoreQuizSession();
 
-  if (savedSession) {
+  if (
+    isSessionValid(savedSession)
+  ) {
 
     appState.currentScreen =
       savedSession.currentScreen;
@@ -105,7 +115,18 @@ export function initializeApp() {
     appState.quiz.remainingTime =
       appState.quiz.questionTimeLimit;
 
+    showToast( 
+      'Previous quiz session restored.' 
+    );
+
+  } else {
+
+    clearQuizSession();
+
   }
+
+  window.location.hash = 
+    `#/${appState.currentScreen}`;
 
   /* =========================================================
     Restart Active Timers After Session Restore
