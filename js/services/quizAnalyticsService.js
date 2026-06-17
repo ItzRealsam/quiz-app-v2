@@ -50,3 +50,39 @@ export function getMaxPossibleScore({
   );
 
 }
+
+/* =========================================================
+   QUIZ ANALYTICS
+   ========================================================= */
+
+export function getCorrectAnswerCount(
+  answers
+) {
+
+  return answers.filter(
+    answer => answer.isCorrect
+  ).length;
+
+}
+
+export function getAverageTimePerQuestion({
+
+  totalDurationSeconds,
+
+  totalQuestions
+
+}) {
+
+  if (
+    totalQuestions === 0
+  ) {
+    return 0;
+  }
+
+  return (
+    totalDurationSeconds
+    /
+    totalQuestions
+  ).toFixed(1);
+
+}

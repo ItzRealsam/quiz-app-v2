@@ -6,8 +6,14 @@ import {
 } from '../utils/config.js';
 
 import {
-  getMaxPossibleScore
+  getMaxPossibleScore,
+  getCorrectAnswerCount,
+  getAverageTimePerQuestion
 } from '../services/quizAnalyticsService.js';
+
+import {
+  getUserRank
+} from '../services/leaderboardAnalyticsService.js';
 
 export function renderResultsScreen() {
 
@@ -26,7 +32,8 @@ export function renderResultsScreen() {
         questions.length,
 
       questionTimeLimit:
-        appState.quiz.questionTimeLimit,
+        QUIZ_CONFIG
+          .QUESTION_TIME_LIMIT,
 
       baseCorrectPoints:
         QUIZ_CONFIG
@@ -42,28 +49,34 @@ export function renderResultsScreen() {
 
     });
   
+  const correctAnswers =
+    getCorrectAnswerCount(
+      answers
+    );
+
   const accuracy =
     Math.round(
       (
-        answers.filter(
-          answer => answer.isCorrect
-        ).length
+        correctAnswers
         /
         questions.length
       ) * 100
     );
   
-  const correctAnswers =
-    answers.filter(
-      answer => answer.isCorrect
-    ).length;
-
   const averageTimePerQuestion =
-    (
-      totalDurationSeconds
-      /
-      questions.length
-    ).toFixed(1);
+    getAverageTimePerQuestion({
+
+      totalDurationSeconds,
+
+      totalQuestions:
+        questions.length
+
+    });
+
+  const rank =
+    getUserRank(
+      appState.user.id
+    );
 
   return `
 
@@ -114,7 +127,7 @@ export function renderResultsScreen() {
               "
             >
 
-              (${correctAnswers}/${questions.length})
+              (${correctAnswers}/${questions.length}) Correct
 
             </span>
           
@@ -153,6 +166,36 @@ export function renderResultsScreen() {
               (${averageTimePerQuestion}s/question)
 
             </span>
+
+          </span>
+
+        </div>
+
+        <div
+          class="
+            quiz__analytics-card
+          "
+        >
+
+          <span
+            class="
+              quiz__analytics-label
+            "
+          >
+
+            Rank
+
+          </span>
+
+          <span
+            class="
+              quiz__analytics-value
+            "
+          >
+
+            ${rank
+              ? `#${rank}`
+              : '--'}
 
           </span>
 
