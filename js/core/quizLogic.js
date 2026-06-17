@@ -338,6 +338,14 @@ export function restartQuiz() {
 
   stopQuizTimer();
 
+  restartQuizState();
+
+  navigateTo('home');
+
+}
+
+export function restartQuizState() {
+
   appState.quiz.currentQuestionIndex =
     0;
 
@@ -371,9 +379,10 @@ export function restartQuiz() {
   appState.quiz.totalDurationSeconds =
     0;
 
+  appState.quiz.remainingTime =
+    appState.quiz.questionTimeLimit;
+
   appState.quiz.remainingQuizTime =
     appState.quiz.quizTimeLimit;
-
-  navigateTo('home');
 
 }

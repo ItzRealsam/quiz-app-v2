@@ -5,7 +5,8 @@ import {
   selectAnswer,
   submitAnswer,
   restartQuiz,
-  moveToNextQuestion
+  moveToNextQuestion,
+  restartQuizState
 } from './quizLogic.js';
 
 import { appState }
@@ -84,6 +85,7 @@ export function bindGlobalEvents() {
             only if quiz not already active
             ----------------------------------------- */
 
+          /*
           if (
             !appState.quiz.startedAt
             ||
@@ -97,6 +99,25 @@ export function bindGlobalEvents() {
               null;
 
           }
+          */
+
+          if (
+            appState.quiz.finishedAt
+          ) {
+
+            restartQuizState();
+
+          }
+
+          /* -----------------------------------------
+            Start fresh lifecycle
+            ----------------------------------------- */
+
+          appState.quiz.startedAt =
+            Date.now();
+
+          appState.quiz.finishedAt =
+            null;
 
           navigateTo('quiz');
 
