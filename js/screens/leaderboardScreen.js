@@ -40,58 +40,6 @@ export function renderLeaderboardScreen() {
 
     });
 
-  if (
-    filteredLeaderboard.length === 0 &&
-    appState.ui
-      .leaderboardSearchTerm
-  ) {
-
-    return `
-
-      <section class="quiz__container">
-
-        <div class="quiz__contents">
-
-          <div
-            class="quiz__leaderboard-wrapper"
-          >
-
-            <div
-              class="quiz__leaderboard-header"
-            >
-
-              <h2>
-                Leaderboard
-              </h2>
-
-            </div>
-
-            <div
-              class="
-                quiz__leaderboard-empty
-              "
-            >
-
-              <i
-                data-feather="search"
-              ></i>
-
-              <p>
-                No matching players found.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    `;
-
-  }
-
   const currentUserId =
     escapeHTML(appState.user.id);
 
@@ -249,7 +197,16 @@ export function renderLeaderboardScreen() {
               >
 
                 <i
-                  data-feather="chevrons-up"
+
+                  data-feather="${
+                    appState.ui
+                      .leaderboardCollapsed
+
+                      ? 'chevrons-down'
+
+                      : 'chevrons-up'
+                  }"
+
                 ></i>
 
               </button>
@@ -278,16 +235,12 @@ export function renderLeaderboardScreen() {
 
                     type="search"
 
-                    placeholder="
-                      Search player...
-                    "
+                    placeholder="Search player..."
 
-                    value="
-                      ${
+                    value="${
                         appState.ui
                           .leaderboardSearchTerm
-                      }
-                    "
+                      }"
 
                     data-action="
                       leaderboard-search
@@ -307,24 +260,44 @@ export function renderLeaderboardScreen() {
           >
 
             ${filteredLeaderboard.length === 0
-            ? `
-              <li
-                class="
-                  quiz__leaderboard-empty
-                "
-              >
 
-                <i
-                  data-feather="bar-chart-2"
-                ></i>
+              ? `
 
-                <p>
-                  No leaderboard entries yet.
-                </p>
+                <li
+                  class="
+                    quiz__leaderboard-empty
+                  "
+                >
 
-              </li>
-            `
-            : `
+                  <i
+                    data-feather="${
+                      appState.ui
+                        .leaderboardSearchTerm
+
+                        ? 'search'
+
+                        : 'bar-chart-2'
+                    }"
+                  ></i>
+
+                  <p>
+
+                    ${
+                      appState.ui
+                        .leaderboardSearchTerm
+
+                        ? 'No matching players found.'
+
+                        : 'No leaderboard entries yet.'
+                    }
+
+                  </p>
+
+                </li>
+
+              `
+
+              : `
 
             ${visibleEntries
               .map((entry, index) => {

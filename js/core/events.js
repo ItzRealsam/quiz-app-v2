@@ -243,10 +243,6 @@ export function bindGlobalEvents() {
 
         case 'toggle-leaderboard-search':
 
-          console.log(
-            'Search clicked'
-          );
-
           appState.ui
             .leaderboardSearchVisible =
             !appState.ui
@@ -462,11 +458,30 @@ export function bindGlobalEvents() {
         return;
       }
 
-      appState.ui
-        .leaderboardSearchTerm =
+      const searchValue =
         target.value;
 
+      appState.ui
+        .leaderboardSearchTerm =
+        searchValue;
+
       renderCurrentScreen();
+
+      const restoredInput =
+        document.querySelector(
+          '.quiz__leaderboard-search input'
+        );
+
+      if (!restoredInput) {
+        return;
+      }
+
+      restoredInput.focus();
+
+      restoredInput.setSelectionRange(
+        searchValue.length,
+        searchValue.length
+      );
 
     }
   );

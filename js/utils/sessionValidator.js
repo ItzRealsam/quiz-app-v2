@@ -38,7 +38,7 @@ export function isSessionValid(
     QUIZ_CONFIG.QUIZ_TIME_LIMIT
   ) {
 
-    return false;
+    return 'expired';
 
   }
 

@@ -188,6 +188,58 @@
   opacity: 0.5;
 }
 
+/* =========================================================
+   LOCATE USER PULSE
+   ========================================================= */
+
+.quiz__leaderboard-item--pulse {
+
+  animation:
+    leaderboardPulse
+    2s
+    ease;
+
+}
+
+@keyframes leaderboardPulse {
+
+  0% {
+
+    transform:
+      scale(1);
+
+    box-shadow:
+      0 0 0 0
+      rgba(
+        var(--color-accent),
+        0.6
+      );
+
+  }
+
+  50% {
+
+    transform:
+      scale(1.02);
+
+  }
+
+  100% {
+
+    transform:
+      scale(1);
+
+    box-shadow:
+      0 0 0 16px
+      rgba(
+        var(--color-accent),
+        0
+      );
+
+  }
+
+}
+
 @media (max-width: 640px) {
 
   .quiz__leaderboard-item {

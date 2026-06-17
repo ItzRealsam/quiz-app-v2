@@ -53,6 +53,15 @@ export function saveQuizSession() {
       startedAt:
         appState.quiz.startedAt,
 
+      remainingTime:
+        appState.quiz.remainingTime,
+
+      questionTimeLimit:
+        appState.quiz.questionTimeLimit,
+
+      quizTimeLimit:
+        appState.quiz.quizTimeLimit
+
     }
 
   };
@@ -85,6 +94,24 @@ export function clearQuizSession() {
 
   removeStorageItem(
     STORAGE_KEYS.QUIZ_SESSION
+  );
+
+}
+
+export function hydrateQuizSession(
+  session
+) {
+
+  if (!session?.quiz) {
+    return;
+  }
+
+  Object.assign(
+
+    appState.quiz,
+
+    session.quiz
+
   );
 
 }

@@ -50,6 +50,10 @@ import {
   initializeUserSession
 } from '../services/userSessionService.js';
 
+import {
+  calculateRemainingTime
+} from '../services/timerRestoreService.js';
+
 export function initializeApp() {
 
   const app =
@@ -93,8 +97,13 @@ export function initializeApp() {
   const savedSession =
     restoreQuizSession();
 
+  const sessionStatus =
+    isSessionValid(
+      savedSession
+    );
+
   if (
-    isSessionValid(savedSession)
+    sessionStatus === true
   ) {
 
     appState.currentScreen =
@@ -109,21 +118,89 @@ export function initializeApp() {
     );
 
     /* -----------------------------------------
-      Question timer should NOT persist
-      across refreshes/navigation.
+      Restore Quiz Timer
       ----------------------------------------- */
 
-    appState.quiz.questionStartedAt =
-      null;
+    /*
+    
+    if (
+      appState.quiz.startedAt
+    ) {
 
-    appState.quiz.remainingTime =
-      appState.quiz.questionTimeLimit;
+      const quizElapsedSeconds =
+        Math.floor(
+          (
+            Date.now()
+            -
+            appState.quiz.startedAt
+          ) / 1000
+        );
 
-    showToast( 
-      'Previous quiz session restored.' 
+      appState.quiz.remainingQuizTime =
+        Math.max(
+
+          0,
+
+          appState.quiz
+            .quizTimeLimit
+
+          -
+
+          quizElapsedSeconds
+
+        );
+
+    }
+
+    */
+
+    /* -----------------------------------------
+      Question expired while away
+      ----------------------------------------- */
+
+    if (
+      appState.quiz.remainingTime <= 0
+      &&
+      !appState.quiz.isAnswerLocked
+    ) {
+
+      appState.quiz.isAnswerLocked =
+        true;
+
+      appState.quiz.currentExplanation =
+        'Time expired while away.';
+
+    }
+
+    /* -----------------------------------------
+      Entire quiz expired while away
+      ----------------------------------------- */
+
+    if (
+      appState.quiz.remainingQuizTime <= 0
+    ) {
+
+      clearQuizSession();
+
+      appState.currentScreen =
+        'results';
+
+    }
+
+    showToast(
+      'Previous quiz session restored.'
     );
 
-  } else {
+  }
+  else if (
+    sessionStatus === 'expired'
+  ) {
+
+    appState.currentScreen =
+      'results';
+
+  }
+  else {
 
     clearQuizSession();
 
@@ -141,9 +218,27 @@ export function initializeApp() {
     'quiz'
   ) {
 
-    startQuestionTimer();
+    if (
 
-    startQuizTimer();
+      appState.quiz.remainingTime > 0
+
+      &&
+
+      !appState.quiz.isAnswerLocked
+
+    ) {
+
+      startQuestionTimer();
+
+    }
+
+    if (
+      appState.quiz.remainingQuizTime > 0
+    ) {
+
+      startQuizTimer();
+
+    }
 
   }
 

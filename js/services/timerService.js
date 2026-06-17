@@ -10,36 +10,15 @@ import {
   saveQuizSession
 } from './sessionService.js';
 
+
 export function startQuestionTimer() {
 
   stopQuestionTimer();
 
-  appState.quiz.questionStartedAt =
-    Date.now();
-  
   appState.quiz.timerIntervalId =
     setInterval(() => {
 
-      const elapsedSeconds =
-        Math.floor(
-          (
-            Date.now()
-            -
-            appState.quiz
-              .questionStartedAt
-          ) / 1000
-        );
-
-      appState.quiz.remainingTime =
-        Math.max(
-
-          0,
-
-          appState.quiz.questionTimeLimit
-          -
-          elapsedSeconds
-
-        );
+      appState.quiz.remainingTime--;
 
       updateTimerUI();
 
@@ -48,6 +27,9 @@ export function startQuestionTimer() {
       if (
         appState.quiz.remainingTime <= 0
       ) {
+
+        appState.quiz.remainingTime =
+          0;
 
         stopQuestionTimer();
 

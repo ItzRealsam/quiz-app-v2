@@ -25,7 +25,8 @@ import {
 } from '../services/scoreService.js';
 
 import {
-  clearQuizSession
+  clearQuizSession,
+  saveQuizSession
 } from '../services/sessionService.js';
 
 /* =========================================================
@@ -53,6 +54,8 @@ export function selectAnswer(
 
   appState.quiz.selectedAnswerIndex =
     selectedIndex;
+  
+  saveQuizSession();
 
   renderCurrentScreen();
 
@@ -148,6 +151,8 @@ export function submitAnswer() {
 
   });
 
+  saveQuizSession();
+
   renderCurrentScreen();
 
 }
@@ -178,6 +183,9 @@ export function moveToNextQuestion() {
 
     appState.quiz.currentQuestionIndex++;
 
+    appState.quiz.remainingTime =
+      appState.quiz.questionTimeLimit;
+
     appState.quiz.selectedAnswerIndex =
       null;
 
@@ -188,6 +196,8 @@ export function moveToNextQuestion() {
       '';
 
     startQuestionTimer();
+
+    saveQuizSession();
 
     renderCurrentScreen();
 
@@ -374,6 +384,9 @@ export function restartQuizState() {
     null;
 
   appState.quiz.finishedAt =
+    null;
+
+  appState.quiz.questionStartedAt =
     null;
 
   appState.quiz.totalDurationSeconds =
