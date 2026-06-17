@@ -225,6 +225,7 @@ function completeQuiz() {
         appState.quiz.startedAt
       ) / 1000
     );
+  
   const accuracy =
     calculateAccuracy();
   

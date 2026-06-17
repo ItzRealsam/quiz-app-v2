@@ -46,6 +46,10 @@ import {
   showToast
  } from '../ui/toast.js';
 
+import {
+  initializeUserSession
+} from '../services/userSessionService.js';
+
 export function initializeApp() {
 
   const app =
@@ -142,6 +146,9 @@ export function initializeApp() {
     startQuizTimer();
 
   }
+
+  appState.user =
+    initializeUserSession();
 
   initializeRouter();
 

@@ -1,21 +1,19 @@
 import { questions }
   from '../../data/questions.js';
 
+import { 
+  QUIZ_CONFIG 
+} from '../utils/config.js';
+
 export const appState = {
 
   currentScreen: 'welcome',
 
   user: {
 
-    id:
-      localStorage.getItem(
-        'quiz-user-id'
-      ) || crypto.randomUUID(),
+    id: null,
 
-    displayName:
-      localStorage.getItem(
-        'quiz-display-name'
-      ) || ''
+    displayName: ''
 
   },
 
@@ -44,9 +42,13 @@ export const appState = {
 
     totalDurationSeconds: 0,
 
-    questionTimeLimit: 15,
+    questionTimeLimit:
+      QUIZ_CONFIG
+        .QUESTION_TIME_LIMIT,
 
-    remainingTime: 15,
+    remainingTime:
+      QUIZ_CONFIG
+        .QUESTION_TIME_LIMIT,
 
     timerIntervalId: null,
 
@@ -61,11 +63,18 @@ export const appState = {
 
   results: {
     completed: false
-  }
+  },
+
+  ui: {
+
+    leaderboardCollapsed:
+      false,
+
+    leaderboardSearchTerm:
+      '',
+
+    leaderboardSearchVisible:
+      false,
+  },
 
 };
-
-localStorage.setItem(
-  'quiz-user-id',
-  appState.user.id
-);

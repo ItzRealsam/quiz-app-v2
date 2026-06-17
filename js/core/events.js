@@ -27,6 +27,10 @@ import {
   setStorageItem
  } from '../utils/storage.js';
 
+import {
+  renderCurrentScreen
+} from './render.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -196,6 +200,66 @@ export function bindGlobalEvents() {
 
           break;
 
+        case 'toggle-leaderboard-search':
+
+          console.log(
+            'Search clicked'
+          );
+
+          appState.ui
+            .leaderboardSearchVisible =
+            !appState.ui
+              .leaderboardSearchVisible;
+
+          renderCurrentScreen();
+
+          break;
+        
+        case 'toggle-leaderboard-collapse':
+
+          appState.ui
+            .leaderboardCollapsed =
+            !appState.ui
+              .leaderboardCollapsed;
+
+          renderCurrentScreen();
+
+          break;
+
+        case 'locate-user': {
+
+          const currentRow =
+            document.querySelector(
+              '.quiz__leaderboard-item--current-user'
+            );
+
+          if (!currentRow) {
+            return;
+          }
+
+          currentRow.scrollIntoView({
+
+            behavior: 'smooth',
+
+            block: 'center'
+
+          });
+
+          currentRow.classList.add(
+            'quiz__leaderboard-item--pulse'
+          );
+
+          setTimeout(() => {
+
+            currentRow.classList.remove(
+              'quiz__leaderboard-item--pulse'
+            );
+
+          }, 2000);
+
+          break;
+        }
+
       }
 
     }
@@ -332,6 +396,36 @@ export function bindGlobalEvents() {
       }
 
       selectAnswer(selectedIndex);
+
+    }
+  );
+
+  /* =======================================================
+     LEADERBOARD SEARCH EVENTS
+     -------------------------------------------------------
+     Toggle leaderboard search visibility.
+     ======================================================= */ 
+
+  document.addEventListener(
+    'input',
+    event => {
+
+      const target =
+        event.target;
+
+      if (
+        !target.matches(
+          '.quiz__leaderboard-search input'
+        )
+      ) {
+        return;
+      }
+
+      appState.ui
+        .leaderboardSearchTerm =
+        target.value;
+
+      renderCurrentScreen();
 
     }
   );

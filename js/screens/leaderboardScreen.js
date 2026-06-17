@@ -5,16 +5,97 @@ import {
   getLeaderboard
 } from '../services/leaderboardService.js';
 
-import { escapeHTML } from '../utils/sanitizer.js';
+import { 
+  escapeHTML
+} from '../utils/sanitizer.js';
+
+import {
+
+  getMaxPossibleScore
+
+} from '../services/quizAnalyticsService.js';
+
+import {
+  QUIZ_CONFIG
+} from '../utils/config.js';
+
+import {
+  getVisibleLeaderboardEntries,
+  filterLeaderboard
+} from '../services/leaderboardViewService.js';
 
 export function renderLeaderboardScreen() {
 
   const leaderboard =
     getLeaderboard();
 
+  const filteredLeaderboard =
+    filterLeaderboard({
+
+      leaderboard,
+
+      searchTerm:
+        appState.ui
+          .leaderboardSearchTerm
+
+    });
+
+  if (
+    filteredLeaderboard.length === 0 &&
+    appState.ui
+      .leaderboardSearchTerm
+  ) {
+
+    return `
+
+      <section class="quiz__container">
+
+        <div class="quiz__contents">
+
+          <div
+            class="quiz__leaderboard-wrapper"
+          >
+
+            <div
+              class="quiz__leaderboard-header"
+            >
+
+              <h2>
+                Leaderboard
+              </h2>
+
+            </div>
+
+            <div
+              class="
+                quiz__leaderboard-empty
+              "
+            >
+
+              <i
+                data-feather="search"
+              ></i>
+
+              <p>
+                No matching players found.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    `;
+
+  }
+
   const currentUserId =
     escapeHTML(appState.user.id);
 
+  /*
   const currentUserIndex =
     leaderboard.findIndex(
       entry =>
@@ -43,7 +124,45 @@ export function renderLeaderboardScreen() {
 
     ];
 
-  }
+  } 
+  */
+
+  const visibleEntries =
+    getVisibleLeaderboardEntries({
+
+      leaderboard:
+        filteredLeaderboard,
+
+      currentUserId,
+
+      collapsed:
+        appState.ui
+          .leaderboardCollapsed
+
+    });
+
+  const maxPossibleScore =
+    getMaxPossibleScore({
+
+      totalQuestions:
+        appState.quiz.questions.length,
+
+      questionTimeLimit:
+        appState.quiz.questionTimeLimit,
+
+      baseCorrectPoints:
+        QUIZ_CONFIG
+          .BASE_CORRECT_POINTS,
+
+      timeBonusMultiplier:
+        QUIZ_CONFIG
+          .TIME_BONUS_MULTIPLIER,
+
+      streakBonusMultiplier:
+        QUIZ_CONFIG
+          .STREAK_BONUS_MULTIPLIER
+
+    });
 
   return `
 
@@ -56,20 +175,138 @@ export function renderLeaderboardScreen() {
         >
 
           <div
-            class="quiz__leaderboard-header"
+            class="
+              quiz__leaderboard-header
+            "
           >
 
             <h2>
               Leaderboard
             </h2>
 
+            <div
+              class="
+                quiz__leaderboard-actions
+              "
+            >
+
+              <button
+
+                class="
+                  quiz__btn-icon
+                "
+
+                type="button"
+
+                data-action="locate-user"
+
+                aria-label="
+                  Locate me
+                "
+              >
+
+                <i
+                  data-feather="navigation"
+                  >
+                </i>
+
+              </button>
+
+              <button
+
+                class="
+                  quiz__btn-icon
+                "
+
+                type="button"
+
+                data-action="toggle-leaderboard-search"
+
+                aria-label="
+                  Search leaderboard
+                "
+              >
+
+                <i
+                  data-feather="search"
+                ></i>
+
+              </button>
+
+              <button
+
+                class="
+                  quiz__btn-icon
+                "
+
+                type="button"
+
+                data-action="toggle-leaderboard-collapse"
+
+                aria-label="
+                  Collapse leaderboard
+                "
+              >
+
+                <i
+                  data-feather="chevrons-up"
+                ></i>
+
+              </button>
+
+            </div>
+
           </div>
+
+          ${
+            appState.ui
+              .leaderboardSearchVisible
+
+              ? `
+
+                <div
+                  class="
+                    quiz__leaderboard-search
+                  "
+                >
+
+                  <input
+
+                    class="
+                      quiz__input-text
+                    "
+
+                    type="search"
+
+                    placeholder="
+                      Search player...
+                    "
+
+                    value="
+                      ${
+                        appState.ui
+                          .leaderboardSearchTerm
+                      }
+                    "
+
+                    data-action="
+                      leaderboard-search
+                    "
+
+                  />
+
+                </div>
+
+              `
+
+              : ''
+          }
 
           <ul
             class="quiz__leaderboard-list"
           >
 
-            ${leaderboard.length === 0
+            ${filteredLeaderboard.length === 0
             ? `
               <li
                 class="
@@ -110,7 +347,7 @@ export function renderLeaderboardScreen() {
                 }
 
                 const actualIndex =
-                  leaderboard.findIndex(
+                  filteredLeaderboard.findIndex(
                     item =>
                       item.userId ===
                       entry.userId
@@ -201,16 +438,40 @@ export function renderLeaderboardScreen() {
                           class="quiz__leaderboard-medal"
                         />
                       `
-                      : actualIndex + 1}
+                      : ''
+                      //actualIndex + 1
+                      }
 
-                      <span 
+                      <div
                         class="
-                          quiz__score-digits
-                        ">
+                          quiz__leaderboard-score-values
+                        "
+                      >
 
-                        ${entry.score}
+                        <span 
+                          class="
+                            quiz__score-digits
+                          "
+                        >
 
-                      </span>
+                          ${entry.score}
+
+                        </span>
+                        <!--
+                        <span
+                          class="
+                            quiz__score-max
+                          "
+                        >
+
+                          /${maxPossibleScore}
+
+                        </span>
+                        -->
+
+                      </div>
+
+
                     </div>
 
                   </li>

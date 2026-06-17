@@ -109,6 +109,26 @@
   outline-offset: 2px;
 }
 
+.quiz__btn-icon {
+  background: none;
+  color: rgb(var(--color-text-secondary));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  border-radius: var(--radius-xs);
+  transition: var(--transition-fast);
+}
+
+.quiz__btn-icon:hover {
+  background-color: rgba(var(--color-surface-strong), 0.05);
+}
+
+.quiz__btn-icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
 @media (max-width: 640px) {
 
   .quiz__actions {

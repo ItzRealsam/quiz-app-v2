@@ -18,62 +18,16 @@ export function getLeaderboard() {
         []
       );
 
-    if (!leaderboard) {
-      return [];
-    }
-
-    try {
-
-      const parsedLeaderboard =
-        JSON.parse(leaderboard);
-
-      return Array.isArray(
-        parsedLeaderboard
-      )
-        ? parsedLeaderboard
-        : [];
-
-    } 
-    
-    /* catch {
-
-      console.warn(
-        'Invalid leaderboard format detected. Resetting leaderboard.'
-      );
-
-      removeStorageItem(
-        STORAGE_KEYS.LEADERBOARD
-      );
-
-      return [];
-
-    }
-    */
-
-    catch {
-
-      /* ---------------------------------------
-        Corrupted / legacy leaderboard format
-        detected.
-        
-        Reset safely.
-        --------------------------------------- */
-
-      const emptyLeaderboard = [];
-
-      setStorageItem(
-        STORAGE_KEYS.LEADERBOARD,
-        emptyLeaderboard
-      );
-
-      return emptyLeaderboard;
-
-    }
+    return Array.isArray(
+      leaderboard
+    )
+      ? leaderboard
+      : [];
 
   } catch (error) {
 
     console.error(
-      'Failed to parse leaderboard:',
+      'Failed to load leaderboard:',
       error
     );
 
@@ -125,12 +79,22 @@ export function submitScore({
         entry.userId === userId
     );
 
+  /* -----------------------------------------
+     Existing User
+     ----------------------------------------- */
+
   if (existingUser) {
 
-    // Only replace if better score
-    if (score > existingUser.score) {
+    /* ---------------------------------------
+       Only replace if new score is better
+       --------------------------------------- */
 
-      existingUser.score = score;
+    if (
+      score > existingUser.score
+    ) {
+
+      existingUser.score =
+        score;
 
       existingUser.accuracy =
         accuracy;
@@ -143,9 +107,16 @@ export function submitScore({
 
       existingUser.updatedAt =
         Date.now();
+
     }
 
-  } else {
+  }
+
+  /* -----------------------------------------
+     New User
+     ----------------------------------------- */
+
+  else {
 
     leaderboard.push({
 
@@ -168,13 +139,32 @@ export function submitScore({
 
   }
 
+  /* -----------------------------------------
+     Sort Descending
+     ----------------------------------------- */
+
   leaderboard.sort(
     (a, b) =>
       b.score - a.score
   );
 
-  saveLeaderboard(
-    leaderboard
+  /* -----------------------------------------
+     Trim Leaderboard
+     ----------------------------------------- */
+
+  const trimmedLeaderboard =
+    leaderboard.slice(0, 100);
+
+  /* -----------------------------------------
+     Persist
+     ----------------------------------------- */
+
+  setStorageItem(
+
+    STORAGE_KEYS.LEADERBOARD,
+
+    trimmedLeaderboard
+
   );
 
 }

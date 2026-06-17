@@ -1,6 +1,14 @@
 import { appState }
   from '../core/state.js';
 
+import {
+  QUIZ_CONFIG
+} from '../utils/config.js';
+
+import {
+  getMaxPossibleScore
+} from '../services/quizAnalyticsService.js';
+
 export function renderResultsScreen() {
 
   const {
@@ -11,9 +19,28 @@ export function renderResultsScreen() {
     totalDurationSeconds
   } = appState.quiz;
   
-
   const maxScore =
-    questions.length * 10;
+    getMaxPossibleScore({
+
+      totalQuestions:
+        questions.length,
+
+      questionTimeLimit:
+        appState.quiz.questionTimeLimit,
+
+      baseCorrectPoints:
+        QUIZ_CONFIG
+          .BASE_CORRECT_POINTS,
+
+      timeBonusMultiplier:
+        QUIZ_CONFIG
+          .TIME_BONUS_MULTIPLIER,
+
+      streakBonusMultiplier:
+        QUIZ_CONFIG
+          .STREAK_BONUS_MULTIPLIER
+
+    });
   
   const accuracy =
     Math.round(
@@ -25,6 +52,18 @@ export function renderResultsScreen() {
         questions.length
       ) * 100
     );
+  
+  const correctAnswers =
+    answers.filter(
+      answer => answer.isCorrect
+    ).length;
+
+  const averageTimePerQuestion =
+    (
+      totalDurationSeconds
+      /
+      questions.length
+    ).toFixed(1);
 
   return `
 
@@ -47,8 +86,11 @@ export function renderResultsScreen() {
           </div>
 
           <p class="quiz__result-feedback">
-            out of ${maxScore}
+
+            /${maxScore}
+
           </p>
+
 
         </div>
 
@@ -63,7 +105,19 @@ export function renderResultsScreen() {
           </span>
 
           <span class="quiz__analytics-value">
+            
             ${accuracy}%
+
+            <span
+              class="
+                quiz__analytics-meta
+              "
+            >
+
+              (${correctAnswers}/${questions.length})
+
+            </span>
+          
           </span>
 
         </div>
@@ -87,7 +141,19 @@ export function renderResultsScreen() {
           </span>
 
           <span class="quiz__analytics-value">
+            
             ${totalDurationSeconds}s
+
+            <span
+              class="
+                quiz__analytics-meta
+              "
+            >
+
+              (${averageTimePerQuestion}s/question)
+
+            </span>
+
           </span>
 
         </div>

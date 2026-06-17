@@ -87,6 +87,18 @@
     var(--font-weight-bold);
 }
 
+.quiz__analytics-meta {
+
+  font-size:
+    var(--font-size-sm);
+
+  font-weight:
+    var(--font-weight-regular);
+
+  color:
+    rgb(var(--color-text-secondary));
+}
+
 @media (max-width: 640px) {
 
   .quiz__analytics {
