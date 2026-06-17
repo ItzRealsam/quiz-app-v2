@@ -1,9 +1,6 @@
 import { renderAppShell }
   from '../ui/renderAppShell.js';
 
-import { renderCurrentScreen }
-  from './render.js';
-
 import { bindGlobalEvents }
   from './events.js';
 
@@ -49,10 +46,6 @@ import {
 import {
   initializeUserSession
 } from '../services/userSessionService.js';
-
-import {
-  calculateRemainingTime
-} from '../services/timerRestoreService.js';
 
 export function initializeApp() {
 
@@ -122,7 +115,7 @@ export function initializeApp() {
       ----------------------------------------- */
 
     /*
-    
+
     if (
       appState.quiz.startedAt
     ) {
