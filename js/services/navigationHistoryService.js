@@ -1,33 +1,37 @@
 import { appState }
   from '../core/state.js';
 
-/* =========================================================
-   NAVIGATION HISTORY
-   ========================================================= */
-
-export function updateNavigationHistory(
-  nextScreen
-) {
-
-  appState.navigation.previousScreen =
-    appState.currentScreen;
-
-  appState.navigation.previousRoute =
-    `#${appState.currentScreen}`;
-
-}
-
 export function getPreviousScreen() {
 
   const history =
     appState.navigation.history;
 
-  if (
-    history.length === 0
+  while (
+    history.length > 0
   ) {
-    return null;
+
+    const previousScreen =
+      history.pop();
+
+    if (
+
+      previousScreen ===
+      'quiz'
+
+      &&
+
+      appState.quiz.finishedAt
+
+    ) {
+
+      continue;
+
+    }
+
+    return previousScreen;
+
   }
 
-  return history.pop();
+  return null;
 
 }

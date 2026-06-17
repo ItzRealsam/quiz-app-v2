@@ -62,19 +62,30 @@ export function syncRoute() {
     const history =
       appState.navigation.history;
 
-    const lastScreen =
+    if (
+
+      history.length === 0
+
+      ||
+
       history[
         history.length - 1
-      ];
-
-    if (
-      lastScreen !==
+      ] !==
       appState.currentScreen
+
     ) {
 
       history.push(
         appState.currentScreen
       );
+
+      if (
+        history.length > 50
+      ) {
+
+        history.shift();
+
+      }
 
     }
 
