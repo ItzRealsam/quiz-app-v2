@@ -32,6 +32,10 @@ import {
   renderCurrentScreen
 } from './render.js';
 
+import {
+  getPreviousScreen
+} from '../services/navigationHistoryService.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -215,11 +219,27 @@ export function bindGlobalEvents() {
            GO BACK
            --------------------------------------------------- */
         
-        case 'go-back':
+        case 'go-back': {
 
-          window.history.back();
+          const previousScreen =
+            getPreviousScreen();
+
+          if (
+            !previousScreen
+          ) {
+            return;
+          }
+
+          appState.navigation
+            .isNavigatingBack =
+            true;
+
+          navigateTo(
+            previousScreen
+          );
 
           break;
+        }
 
         case 'toggle-leaderboard-search':
 

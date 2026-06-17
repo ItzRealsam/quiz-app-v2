@@ -77,4 +77,13 @@ export const appState = {
       false,
   },
 
+  navigation: {
+
+    history: [],
+
+    isNavigatingBack:
+      false
+
+  },
+
 };

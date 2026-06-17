@@ -50,8 +50,42 @@ export function syncRoute() {
   const route =
     getCurrentRoute();
 
+  if (
+    !appState.navigation
+      .isNavigatingBack
+    &&
+    appState.currentScreen
+    &&
+    appState.currentScreen !== route
+  ) {
+
+    const history =
+      appState.navigation.history;
+
+    const lastScreen =
+      history[
+        history.length - 1
+      ];
+
+    if (
+      lastScreen !==
+      appState.currentScreen
+    ) {
+
+      history.push(
+        appState.currentScreen
+      );
+
+    }
+
+  }
+
   appState.currentScreen =
     route;
+  
+  appState.navigation
+    .isNavigatingBack =
+    false;
 
   renderCurrentScreen();
 
