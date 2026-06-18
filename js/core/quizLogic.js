@@ -33,6 +33,10 @@ import {
   updatePlayerStats
 } from '../services/playerStatsService.js';
 
+import { 
+  evaluateAchievements 
+} from '../services/achievementService.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -303,6 +307,8 @@ function completeQuiz() {
         .length
 
   });
+
+  evaluateAchievements();
 
   clearQuizSession();
 

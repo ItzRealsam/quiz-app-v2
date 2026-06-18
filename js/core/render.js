@@ -42,6 +42,10 @@ import {
   renderProfileScreen 
 } from '../screens/profileScreen.js';
 
+import { 
+  renderAchievementsScreen 
+} from '../screens/achievementsScreen.js';
+
 export function renderCurrentScreen() {
   
   renderHeader();
@@ -127,6 +131,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderProfileScreen();
+
+        break;
+        
+      case 'achievements':
+
+        screen.innerHTML =
+          renderAchievementsScreen();
 
         break;
 

@@ -19,7 +19,8 @@ const VALID_ROUTES = [
   'resume',
   'review',
   'settings',
-  'profile'
+  'profile',
+  'achievements'
 
 ];
 

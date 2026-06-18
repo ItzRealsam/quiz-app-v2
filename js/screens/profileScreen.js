@@ -253,6 +253,25 @@ export function renderProfileScreen() {
 
         </div>
 
+        <div class="quiz__actions">
+
+          <button
+
+            class="quiz__btn-secondary"
+
+            data-action="view-achievements"
+            
+            aria-label="See achievements"
+
+          >
+
+            Achievements
+
+          </button>
+
+
+        </div>
+
       </div>
 
     </section>

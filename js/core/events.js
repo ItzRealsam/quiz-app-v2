@@ -379,8 +379,14 @@ export function bindGlobalEvents() {
           );
 
           break;
-
         
+        case 'view-achievements':
+
+          navigateTo(
+            'achievements'
+          );
+
+          break;       
         
         
       }
