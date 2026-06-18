@@ -62,8 +62,11 @@ export const appState = {
   },
 
   results: {
-    completed: false
+    completed: false,
   },
+
+  pendingSession:
+    null,
 
   ui: {
 

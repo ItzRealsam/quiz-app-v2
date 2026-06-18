@@ -102,13 +102,11 @@ export function initializeApp() {
     appState.currentScreen =
       savedSession.currentScreen;
 
-    Object.assign(
+    appState.pendingSession =
+      savedSession;
 
-      appState.quiz,
-
-      savedSession.quiz
-
-    );
+    appState.currentScreen =
+      'resume';
 
     /* -----------------------------------------
       Restore Quiz Timer

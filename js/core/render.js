@@ -22,6 +22,11 @@ import {
 } from '../screens/leaderboardScreen.js';
 
 import {
+  renderResumeScreen
+}
+from '../screens/resumeScreen.js';
+
+import {
   initializeIcons
 } from '../ui/icons.js';
 
@@ -82,6 +87,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderLeaderboardScreen();
+
+        break;
+      
+      case 'resume':
+
+        screen.innerHTML =
+          renderResumeScreen();
 
         break;
 

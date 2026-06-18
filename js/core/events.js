@@ -36,6 +36,11 @@ import {
   getPreviousScreen
 } from '../services/navigationHistoryService.js';
 
+import {
+  clearQuizSession
+}
+from '../services/sessionService.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -296,6 +301,40 @@ export function bindGlobalEvents() {
 
           break;
         }
+
+        case 'resume-session': 
+
+          Object.assign(
+
+            appState.quiz,
+
+            appState.pendingSession.quiz
+
+          );
+
+          appState.pendingSession =
+            null;
+
+          navigateTo('quiz');
+
+          startQuestionTimer();
+
+          startQuizTimer();
+
+          break;
+        
+        case 'discard-session':
+
+          clearQuizSession();
+
+          appState.pendingSession =
+            null;
+
+          restartQuizState();
+
+          navigateTo('home');
+
+          break;
 
       }
 
