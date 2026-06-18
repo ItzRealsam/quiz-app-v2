@@ -70,7 +70,7 @@
 .quiz__header-back {
   background: none;
   color: rgb(var(--color-text-primary));
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   display: inline-flex;
   align-items: center;
@@ -79,27 +79,30 @@
   transition: var(--transition-fast);
 }
 
-.quiz__user--hidden {
-
-  visibility: hidden;
-}
-
 .quiz__brand {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
 }
 
 .quiz__brand-logo {
-  font-size: 2.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .quiz__brand-logo-image {
   width: 2.4rem;
   height: 2.4rem;
+}
+
+.quiz__user {
+  font-size: var(--font-size-sm);
+}
+
+.quiz__user--hidden {
+  visibility: hidden;
 }
 
 .quiz__user-name {

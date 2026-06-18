@@ -14,6 +14,7 @@ import {
 import {
   getUserRank
 } from '../services/leaderboardAnalyticsService.js';
+import { getLeaderboard } from '../services/leaderboardService.js';
 
 export function renderResultsScreen() {
 
@@ -55,13 +56,18 @@ export function renderResultsScreen() {
     );
 
   const accuracy =
-    Math.round(
-      (
-        correctAnswers
-        /
-        questions.length
-      ) * 100
-    );
+
+    questions.length > 0
+
+      ? Math.round(
+          (
+            correctAnswers
+            /
+            questions.length
+          ) * 100
+        )
+
+      : 0;
   
   const averageTimePerQuestion =
     getAverageTimePerQuestion({
@@ -77,6 +83,29 @@ export function renderResultsScreen() {
     getUserRank(
       appState.user.id
     );
+  
+  const leaderboard = 
+    getLeaderboard();
+  
+  const percentile =
+    rank
+
+      ? Math.max(
+
+          1,
+
+          Math.round(
+            (
+              rank
+              /
+              leaderboard.length
+            )
+            * 100
+          )
+
+        )
+
+      : null;
 
   return `
 
@@ -194,9 +223,38 @@ export function renderResultsScreen() {
           >
 
             ${rank
-              ? `#${rank}`
-              : '--'}
 
+              ? `#${rank} 
+              
+                <span
+                  class="
+                    quiz__analytics-meta
+                  "
+                >
+
+                  of ${leaderboard.length}
+
+                </span>`
+
+              : '--'
+            }
+
+          </span>
+
+        </div>
+
+        <div class="quiz__analytics-card">
+
+          <span
+            class="quiz__analytics-label"
+          >
+            Percentile
+          </span>
+
+          <span
+            class="quiz__analytics-value"
+          >
+            Top ${percentile}%
           </span>
 
         </div>
