@@ -47,7 +47,15 @@ from '../services/sessionService.js';
    Centralized event delegation architecture.
    ========================================================= */
 
+let eventsBound = false;
+
 export function bindGlobalEvents() {
+
+  if (eventsBound) {
+    return;
+  }
+
+  eventsBound = true;
 
   /* =======================================================
      CLICK EVENTS
@@ -255,6 +263,23 @@ export function bindGlobalEvents() {
 
           renderCurrentScreen();
 
+          if (
+            appState.ui
+              .leaderboardSearchVisible
+          ) {
+
+            requestAnimationFrame(() => {
+
+              document
+                .querySelector(
+                  '.quiz__leaderboard-search input'
+                )
+                ?.focus();
+
+            });
+
+          }
+
           break;
         
         case 'toggle-leaderboard-collapse':
@@ -269,6 +294,19 @@ export function bindGlobalEvents() {
           break;
 
         case 'locate-user': {
+
+          if (
+            appState.ui
+              .leaderboardCollapsed
+          ) {
+
+            appState.ui
+              .leaderboardCollapsed =
+              false;
+
+            renderCurrentScreen();
+
+          }
 
           const currentRow =
             document.querySelector(
@@ -404,6 +442,59 @@ export function bindGlobalEvents() {
   document.addEventListener(
     'keydown',
     event => {
+
+      if (
+        event.key === 'Escape'
+        &&
+        appState.ui
+          .leaderboardSearchVisible
+      ) {
+
+        appState.ui
+          .leaderboardSearchVisible =
+          false;
+
+        appState.ui
+          .leaderboardSearchTerm =
+          '';
+
+        renderCurrentScreen();
+
+        return;
+      }
+
+      if (
+
+        event.key === '/'
+
+        &&
+
+        appState.currentScreen ===
+        'leaderboard'
+
+      ) {
+
+        event.preventDefault();
+
+        appState.ui
+          .leaderboardSearchVisible =
+          true;
+
+        renderCurrentScreen();
+
+        requestAnimationFrame(() => {
+
+          document
+            .querySelector(
+              '.quiz__leaderboard-search input'
+            )
+            ?.focus();
+
+        });
+
+        return;
+
+      }
 
       /* ---------------------------------------------------
          Only active during quiz screen
