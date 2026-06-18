@@ -37,6 +37,10 @@ import {
   evaluateAchievements 
 } from '../services/achievementService.js';
 
+import { 
+  showToast 
+} from '../ui/toast.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -308,7 +312,12 @@ function completeQuiz() {
 
   });
 
-  evaluateAchievements();
+  const unlockedAchievements =
+    evaluateAchievements();
+
+  showToast(
+    `🏆 Achievement Unlocked`
+  );
 
   clearQuizSession();
 

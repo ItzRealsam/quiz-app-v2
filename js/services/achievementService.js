@@ -57,6 +57,8 @@ export function evaluateAchievements() {
 
     );
 
+  const newlyUnlocked = [];
+
   if (
     stats.quizzesPlayed >= 1
     &&
@@ -66,6 +68,10 @@ export function evaluateAchievements() {
   ) {
 
     unlocked.push(
+      'first-quiz'
+    );
+
+    newlyUnlocked.push(
       'first-quiz'
     );
 
@@ -83,6 +89,10 @@ export function evaluateAchievements() {
       'quiz-master-10'
     );
 
+    newlyUnlocked.push(
+      'quiz-master-10'
+    );
+
   }
 
   if (
@@ -97,6 +107,10 @@ export function evaluateAchievements() {
       'streak-5'
     );
 
+    newlyUnlocked.push(
+      'streak-5'
+    );
+
   }
 
   setStorageItem(
@@ -106,5 +120,7 @@ export function evaluateAchievements() {
     unlocked
 
   );
+
+  return newlyUnlocked;
 
 }
