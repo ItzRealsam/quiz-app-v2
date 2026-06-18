@@ -41,6 +41,10 @@ import {
 }
 from '../services/sessionService.js';
 
+import { 
+  startFreshQuiz 
+} from '../services/quizService.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -82,7 +86,29 @@ export function bindGlobalEvents() {
         /* ---------------------------------------------------
            START QUIZ
            --------------------------------------------------- */
+        case 'open-settings':
 
+          navigateTo(
+            'settings'
+          );
+
+          break;
+
+        case 'begin-custom-quiz': {
+
+          const started =
+            startFreshQuiz();
+
+          if (!started) {
+            return;
+          }
+
+          navigateTo('quiz');
+
+          break;
+
+        }
+        
         case 'start-quiz':
 
           /* -----------------------------------------
@@ -102,45 +128,9 @@ export function bindGlobalEvents() {
             only if quiz not already active
             ----------------------------------------- */
 
-          /*
-          if (
-            !appState.quiz.startedAt
-            ||
-            appState.quiz.finishedAt
-          ) {
-
-            appState.quiz.startedAt =
-              Date.now();
-
-            appState.quiz.finishedAt =
-              null;
-
-          }
-          */
-
-          if (
-            appState.quiz.finishedAt
-          ) {
-
-            restartQuizState();
-
-          }
-
-          /* -----------------------------------------
-            Start fresh lifecycle
-            ----------------------------------------- */
-
-          appState.quiz.startedAt =
-            Date.now();
-
-          appState.quiz.finishedAt =
-            null;
+          startFreshQuiz();
 
           navigateTo('quiz');
-
-          startQuestionTimer();
-
-          startQuizTimer();
 
           break;
 
@@ -381,6 +371,8 @@ export function bindGlobalEvents() {
           );
 
           break;
+
+        
         
         
       }
@@ -621,6 +613,36 @@ export function bindGlobalEvents() {
         searchValue.length,
         searchValue.length
       );
+
+    }
+  );
+
+  document.addEventListener(
+    'change',
+    event => {
+
+      const target =
+        event.target;
+
+      if (
+        target.id ===
+        'quiz-category'
+      ) {
+
+        appState.quiz.category =
+          target.value;
+
+      }
+
+      if (
+        target.id ===
+        'quiz-difficulty'
+      ) {
+
+        appState.quiz.difficulty =
+          target.value;
+
+      }
 
     }
   );

@@ -3,6 +3,12 @@ export const questions = [
   {
     id: 'html-basics',
 
+    category:
+      'technology',
+
+    difficulty:
+      'easy',
+
     question:
       'What does HTML stand for?',
 
@@ -21,6 +27,12 @@ export const questions = [
 
   {
     id: 'css-basics',
+
+    category:
+      'technology',
+
+    difficulty:
+      'easy',
 
     question:
       'Which CSS property controls text size?',

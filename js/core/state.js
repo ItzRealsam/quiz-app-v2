@@ -18,6 +18,12 @@ export const appState = {
   },
 
   quiz: {
+    category:
+      'all',
+
+    difficulty:
+      'all',
+    
     questions,
 
     currentQuestionIndex: 0,

@@ -49,7 +49,7 @@ export function renderHomeScreen() {
 
         <button
           class="quiz__btn-primary"
-          data-action="start-quiz"
+          data-action="open-settings"
           aria-label="Start quiz"
         >
           Start Quiz

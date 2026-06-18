@@ -34,6 +34,10 @@ import {
   renderReviewScreen 
 } from '../screens/reviewScreen.js';
 
+import { 
+  renderSettingsScreen 
+} from '../screens/settingsScreen.js';
+
 export function renderCurrentScreen() {
   
   renderHeader();
@@ -105,6 +109,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderReviewScreen();
+
+        break;
+
+      case 'settings':
+
+        screen.innerHTML =
+          renderSettingsScreen();
 
         break;
 
