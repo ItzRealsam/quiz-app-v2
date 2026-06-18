@@ -48,6 +48,29 @@ export function renderHomeScreen() {
       <div class="quiz__actions">
 
         <button
+
+          class="quiz__btn-secondary"
+
+          data-action="view-profile"
+          aria-label="See profile"
+
+        >
+
+          Profile
+
+        </button>
+
+        <button
+          class="quiz__btn-secondary"
+          data-action="view-leaderboard"
+          aria-label="See leaderboard"
+        >
+
+          Leaderboard
+
+        </button>
+
+        <button
           class="quiz__btn-primary"
           data-action="open-settings"
           aria-label="Start quiz"

@@ -18,7 +18,8 @@ const VALID_ROUTES = [
   'leaderboard',
   'resume',
   'review',
-  'settings'
+  'settings',
+  'profile'
 
 ];
 

@@ -372,6 +372,14 @@ export function bindGlobalEvents() {
 
           break;
 
+        case 'view-profile':
+
+          navigateTo(
+            'profile'
+          );
+
+          break;
+
         
         
         

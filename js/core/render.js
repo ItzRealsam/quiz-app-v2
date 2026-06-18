@@ -38,6 +38,10 @@ import {
   renderSettingsScreen 
 } from '../screens/settingsScreen.js';
 
+import { 
+  renderProfileScreen 
+} from '../screens/profileScreen.js';
+
 export function renderCurrentScreen() {
   
   renderHeader();
@@ -116,6 +120,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderSettingsScreen();
+
+        break;
+
+      case 'profile':
+
+        screen.innerHTML =
+          renderProfileScreen();
 
         break;
 
