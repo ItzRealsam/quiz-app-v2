@@ -380,6 +380,42 @@ export function renderLeaderboardScreen() {
 
                       </span>
 
+                      <div
+                        class="
+                          quiz__leaderboard-meta
+                        "
+                      >
+
+                        <span>
+
+                          ${entry.accuracy ?? 0}% Accuracy,
+
+                        </span>
+
+                        <span>
+
+                          ${entry.bestStreak ?? 0} Streak,
+
+                        </span>
+
+                        <span>
+
+                          ${
+                            Math.floor(
+                              (entry.totalDurationSeconds ?? 0)
+                              / 60
+                            )
+                          }m
+
+                          ${
+                            (entry.totalDurationSeconds ?? 0)
+                            % 60
+                          }s
+
+                        </span>
+
+                      </div>
+
                     </div>
 
                     <div 
@@ -430,7 +466,6 @@ export function renderLeaderboardScreen() {
                           ${entry.score}
 
                         </span>
-                        <!--
                         <span
                           class="
                             quiz__score-max
@@ -440,7 +475,6 @@ export function renderLeaderboardScreen() {
                           /${maxPossibleScore}
 
                         </span>
-                        -->
 
                       </div>
 
