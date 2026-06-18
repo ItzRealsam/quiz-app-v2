@@ -386,7 +386,21 @@ export function bindGlobalEvents() {
             'achievements'
           );
 
-          break;       
+          break;
+          
+        case 'close-level-up':
+
+          appState.ui
+            .levelUpModalVisible =
+            false;
+
+          appState.ui
+            .unlockedLevel =
+            null;
+
+          renderCurrentScreen();
+
+          break;
         
         
       }

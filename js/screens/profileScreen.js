@@ -2,10 +2,28 @@ import {
   getPlayerStats
 } from '../services/playerStatsService.js';
 
+import {
+  getLevelProgress
+} from '../services/playerLevelService.js';
+
+import {
+  getLevelTitle
+} from '../services/playerLevelService.js';
+
 export function renderProfileScreen() {
 
   const stats =
     getPlayerStats();
+
+  const levelTitle =
+    getLevelTitle(
+      stats.level
+    );
+
+  const progress =
+    getLevelProgress(
+      stats.experience
+    );
 
   const accuracy =
     stats.correctAnswers
@@ -54,6 +72,65 @@ export function renderProfileScreen() {
             quiz__analytics
           "
         >
+          <div
+            class="
+              quiz__analytics-card
+            "
+          >
+
+            <span
+              class="
+                quiz__analytics-label
+              "
+            >
+
+              Level
+
+            </span>
+
+            <span
+              class="
+                quiz__analytics-value
+              "
+            >
+
+              ${stats.level}
+
+              <div class="quiz__analytics-meta">
+
+                ${levelTitle}
+
+              </div>
+
+            </span>
+
+            <div
+              class="
+                quiz__level-progress
+              "
+            >
+
+              <div
+
+                class="
+                  quiz__level-progress-bar
+                "
+
+                style="
+                  width:${progress}%;
+                "
+
+              ></div>
+
+            </div>
+
+            <small>
+
+              ${progress}/100 XP
+
+            </small>
+
+          </div>
 
           <div
             class="

@@ -84,6 +84,12 @@ export const appState = {
 
     leaderboardSearchVisible:
       false,
+
+    levelUpModalVisible:
+      false,
+
+    unlockedLevel:
+      null,
   },
 
   navigation: {

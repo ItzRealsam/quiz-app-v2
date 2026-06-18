@@ -41,6 +41,10 @@ import {
   showToast 
 } from '../ui/toast.js';
 
+import {
+  getLevelTitle
+} from '../services/playerLevelService.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -285,35 +289,50 @@ function completeQuiz() {
 
   });
 
-  updatePlayerStats({
+  const levelResult =
+    updatePlayerStats({
 
-    score:
-      appState.quiz.score,
+      score:
+        appState.quiz.score,
 
-    bestStreak:
-      appState.quiz.bestStreak,
+      bestStreak:
+        appState.quiz.bestStreak,
 
-    totalDurationSeconds:
-      appState.quiz.totalDurationSeconds,
+      totalDurationSeconds:
+        appState.quiz.totalDurationSeconds,
 
-    correctAnswers:
+      correctAnswers:
 
-      appState.quiz.answers
-        .filter(
-          answer =>
-            answer.isCorrect
-        )
-        .length,
+        appState.quiz.answers
+          .filter(
+            answer =>
+              answer.isCorrect
+          )
+          .length,
 
-    totalQuestions:
+      totalQuestions:
 
-      appState.quiz.answers
-        .length
+        appState.quiz.answers
+          .length
 
-  });
+    });
 
   const unlockedAchievements =
     evaluateAchievements();
+
+  if (
+    levelResult.leveledUp
+  ) {
+
+    appState.ui
+      .levelUpModalVisible =
+      true;
+
+    appState.ui
+      .unlockedLevel =
+      levelResult.newLevel;
+
+  }
 
   showToast(
     `🏆 Achievement Unlocked`

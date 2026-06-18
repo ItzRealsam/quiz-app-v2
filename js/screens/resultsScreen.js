@@ -14,7 +14,14 @@ import {
 import {
   getUserRank
 } from '../services/leaderboardAnalyticsService.js';
-import { getLeaderboard } from '../services/leaderboardService.js';
+
+import { 
+  getLeaderboard 
+} from '../services/leaderboardService.js';
+
+import {
+  renderLevelUpModal
+} from './levelUpModal.js';
 
 export function renderResultsScreen() {
 
@@ -298,6 +305,8 @@ export function renderResultsScreen() {
       </div>
 
     </section>
+
+    ${renderLevelUpModal()}
 
   `;
 }

@@ -7,6 +7,10 @@ import {
   setStorageItem
 } from '../utils/storage.js';
 
+import {
+  getLevelFromXP
+} from './playerLevelService.js';
+
 /* =========================================================
    DEFAULT PLAYER STATS
    ========================================================= */
@@ -29,7 +33,11 @@ function getDefaultStats() {
 
     bestStreak: 0,
 
-    totalTimePlayed: 0
+    totalTimePlayed: 0,
+
+    level: 1,
+
+    experience: 0,
 
   };
 
@@ -41,13 +49,22 @@ function getDefaultStats() {
 
 export function getPlayerStats() {
 
-  return getStorageItem(
+   const stats =
+    getStorageItem(
 
-    STORAGE_KEYS.PLAYER_STATS,
+      STORAGE_KEYS.PLAYER_STATS,
 
-    getDefaultStats()
+      {}
 
-  );
+    );
+
+  return {
+
+    ...getDefaultStats(),
+
+    ...stats
+
+  };
 
 }
 
@@ -89,6 +106,9 @@ export function updatePlayerStats({
 
   const stats =
     getPlayerStats();
+
+  const previousLevel =
+    stats.level;
 
   stats.quizzesPlayed += 1;
 
@@ -135,6 +155,45 @@ export function updatePlayerStats({
   stats.totalTimePlayed +=
 
     totalDurationSeconds;
+
+  const earnedXP =
+
+    Math.round(
+      score / 10
+    );
+
+  stats.experience +=
+    earnedXP;
+
+  stats.level =
+    getLevelFromXP(
+      stats.experience
+    );
+
+  if (
+    stats.level >
+    previousLevel
+  ) {
+
+    return {
+
+      leveledUp: true,
+
+      newLevel:
+        stats.level
+
+    };
+
+  }
+
+  return {
+
+    leveledUp: false,
+
+    newLevel:
+      stats.level
+
+  };
 
   savePlayerStats(
     stats
