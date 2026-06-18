@@ -15,9 +15,12 @@ export const STORAGE_KEYS = {
   
   QUIZ_SESSION:
     'quiz-session',
+
+  PLAYER_STATS:
+    'quiz-player-stats',
   
   LEADERBOARD:    
-    'quiz-leaderboard'
+    'quiz-leaderboard',  
 
 };
 

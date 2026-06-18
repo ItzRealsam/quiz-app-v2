@@ -29,6 +29,10 @@ import {
   saveQuizSession
 } from '../services/sessionService.js';
 
+import {
+  updatePlayerStats
+} from '../services/playerStatsService.js';
+
 /* =========================================================
    ANSWER SELECTION
    ---------------------------------------------------------
@@ -270,6 +274,33 @@ function completeQuiz() {
 
     totalDurationSeconds:
       appState.quiz.totalDurationSeconds
+
+  });
+
+  updatePlayerStats({
+
+    score:
+      appState.quiz.score,
+
+    bestStreak:
+      appState.quiz.bestStreak,
+
+    totalDurationSeconds:
+      appState.quiz.totalDurationSeconds,
+
+    correctAnswers:
+
+      appState.quiz.answers
+        .filter(
+          answer =>
+            answer.isCorrect
+        )
+        .length,
+
+    totalQuestions:
+
+      appState.quiz.answers
+        .length
 
   });
 
