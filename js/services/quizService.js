@@ -18,6 +18,14 @@ import {
   showToast 
 } from '../ui/toast.js';
 
+import {
+  shuffleArray
+} from '../utils/shuffleArray.js';
+
+import {
+  randomizeQuestion
+} from './questionRandomizerService.js';
+
 export function startFreshQuiz() {
 
   if (
@@ -38,6 +46,14 @@ export function startFreshQuiz() {
         appState.quiz.difficulty
 
     });
+  
+  const quizQuestions =
+    shuffleArray(
+      filteredQuestions
+    ).slice(
+      0,
+      10
+    );
 
   if (
     filteredQuestions.length === 0
@@ -52,7 +68,9 @@ export function startFreshQuiz() {
   }
 
   appState.quiz.questions =
-    filteredQuestions;
+    quizQuestions.map(
+      randomizeQuestion
+    );
 
   appState.quiz.startedAt =
     Date.now();
