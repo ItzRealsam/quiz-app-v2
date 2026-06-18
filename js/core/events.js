@@ -373,7 +373,16 @@ export function bindGlobalEvents() {
           navigateTo('home');
 
           break;
+        
+        case 'review-answers':
 
+          navigateTo(
+            'review'
+          );
+
+          break;
+        
+        
       }
 
     }

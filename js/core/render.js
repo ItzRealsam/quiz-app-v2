@@ -30,6 +30,10 @@ import {
   initializeIcons
 } from '../ui/icons.js';
 
+import { 
+  renderReviewScreen 
+} from '../screens/reviewScreen.js';
+
 export function renderCurrentScreen() {
   
   renderHeader();
@@ -94,6 +98,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderResumeScreen();
+
+        break;
+
+      case 'review':
+
+        screen.innerHTML =
+          renderReviewScreen();
 
         break;
 

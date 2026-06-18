@@ -274,6 +274,18 @@ export function renderResultsScreen() {
         </button>
 
         <button
+
+          class="quiz__btn-secondary"
+
+          data-action="review-answers"
+
+        >
+
+          Review Answers
+
+        </button>
+
+        <button
           class="quiz__btn-primary"
           data-action="restart-quiz"
           aria-label="Restart quiz"

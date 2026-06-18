@@ -16,7 +16,8 @@ const VALID_ROUTES = [
   'quiz',
   'results',
   'leaderboard',
-  'resume'
+  'resume',
+  'review'
 
 ];
 

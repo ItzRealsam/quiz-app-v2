@@ -144,8 +144,20 @@ export function submitAnswer() {
     questionId:
       currentQuestion.id,
 
+    questionText:
+      currentQuestion.question,
+
+    options:
+      currentQuestion.options,
+
     selectedIndex:
       selectedAnswerIndex,
+
+    correctIndex:
+      currentQuestion.answer,
+
+    explanation:
+      currentQuestion.explanation,
 
     isCorrect
 
