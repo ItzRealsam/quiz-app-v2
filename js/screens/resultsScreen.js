@@ -23,6 +23,10 @@ import {
   renderLevelUpModal
 } from './levelUpModal.js';
 
+import { 
+  renderAchievementModal 
+} from './achievementModal.js';
+
 export function renderResultsScreen() {
 
   const {
@@ -307,6 +311,8 @@ export function renderResultsScreen() {
     </section>
 
     ${renderLevelUpModal()}
+
+    ${renderAchievementModal()}
 
   `;
 }

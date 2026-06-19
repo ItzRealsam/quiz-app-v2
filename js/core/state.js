@@ -90,6 +90,12 @@ export const appState = {
 
     unlockedLevel:
       null,
+
+    achievementModalVisible:
+      false,
+
+    unlockedAchievement:
+      null,
   },
 
   navigation: {

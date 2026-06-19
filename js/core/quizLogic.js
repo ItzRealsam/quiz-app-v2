@@ -313,12 +313,29 @@ function completeQuiz() {
       totalQuestions:
 
         appState.quiz.answers
-          .length
+          .length,
+
+      accuracy
 
     });
 
   const unlockedAchievements =
     evaluateAchievements();
+
+  if (
+    unlockedAchievements.length
+  )
+  {
+
+    appState.ui
+      .achievementModalVisible =
+      true;
+
+    appState.ui
+      .unlockedAchievement =
+      unlockedAchievements[0];
+
+  }
 
   if (
     levelResult.leveledUp

@@ -1,6 +1,11 @@
 import {
-  ACHIEVEMENTS
+  ACHIEVEMENTS,
+  getAchievementProgress
 } from '../services/achievementService.js';
+
+import { 
+  getPlayerStats 
+} from '../services/playerStatsService.js';
 
 import {
   STORAGE_KEYS
@@ -11,7 +16,7 @@ import {
 } from '../utils/storage.js';
 
 export function renderAchievementsScreen() {
-
+  
   const unlocked =
     getStorageItem(
 
@@ -20,6 +25,9 @@ export function renderAchievementsScreen() {
       []
 
     );
+
+  const stats =
+    getPlayerStats();
 
   return `
 
@@ -40,8 +48,26 @@ export function renderAchievementsScreen() {
         </h1>
 
         ${ACHIEVEMENTS.map(
-          achievement => `
+          achievement => {
+            
+            const progress =
 
+              getAchievementProgress(
+
+                achievement,
+
+                stats
+
+              );
+
+            const isUnlocked =
+
+              unlocked.includes(
+                achievement.id
+              );
+
+            return `
+            
             <div
               class="
                 quiz__analytics-card
@@ -69,12 +95,87 @@ export function renderAchievementsScreen() {
 
                 ${achievement.description}
 
+                ${
+
+                  !isUnlocked
+
+                  &&
+
+                  progress
+
+                  ?
+
+                  `
+
+                    <div
+                      class="
+                        quiz__achievement-progress
+                      "
+                    >
+
+                      ${progress.current}
+
+                      /
+
+                      ${progress.target}
+
+                    </div>
+
+                  `
+
+                  :
+
+                  ''
+
+                }
+
+                ${
+
+                  !isUnlocked
+
+                  &&
+
+                  progress
+
+                  ?
+
+                  `
+
+                    <div
+                      class="
+                        quiz__achievement-bar
+                      "
+                    >
+
+                      <div
+
+                        class="
+                          quiz__achievement-bar-fill
+                        "
+
+                        style="
+                          width:
+                          ${progress.percentage}%;
+                        "
+
+                      ></div>
+
+                    </div>
+
+                  `
+
+                  :
+
+                  ''
+
+                }
+
               </p>
 
             </div>
 
           `
-        ).join('')}
+        }).join('')}
 
       </div>
 

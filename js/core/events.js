@@ -401,6 +401,20 @@ export function bindGlobalEvents() {
           renderCurrentScreen();
 
           break;
+
+        case 'close-achievement':
+
+          appState.ui
+            .achievementModalVisible =
+            false;
+
+          appState.ui
+            .unlockedAchievement =
+            null;
+
+          renderCurrentScreen();
+
+          break;
         
         
       }

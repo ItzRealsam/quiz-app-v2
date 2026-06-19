@@ -39,6 +39,8 @@ function getDefaultStats() {
 
     experience: 0,
 
+    perfectScores: 0,
+
   };
 
 }
@@ -100,7 +102,9 @@ export function updatePlayerStats({
 
   totalQuestions,
 
-  totalDurationSeconds
+  totalDurationSeconds,
+
+  accuracy
 
 }) {
 
@@ -113,6 +117,14 @@ export function updatePlayerStats({
   stats.quizzesPlayed += 1;
 
   stats.totalScore += score;
+
+  if (
+    accuracy === 100
+  ) {
+
+    stats.perfectScores += 1;
+
+  }
 
   stats.highestScore =
     Math.max(
@@ -170,6 +182,10 @@ export function updatePlayerStats({
       stats.experience
     );
 
+  savePlayerStats(
+    stats
+  );
+
   if (
     stats.level >
     previousLevel
@@ -194,9 +210,5 @@ export function updatePlayerStats({
       stats.level
 
   };
-
-  savePlayerStats(
-    stats
-  );
 
 }

@@ -21,24 +21,52 @@ export const ACHIEVEMENTS = [
   },
 
   {
-    id: 'quiz-master-10',
-    title: 'Quiz Enthusiast',
+    id:
+      'quiz-master-10',
+
+    title:
+      'Quiz Enthusiast',
+
     description:
-      'Complete 10 quizzes.'
+      'Complete 10 quizzes.',
+
+    target: 10,
+
+    metric:
+      'quizzesPlayed'
   },
 
   {
-    id: 'perfect-score',
-    title: 'Perfect Score',
+    id:
+      'perfect-score',
+      
+    title:
+      'Perfect Score',
+
     description:
-      'Get 100% accuracy in a quiz.'
+      'Get 100% accuracy in a quiz.',
+
+    target: 
+      1,
+
+    metric:
+      'perfectScores'
   },
 
   {
-    id: 'streak-5',
-    title: 'Hot Streak',
+    id:
+      'streak-5',
+
+    title:
+      'Hot Streak',
+
     description:
-      'Reach a streak of 5.'
+      'Reach a streak of 5.',
+
+    target: 5,
+
+    metric:
+      'bestStreak'
   }
 
 ];
@@ -122,5 +150,42 @@ export function evaluateAchievements() {
   );
 
   return newlyUnlocked;
+
+}
+
+export function getAchievementProgress(
+  achievement,
+  stats
+) {
+
+  const currentValue =
+    stats[
+      achievement.metric
+    ] || 0;
+
+  return {
+
+    current:
+      currentValue,
+
+    target:
+      achievement.target,
+
+    percentage:
+      Math.min(
+
+        100,
+
+        Math.round(
+          (
+            currentValue
+            /
+            achievement.target
+          ) * 100
+        )
+
+      )
+
+  };
 
 }
