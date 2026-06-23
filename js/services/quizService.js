@@ -47,12 +47,33 @@ export function startFreshQuiz() {
 
     });
   
+  if (
+    filteredQuestions.length === 0
+  ) {
+
+    showToast(
+      'No questions available for this selection.'
+    );
+
+    return false;
+
+  }
+
+  const actualQuestionCount =
+    Math.min(
+
+      appState.quiz.questionCount,
+
+      filteredQuestions.length
+
+    );
+
   const quizQuestions =
     shuffleArray(
       filteredQuestions
     ).slice(
       0,
-      10
+      actualQuestionCount
     );
 
   if (

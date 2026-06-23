@@ -26,6 +26,8 @@ export const appState = {
     
     questions,
 
+    questionCount: 10,
+
     currentQuestionIndex: 0,
 
     score: 0,

@@ -244,6 +244,59 @@ export function renderSettingsScreen() {
 
         </div>
 
+        <div
+          class="
+            quiz__settings-group
+          "
+        >
+
+          <label>
+
+            Questions
+
+          </label>
+
+          <select
+            id="quiz-question-count"
+          >
+
+            <option
+              value="5"
+              ${
+                appState.quiz.questionCount === 5
+                  ? 'selected'
+                  : ''
+              }
+            >
+              5 Questions
+            </option>
+
+            <option
+              value="10"
+              ${
+                appState.quiz.questionCount === 10
+                  ? 'selected'
+                  : ''
+              }
+            >
+              10 Questions
+            </option>
+
+            <option
+              value="20"
+              ${
+                appState.quiz.questionCount === 20
+                  ? 'selected'
+                  : ''
+              }
+            >
+              20 Questions
+            </option>
+
+          </select>
+
+        </div>
+
         <button
 
           class="

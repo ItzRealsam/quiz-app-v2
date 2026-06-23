@@ -96,6 +96,13 @@ export function bindGlobalEvents() {
 
         case 'begin-custom-quiz': {
 
+          appState.quiz.questionCount =
+            Number(
+              document.querySelector(
+                '#quiz-question-count'
+              ).value
+            );
+
           const started =
             startFreshQuiz();
 

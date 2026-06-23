@@ -23,7 +23,10 @@ export const STORAGE_KEYS = {
     'quiz-achievements',
   
   LEADERBOARD:    
-    'quiz-leaderboard', 
+    'quiz-leaderboard',
+
+  DAILY_CHALLENGE:
+    'quiz-daily-challenge',
 
 };
 
