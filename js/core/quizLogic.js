@@ -324,8 +324,7 @@ function completeQuiz() {
 
   if (
     unlockedAchievements.length
-  )
-  {
+  ) {
 
     appState.ui
       .achievementModalVisible =
@@ -334,6 +333,10 @@ function completeQuiz() {
     appState.ui
       .unlockedAchievement =
       unlockedAchievements[0];
+
+    showToast(
+      '🏆 Achievement Unlocked'
+    );
 
   }
 
@@ -350,10 +353,6 @@ function completeQuiz() {
       levelResult.newLevel;
 
   }
-
-  showToast(
-    `🏆 Achievement Unlocked`
-  );
 
   clearQuizSession();
 

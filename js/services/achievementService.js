@@ -141,6 +141,24 @@ export function evaluateAchievements() {
 
   }
 
+  if (
+    stats.perfectScores >= 1
+    &&
+    !unlocked.includes(
+      'perfect-score'
+    )
+  ) {
+
+    unlocked.push(
+      'perfect-score'
+    );
+
+    newlyUnlocked.push(
+      'perfect-score'
+    );
+
+  }
+
   setStorageItem(
 
     STORAGE_KEYS.ACHIEVEMENTS,

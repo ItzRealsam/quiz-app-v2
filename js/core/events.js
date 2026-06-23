@@ -96,12 +96,21 @@ export function bindGlobalEvents() {
 
         case 'begin-custom-quiz': {
 
-          appState.quiz.questionCount =
-            Number(
-              document.querySelector(
-                '#quiz-question-count'
-              ).value
+          const categorySelect =
+            document.querySelector(
+              '#quiz-category'
             );
+
+          const difficultySelect =
+            document.querySelector(
+              '#quiz-difficulty'
+            );
+
+          appState.quiz.category =
+            categorySelect?.value || 'all';
+
+          appState.quiz.difficulty =
+            difficultySelect?.value || 'all';
 
           const started =
             startFreshQuiz();
@@ -674,23 +683,41 @@ export function bindGlobalEvents() {
         event.target;
 
       if (
-        target.id ===
-        'quiz-category'
+        target.matches(
+          '#quiz-category'
+        )
       ) {
 
         appState.quiz.category =
           target.value;
 
+        return;
       }
 
       if (
-        target.id ===
-        'quiz-difficulty'
+        target.matches(
+          '#quiz-difficulty'
+        )
       ) {
 
         appState.quiz.difficulty =
           target.value;
 
+        return;
+      }
+
+      if (
+        target.matches(
+          '#quiz-question-count'
+        )
+      ) {
+
+        appState.quiz.questionCount =
+          Number(
+            target.value
+          );
+
+        return;
       }
 
     }

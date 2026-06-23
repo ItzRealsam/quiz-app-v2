@@ -1,5 +1,5 @@
 import { questions }
-  from '../../data/questions.js';
+  from '../../data/questions/index.js';
 
 import { 
   QUIZ_CONFIG 

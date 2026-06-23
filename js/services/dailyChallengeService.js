@@ -1,6 +1,10 @@
 import { 
   STORAGE_KEYS 
-} from "../utils/config";
+} from "../utils/config.js";
+
+import {
+  setStorageItem
+} from '../utils/storage.js';
 
 const CHALLENGE_POOL = [
 

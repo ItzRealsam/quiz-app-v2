@@ -14,8 +14,8 @@ import {
   getQuestions
 } from './questionService.js';
 
-import { 
-  showToast 
+import {
+  showToast
 } from '../ui/toast.js';
 
 import {
@@ -28,13 +28,12 @@ import {
 
 export function startFreshQuiz() {
 
-  if (
-    appState.quiz.finishedAt
-  ) {
+  /* -----------------------------------------
+     Always reset quiz runtime state before
+     building a fresh question set.
+     ----------------------------------------- */
 
-    restartQuizState();
-
-  }
+  restartQuizState();
 
   const filteredQuestions =
     getQuestions({
@@ -46,47 +45,71 @@ export function startFreshQuiz() {
         appState.quiz.difficulty
 
     });
-  
+
+  /* -----------------------------------------
+     Prevent empty quiz launches
+     ----------------------------------------- */
+
   if (
     filteredQuestions.length === 0
   ) {
 
-    showToast(
-      'No questions available for this selection.'
-    );
+    const selectedCategory =
+      appState.quiz.category;
+
+    const selectedDifficulty =
+      appState.quiz.difficulty;
+
+    let message =
+      'No questions available for this selection.';
+
+    if (
+      selectedCategory !== 'all'
+      &&
+      selectedDifficulty !== 'all'
+    ) {
+
+      message =
+        `No ${selectedDifficulty} ${selectedCategory} questions available yet.`;
+
+    }
+    else if (
+      selectedCategory !== 'all'
+    ) {
+
+      message =
+        `No ${selectedCategory} questions available yet.`;
+
+    }
+    else if (
+      selectedDifficulty !== 'all'
+    ) {
+
+      message =
+        `No ${selectedDifficulty} questions available yet.`;
+
+    }
+
+    showToast(message);
 
     return false;
 
   }
 
-  const actualQuestionCount =
-    Math.min(
-
-      appState.quiz.questionCount,
-
-      filteredQuestions.length
-
-    );
+  /* -----------------------------------------
+     Build quiz question set
+     - shuffle question pool
+     - limit to max 10
+     - randomize options per question
+     ----------------------------------------- */
 
   const quizQuestions =
     shuffleArray(
       filteredQuestions
     ).slice(
       0,
-      actualQuestionCount
+      appState.quiz.questionCount
     );
-
-  if (
-    filteredQuestions.length === 0
-  ) {
-
-    showToast(
-      'No questions available for this selection.'
-    );
-
-    return false;
-
-  }
 
   appState.quiz.questions =
     quizQuestions.map(
@@ -98,6 +121,30 @@ export function startFreshQuiz() {
 
   appState.quiz.finishedAt =
     null;
+
+    appState.quiz.currentQuestionIndex =
+    0;
+
+  appState.quiz.selectedAnswerIndex =
+    null;
+
+  appState.quiz.isAnswerLocked =
+    false;
+
+  appState.quiz.currentExplanation =
+    '';
+
+  appState.quiz.answers =
+    [];
+
+  appState.quiz.score =
+    0;
+
+  appState.quiz.streak =
+    0;
+
+  appState.quiz.bestStreak =
+    0;
 
   startQuestionTimer();
 

@@ -3,7 +3,11 @@ import { appState }
 
 import {
   getCategoryStats,
-  getDifficultyStats
+  getDifficultyStats,
+  getAvailableCategories,
+  getAvailableDifficulties,
+  formatCategoryLabel,
+  formatDifficultyLabel
 } from '../services/questionService.js';
 
 export function renderSettingsScreen() {
@@ -13,6 +17,21 @@ export function renderSettingsScreen() {
 
   const difficultyStats =
     getDifficultyStats();
+
+  const categories =
+    getAvailableCategories();
+
+  const difficulties =
+    getAvailableDifficulties();
+
+  const totalQuestions =
+    Object.values(
+      categoryStats
+    ).reduce(
+      (sum, count) =>
+        sum + count,
+      0
+    );
 
   return `
 
@@ -27,9 +46,7 @@ export function renderSettingsScreen() {
         <h1
           class="quiz__title"
         >
-
           Quiz Settings
-
         </h1>
 
         <div
@@ -38,112 +55,58 @@ export function renderSettingsScreen() {
           "
         >
 
-          <label>
-
+          <label for="quiz-category">
             Category
-
           </label>
 
-          <select
-            id="quiz-category"
-          >
-
-            <option value="all">
-
-              All
-
-            </option>
+          <select id="quiz-category">
 
             <option
-              value="technology"
-
-              ${categoryStats.technology === 0
-                ? 'disabled'
-                : ''}
-
+              value="all"
               ${
                 appState.quiz.category ===
-                'technology'
-
-                ? 'selected'
-                : ''
+                'all'
+                  ? 'selected'
+                  : ''
               }
-
             >
-              Technology ${categoryStats.technology === 0
-                ? '(Coming Soon)'
-                : `(${categoryStats.technology})`
-              }
+              All (${totalQuestions})
             </option>
 
-            <option
-              value="science"
+            ${categories.map(
+              category => {
 
-              ${categoryStats.science === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.category ===
-                'science'
+                const count =
+                  categoryStats[
+                    category
+                  ] || 0;
 
-                ? 'selected'
-                : ''
+                const selected =
+                  appState.quiz.category ===
+                  category
+                    ? 'selected'
+                    : '';
+
+                const disabled =
+                  count === 0
+                    ? 'disabled'
+                    : '';
+
+                return `
+                  <option
+                    value="${category}"
+                    ${selected}
+                    ${disabled}
+                  >
+                    ${formatCategoryLabel(category)} ${count === 0
+                      ? '(Coming Soon)'
+                      : `(${count})`
+                    }
+                  </option>
+                `;
+
               }
-
-            >
-              Science ${categoryStats.science === 0
-                ? '(Coming Soon)'
-                : `(${categoryStats.science})`
-              }
-
-            </option>
-
-            <option
-              value="history"
-
-                ${categoryStats.history === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.category ===
-                'history'
-
-                ? 'selected'
-                : ''
-              }
-
-            >
-              History ${categoryStats.history === 0
-                ? '(Coming Soon)'
-                : `(${categoryStats.history})`
-              }
-
-            </option>
-
-            <option
-              value="sports"
-
-                ${categoryStats.sports === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.category ===
-                'sports'
-
-                ? 'selected'
-                : ''
-              }
-
-            >
-              Sports ${categoryStats.sports === 0
-                ? '(Coming Soon)'
-                : `(${categoryStats.sports})`
-              }
-
-            </option>
+            ).join('')}
 
           </select>
 
@@ -155,90 +118,65 @@ export function renderSettingsScreen() {
           "
         >
 
-          <label>
+                  <div
+          class="
+            quiz__settings-group
+          "
+        >
 
+          <label for="quiz-difficulty">
             Difficulty
-
           </label>
 
-          <select
-            id="quiz-difficulty"
-          >
+          <select id="quiz-difficulty">
 
-            <option value="all">
-
+            <option
+              value="all"
+              ${
+                appState.quiz.difficulty ===
+                'all'
+                  ? 'selected'
+                  : ''
+              }
+            >
               All
-
             </option>
 
-            <option
-              value="easy"
+            ${difficulties.map(
+              difficulty => {
 
-                ${difficultyStats.easy === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.difficulty ===
-                'easy'
+                const count =
+                  difficultyStats[
+                    difficulty
+                  ] || 0;
 
-                ? 'selected'
-                : ''
+                const selected =
+                  appState.quiz
+                    .difficulty ===
+                  difficulty
+                    ? 'selected'
+                    : '';
+
+                const disabled =
+                  count === 0
+                    ? 'disabled'
+                    : '';
+
+                return `
+                  <option
+                    value="${difficulty}"
+                    ${selected}
+                    ${disabled}
+                  >
+                    ${formatDifficultyLabel(difficulty)} ${count === 0
+                      ? '(Coming Soon)'
+                      : `(${count})`
+                    }
+                  </option>
+                `;
+
               }
-
-            >
-              Easy ${difficultyStats.easy === 0
-                ? '(Coming Soon)'
-                : `(${difficultyStats.easy})`
-              }
-
-            </option>
-
-            <option
-              value="medium"
-
-                ${difficultyStats.medium === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.difficulty ===
-                'medium'
-
-                ? 'selected'
-                : ''
-              }
-
-            >
-              Medium ${difficultyStats.medium === 0
-                ? '(Coming Soon)'
-                : `(${difficultyStats.medium})`
-              }
-
-            </option>
-
-            <option
-              value="hard"
-
-                ${difficultyStats.hard === 0
-                ? 'disabled'
-                : ''}
-              
-              ${
-                appState.quiz.difficulty ===
-                'hard'
-
-                ? 'selected'
-                : ''
-              }
-
-            >
-              Hard ${difficultyStats.hard === 0
-                ? '(Coming Soon)'
-                : `(${difficultyStats.hard})`
-              }
-
-            </option>
+            ).join('')}
 
           </select>
 
@@ -250,15 +188,11 @@ export function renderSettingsScreen() {
           "
         >
 
-          <label>
-
-            Questions
-
+          <label for="quiz-question-count">
+            Number of Questions
           </label>
 
-          <select
-            id="quiz-question-count"
-          >
+          <select id="quiz-question-count">
 
             <option
               value="5"
@@ -283,6 +217,17 @@ export function renderSettingsScreen() {
             </option>
 
             <option
+              value="15"
+              ${
+                appState.quiz.questionCount === 15
+                  ? 'selected'
+                  : ''
+              }
+            >
+              15 Questions
+            </option>
+
+            <option
               value="20"
               ${
                 appState.quiz.questionCount === 20
@@ -298,17 +243,12 @@ export function renderSettingsScreen() {
         </div>
 
         <button
-
           class="
             quiz__btn-primary
           "
-
           data-action="begin-custom-quiz"
-
         >
-
           Start Quiz
-
         </button>
 
       </div>

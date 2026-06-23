@@ -25,6 +25,14 @@ export function saveQuizSession() {
       appState.currentScreen,
 
     quiz: {
+      questions:
+        appState.quiz.questions,
+
+      category:
+        appState.quiz.category,
+
+      difficulty:
+        appState.quiz.difficulty,
 
       currentQuestionIndex:
         appState.quiz.currentQuestionIndex,
@@ -60,8 +68,10 @@ export function saveQuizSession() {
         appState.quiz.questionTimeLimit,
 
       quizTimeLimit:
-        appState.quiz.quizTimeLimit
+        appState.quiz.quizTimeLimit,
 
+      remainingQuizTime:
+        appState.quiz.remainingQuizTime
     }
 
   };
