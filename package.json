@@ -1,0 +1,24 @@
+{
+  "name": "quiz-app-v2",
+  "version": "1.0.0",
+  "description": "A modern Vanilla JavaScript Quiz Application.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItzRealsam/quiz-app-v2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4"
+  },
+  "devDependencies": {
+    "vite": "^7.1.3"
+  }
+}
