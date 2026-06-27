@@ -1,9 +1,9 @@
 import { appState }
-  from '../core/state.js';
+  from '../../core/state.js';
 
 import {
   QUIZ_CONFIG
-} from '../utils/config.js';
+} from '../../utils/config.js';
 
 /* =========================================================
    SCORE PROCESSING

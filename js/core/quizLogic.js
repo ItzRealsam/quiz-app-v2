@@ -9,33 +9,33 @@ import { navigateTo }
 
 import {
   submitScore
-} from '../services/leaderboardService.js';
+} from '../services/leaderboard/leaderboardService.js';
 
 import {
   startQuestionTimer,
   stopQuestionTimer,
   stopQuizTimer
-} from '../services/timerService.js';
+} from '../services/quiz/timerService.js';
 
 import {
 
   processAnswerScore,
   calculateAccuracy
 
-} from '../services/scoreService.js';
+} from '../services/quiz/scoreService.js';
 
 import {
   clearQuizSession,
   saveQuizSession
-} from '../services/sessionService.js';
+} from '../services/auth/sessionService.js';
 
 import {
   updatePlayerStats
-} from '../services/playerStatsService.js';
+} from '../services/player/playerStatsService.js';
 
 import { 
   evaluateAchievements 
-} from '../services/achievementService.js';
+} from '../services/player/achievementService.js';
 
 import { 
   showToast 
@@ -43,7 +43,7 @@ import {
 
 import {
   getLevelTitle
-} from '../services/playerLevelService.js';
+} from '../services/player/playerLevelService.js';
 
 /* =========================================================
    ANSWER SELECTION

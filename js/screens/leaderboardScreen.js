@@ -3,7 +3,7 @@ import { appState }
 
 import {
   getLeaderboard
-} from '../services/leaderboardService.js';
+} from '../services/leaderboard/leaderboardService.js';
 
 import { 
   escapeHTML
@@ -13,7 +13,7 @@ import {
 
   getMaxPossibleScore
 
-} from '../services/quizAnalyticsService.js';
+} from '../services/quiz/quizAnalyticsService.js';
 
 import {
   QUIZ_CONFIG
@@ -22,7 +22,7 @@ import {
 import {
   getVisibleLeaderboardEntries,
   filterLeaderboard
-} from '../services/leaderboardViewService.js';
+} from '../services/leaderboard/leaderboardViewService.js';
 
 export function renderLeaderboardScreen() {
 

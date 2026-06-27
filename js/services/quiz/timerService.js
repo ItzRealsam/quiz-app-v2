@@ -1,14 +1,14 @@
 import { appState }
-  from '../core/state.js';
+  from '../../core/state.js';
 
 import {
   handleTimeExpiration,
   handleQuizExpiration
-} from '../core/quizLogic.js';
+} from '../../core/quizLogic.js';
 
 import {
   saveQuizSession
-} from './sessionService.js';
+} from '../auth/sessionService.js';
 
 
 export function startQuestionTimer() {

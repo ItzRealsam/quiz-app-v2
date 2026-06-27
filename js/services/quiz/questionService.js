@@ -1,5 +1,5 @@
 import { questions }
-  from '../../data/questions/index.js';
+  from '../../../data/questions/index.js';
 
 /* =========================================================
    GET FILTERED QUESTIONS

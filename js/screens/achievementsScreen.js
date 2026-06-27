@@ -1,11 +1,11 @@
 import {
   ACHIEVEMENTS,
   getAchievementProgress
-} from '../services/achievementService.js';
+} from '../services/player/achievementService.js';
 
 import { 
   getPlayerStats 
-} from '../services/playerStatsService.js';
+} from '../services/player/playerStatsService.js';
 
 import {
   STORAGE_KEYS

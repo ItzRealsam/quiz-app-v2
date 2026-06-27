@@ -1,5 +1,5 @@
 import { appState }
-  from '../core/state.js';
+  from '../../core/state.js';
 
 export function getPreviousScreen() {
 

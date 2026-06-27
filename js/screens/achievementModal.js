@@ -4,7 +4,7 @@ import {
 
 import {
   ACHIEVEMENTS
-} from '../services/achievementService.js';
+} from '../services/player/achievementService.js';
 
 export function renderAchievementModal() {
 

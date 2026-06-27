@@ -1,9 +1,9 @@
 import { appState }
-  from '../core/state.js';
+  from '../../core/state.js';
 
 import {
   STORAGE_KEYS
-} from '../utils/config.js';
+} from '../../utils/config.js';
 
 import {
 
@@ -11,7 +11,7 @@ import {
   setStorageItem,
   removeStorageItem
 
-} from '../utils/storage.js';
+} from '../../utils/storage.js';
 
 /* =========================================================
    SAVE SESSION

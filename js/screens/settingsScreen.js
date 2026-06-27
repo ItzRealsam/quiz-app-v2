@@ -8,7 +8,7 @@ import {
   getAvailableDifficulties,
   formatCategoryLabel,
   formatDifficultyLabel
-} from '../services/questionService.js';
+} from '../services/quiz/questionService.js';
 
 export function renderSettingsScreen() {
 

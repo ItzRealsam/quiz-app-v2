@@ -1,6 +1,6 @@
 import {
   shuffleArray
-} from '../utils/shuffleArray.js';
+} from '../../utils/shuffleArray.js';
 
 export function randomizeQuestion(
   question

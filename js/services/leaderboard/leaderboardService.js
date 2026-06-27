@@ -1,12 +1,12 @@
 import { 
   STORAGE_KEYS
- } from '../utils/config.js';
+ } from '../../utils/config.js';
 
 import { 
   getStorageItem,
   removeStorageItem,
   setStorageItem
-} from "../utils/storage.js";
+} from "../../utils/storage.js";
 
 export function getLeaderboard() {
 

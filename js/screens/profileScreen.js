@@ -1,14 +1,14 @@
 import {
   getPlayerStats
-} from '../services/playerStatsService.js';
+} from '../services/player/playerStatsService.js';
 
 import {
   getLevelProgress
-} from '../services/playerLevelService.js';
+} from '../services/player/playerLevelService.js';
 
 import {
   getLevelTitle
-} from '../services/playerLevelService.js';
+} from '../services/player/playerLevelService.js';
 
 export function renderProfileScreen() {
 

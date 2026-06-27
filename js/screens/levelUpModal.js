@@ -4,7 +4,7 @@ import {
 
 import {
   getLevelTitle
-} from '../services/playerLevelService.js';
+} from '../services/player/playerLevelService.js';
 
 export function renderLevelUpModal() {
 

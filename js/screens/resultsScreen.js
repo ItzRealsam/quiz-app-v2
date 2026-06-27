@@ -9,15 +9,15 @@ import {
   getMaxPossibleScore,
   getCorrectAnswerCount,
   getAverageTimePerQuestion
-} from '../services/quizAnalyticsService.js';
+} from '../services/quiz/quizAnalyticsService.js';
 
 import {
   getUserRank
-} from '../services/leaderboardAnalyticsService.js';
+} from '../services/leaderboard/leaderboardAnalyticsService.js';
 
 import { 
   getLeaderboard 
-} from '../services/leaderboardService.js';
+} from '../services/leaderboard/leaderboardService.js';
 
 import {
   renderLevelUpModal

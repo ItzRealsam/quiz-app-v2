@@ -18,7 +18,7 @@ import { showToast }
 import {
   startQuestionTimer,
   startQuizTimer
-} from '../services/timerService.js';
+} from '../services/quiz/timerService.js';
 
 import { 
   STORAGE_KEYS
@@ -34,16 +34,16 @@ import {
 
 import {
   getPreviousScreen
-} from '../services/navigationHistoryService.js';
+} from '../services/navigation/navigationHistoryService.js';
 
 import {
   clearQuizSession
 }
-from '../services/sessionService.js';
+from '../services/auth/sessionService.js';
 
 import { 
   startFreshQuiz 
-} from '../services/quizService.js';
+} from '../services/quiz/quizService.js';
 
 /* =========================================================
    GLOBAL EVENT BINDINGS

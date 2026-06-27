@@ -1,5 +1,5 @@
 import { appState }
-  from '../core/state.js';
+  from '../../core/state.js';
 
 import {
   startQuestionTimer,
@@ -8,7 +8,7 @@ import {
 
 import {
   restartQuizState
-} from '../core/quizLogic.js';
+} from '../../core/quizLogic.js';
 
 import {
   getQuestions
@@ -16,11 +16,11 @@ import {
 
 import {
   showToast
-} from '../ui/toast.js';
+} from '../../ui/toast.js';
 
 import {
   shuffleArray
-} from '../utils/shuffleArray.js';
+} from '../../utils/shuffleArray.js';
 
 import {
   randomizeQuestion

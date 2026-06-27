@@ -28,12 +28,12 @@ import {
 import {
   restoreQuizSession,
   clearQuizSession
-} from '../services/sessionService.js';
+} from '../services/auth/sessionService.js';
 
 import {
   startQuestionTimer,
   startQuizTimer
-} from '../services/timerService.js';
+} from '../services/quiz/timerService.js';
 
 import {
   isSessionValid
@@ -45,7 +45,7 @@ import {
 
 import {
   initializeUserSession
-} from '../services/userSessionService.js';
+} from '../services/auth/userSessionService.js';
 
 export function initializeApp() {
 
