@@ -1,0 +1,15 @@
+.quiz__page-header{
+
+    margin-bottom:2rem;
+
+}
+
+.quiz__subtitle{
+
+    opacity:.75;
+
+    margin-top:.4rem;
+
+    font-size: var(--font-size-xs);
+
+}

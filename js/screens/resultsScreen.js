@@ -27,6 +27,10 @@ import {
   renderAchievementModal 
 } from './achievementModal.js';
 
+import { 
+  renderStatCard 
+} from '../ui/components/cards/statCard.js';
+
 export function renderResultsScreen() {
 
   const {
@@ -150,7 +154,26 @@ export function renderResultsScreen() {
       </div>
 
       <div class="quiz__analytics">
+        <!--
+        ${
 
+          renderStatCard({
+
+            title:
+
+            'Accuracy',
+
+            value:
+
+            `${accuracy}%`,
+
+            icon:'🏆'
+
+          })
+
+        }
+        -->
+        
         <div class="quiz__analytics-card">
 
           <span class="quiz__analytics-label">

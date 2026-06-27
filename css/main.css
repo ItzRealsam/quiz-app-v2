@@ -8,6 +8,7 @@
 @import url('./layout/container.css');
 @import url('./layout/grid.css');
 @import url('./layout/section.css');
+@import url('./layout/pageHeader.css');
 
 /* Components */
 @import url('./components/actions.css');
@@ -17,6 +18,7 @@
 @import url('./components/loader.css');
 @import url('./components/app-shell.css');
 @import url('./components/progress.css');
+@import url('./components/emptyState.css');
 
 /* Pages */
 @import url('./pages/welcome.css');

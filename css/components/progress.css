@@ -1,3 +1,21 @@
+.quiz__progress{
+
+  margin-top: .8rem;
+
+}
+
+.quiz__progress-label{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-bottom: .4rem;
+
+  font-size: var(--font-size-xs);
+
+}
+
 .quiz__progress-track {
 
   width: 100%;

@@ -1,0 +1,17 @@
+.quiz__empty-state{
+
+  text-align: center;
+
+  padding: 1.6rem .8rem;
+
+  opacity: .8;
+
+}
+
+.quiz__empty-icon{
+
+  font-size: 2rem;
+
+  margin-bottom: 0.8rem;
+
+}

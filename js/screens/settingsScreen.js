@@ -10,6 +10,10 @@ import {
   formatDifficultyLabel
 } from '../services/quiz/questionService.js';
 
+import {
+  renderPageHeader
+} from '../ui/components/layout/pageHeader.js';
+
 export function renderSettingsScreen() {
 
   const categoryStats =
@@ -43,11 +47,21 @@ export function renderSettingsScreen() {
         class="quiz__contents"
       >
 
-        <h1
-          class="quiz__title"
-        >
-          Quiz Settings
-        </h1>
+        ${
+
+          renderPageHeader({
+
+            title:
+
+            'Quiz Settings',
+
+            subtitle:
+
+            'Customize your quiz experience.'
+
+          })
+
+        }
 
         <div
           class="
@@ -117,13 +131,7 @@ export function renderSettingsScreen() {
             quiz__settings-group
           "
         >
-
-                  <div
-          class="
-            quiz__settings-group
-          "
-        >
-
+        
           <label for="quiz-difficulty">
             Difficulty
           </label>

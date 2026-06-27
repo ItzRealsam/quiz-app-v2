@@ -62,6 +62,15 @@
   gap: var(--space-xs);
 
   text-align: center;
+
+  
+  transition: .2s ease;
+}
+
+.quiz__analytics-card:hover{
+
+  transform:translateY(-3px);
+
 }
 
 .quiz__score-label,

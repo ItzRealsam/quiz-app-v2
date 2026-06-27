@@ -15,6 +15,10 @@ import {
   getStorageItem
 } from '../utils/storage.js';
 
+import {
+  renderProgressBar
+} from '../ui/components';
+
 export function renderAchievementsScreen() {
   
   const unlocked =
@@ -106,61 +110,22 @@ export function renderAchievementsScreen() {
                   ?
 
                   `
+                    ${
 
-                    <div
-                      class="
-                        quiz__achievement-progress
-                      "
-                    >
+                      renderProgressBar({
 
-                      ${progress.current}
+                        label:
+                          'Progress',
 
-                      /
+                        value:
+                          progress.current,
 
-                      ${progress.target}
+                        max:
+                          progress.target
 
-                    </div>
+                      })
 
-                  `
-
-                  :
-
-                  ''
-
-                }
-
-                ${
-
-                  !isUnlocked
-
-                  &&
-
-                  progress
-
-                  ?
-
-                  `
-
-                    <div
-                      class="
-                        quiz__achievement-bar
-                      "
-                    >
-
-                      <div
-
-                        class="
-                          quiz__achievement-bar-fill
-                        "
-
-                        style="
-                          width:
-                          ${progress.percentage}%;
-                        "
-
-                      ></div>
-
-                    </div>
+                    }
 
                   `
 
@@ -169,7 +134,7 @@ export function renderAchievementsScreen() {
                   ''
 
                 }
-
+                
               </p>
 
             </div>
