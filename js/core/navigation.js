@@ -4,7 +4,7 @@ import {
 
 import {
   saveQuizSession
-} from '../services/auth/sessionService.js';
+} from '../services/auth/quizSessionService.js';
 
 export function navigateTo(
   screen

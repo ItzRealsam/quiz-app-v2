@@ -1,8 +1,13 @@
+import { 
+  navigateToRoute 
+} from '../../core/router.js';
+
 import { appState }
   from '../../core/state.js';
 
 import {
-  STORAGE_KEYS
+  STORAGE_KEYS,
+  QUIZ_CONFIG
 } from '../../utils/config.js';
 
 import {
@@ -21,10 +26,19 @@ export function saveQuizSession() {
 
   const session = {
 
+    savedAt:
+      Date.now(),
+
     currentScreen:
       appState.currentScreen,
 
-    quiz: {
+    navigation: {
+
+      history: [...appState.navigation.history]
+
+    },
+
+    quiz:{
       questions:
         appState.quiz.questions,
 
@@ -72,7 +86,9 @@ export function saveQuizSession() {
 
       remainingQuizTime:
         appState.quiz.remainingQuizTime
-    }
+    },
+
+    expired: false
 
   };
 
@@ -89,10 +105,37 @@ export function saveQuizSession() {
 
 export function restoreQuizSession() {
 
-  return getStorageItem(
-    STORAGE_KEYS.QUIZ_SESSION,
-    null
-  );
+  const session =
+    getStorageItem(
+      STORAGE_KEYS.QUIZ_SESSION,
+      null
+    );
+
+  if (!session) {
+
+    return null;
+
+  }
+
+  if (
+
+    Date.now() -
+    session.savedAt >
+    QUIZ_CONFIG.SESSION_TIMEOUT
+
+  ) {
+
+    clearQuizSession();
+
+    return {
+
+      expired: true
+
+    };
+
+  }
+
+  return session;
 
 }
 
@@ -123,5 +166,18 @@ export function hydrateQuizSession(
     session.quiz
 
   );
+
+  if (
+    session.navigation?.history
+  )
+  {
+
+    appState.navigation.history =
+      [...session.navigation.history];
+
+  }
+
+  appState.currentScreen =
+    session.currentScreen;
 
 }

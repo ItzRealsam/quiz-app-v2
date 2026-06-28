@@ -8,7 +8,7 @@ import {
 
 import {
   saveQuizSession
-} from '../auth/sessionService.js';
+} from '../auth/quizSessionService.js';
 
 
 export function startQuestionTimer() {

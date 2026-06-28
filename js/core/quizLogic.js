@@ -27,7 +27,7 @@ import {
 import {
   clearQuizSession,
   saveQuizSession
-} from '../services/auth/sessionService.js';
+} from '../services/auth/quizSessionService.js';
 
 import {
   updatePlayerStats

@@ -28,16 +28,12 @@ import {
 import {
   restoreQuizSession,
   clearQuizSession
-} from '../services/auth/sessionService.js';
+} from '../services/auth/quizSessionService.js';
 
 import {
   startQuestionTimer,
   startQuizTimer
 } from '../services/quiz/timerService.js';
-
-import {
-  isSessionValid
-} from '../utils/sessionValidator.js';
 
 import { 
   showToast
@@ -87,26 +83,47 @@ export function initializeApp() {
   app.innerHTML =
     renderAppShell();
 
-  const savedSession =
+  const session =
     restoreQuizSession();
 
-  const sessionStatus =
-    isSessionValid(
-      savedSession
-    );
-
   if (
-    sessionStatus === true
+
+    session?.expired
+
   ) {
 
+    showToast(
+
+      'Your quiz session has expired.'
+
+    );
+
     appState.currentScreen =
-      savedSession.currentScreen;
+      'home';
+
+  }
+  else if (
+
+    session
+
+  ) {
 
     appState.pendingSession =
-      savedSession;
+      session;
 
     appState.currentScreen =
       'resume';
+
+    showToast(
+      'Previous quiz session restored.'
+    );
+
+  }
+  else {
+
+    clearQuizSession();
+
+  }
 
     /* -----------------------------------------
       Restore Quiz Timer
@@ -146,24 +163,6 @@ export function initializeApp() {
     */
 
     /* -----------------------------------------
-      Question expired while away
-      ----------------------------------------- */
-
-    if (
-      appState.quiz.remainingTime <= 0
-      &&
-      !appState.quiz.isAnswerLocked
-    ) {
-
-      appState.quiz.isAnswerLocked =
-        true;
-
-      appState.quiz.currentExplanation =
-        'Time expired while away.';
-
-    }
-
-    /* -----------------------------------------
       Entire quiz expired while away
       ----------------------------------------- */
 
@@ -178,60 +177,8 @@ export function initializeApp() {
 
     }
 
-    showToast(
-      'Previous quiz session restored.'
-    );
-
-  }
-  else if (
-    sessionStatus === 'expired'
-  ) {
-
-    appState.currentScreen =
-      'results';
-
-  }
-  else {
-
-    clearQuizSession();
-
-  }
-
   window.location.hash = 
     `#/${appState.currentScreen}`;
-
-  /* =========================================================
-    Restart Active Timers After Session Restore
-    ========================================================= */
-
-  if (
-    appState.currentScreen ===
-    'quiz'
-  ) {
-
-    if (
-
-      appState.quiz.remainingTime > 0
-
-      &&
-
-      !appState.quiz.isAnswerLocked
-
-    ) {
-
-      startQuestionTimer();
-
-    }
-
-    if (
-      appState.quiz.remainingQuizTime > 0
-    ) {
-
-      startQuizTimer();
-
-    }
-
-  }
 
   appState.user =
     initializeUserSession();

@@ -5,6 +5,15 @@ import {
   renderCurrentScreen
 } from './render.js';
 
+import {
+  hydrateQuizSession
+} from '../services/auth/quizSessionService.js';
+
+import {
+  startQuestionTimer,
+  startQuizTimer
+} from '../services/quiz/timerService.js';
+
 /* =========================================================
    VALID ROUTES
    ========================================================= */
@@ -154,6 +163,101 @@ export function initializeRouter() {
     'hashchange',
     syncRoute
   );
+
+  if (
+    appState.pendingSession
+  ){
+
+    hydrateQuizSession(
+
+      appState.pendingSession
+
+    );
+
+    
+    /* -----------------------------------------
+      Question expired while away
+      ----------------------------------------- */
+
+    if (
+
+      appState.quiz.remainingTime <= 0 &&
+
+      !appState.quiz.isAnswerLocked
+
+    ){
+
+      appState.quiz.isAnswerLocked =
+        true;
+
+      appState.quiz.currentExplanation =
+        'Time expired while away.';
+
+    }
+
+    if (
+
+      appState.quiz.remainingQuizTime <= 0
+
+    ){
+
+      clearQuizSession();
+
+      navigateToRoute(
+        'results'
+      );
+
+      appState.pendingSession =
+        null;
+
+      return;
+
+    }
+
+    navigateToRoute(
+
+      appState.pendingSession.currentScreen
+
+    );
+
+    /* =========================================================
+      Restart Active Timers After Session Restore
+      ========================================================= */
+  
+    if (
+      appState.currentScreen ===
+      'quiz'
+    ) {
+  
+      if (
+  
+        appState.quiz.remainingTime > 0
+  
+        &&
+  
+        !appState.quiz.isAnswerLocked
+  
+      ) {
+  
+        startQuestionTimer();
+  
+      }
+  
+      if (
+        appState.quiz.remainingQuizTime > 0
+      ) {
+  
+        startQuizTimer();
+  
+      }
+  
+    }
+  
+    appState.pendingSession = null;
+
+    return;
+
+  }
 
   syncRoute();
 

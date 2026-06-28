@@ -39,7 +39,7 @@ import {
 import {
   clearQuizSession
 }
-from '../services/auth/sessionService.js';
+from '../services/auth/quizSessionService.js';
 
 import { 
   startFreshQuiz 

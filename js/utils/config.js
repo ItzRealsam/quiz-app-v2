@@ -57,7 +57,8 @@ export const QUIZ_CONFIG = {
   */
 
   LEADERBOARD_LIMIT:
-    10
+    10,
   
-
+  SESSION_TIMEOUT:
+    60 * 60 * 1000,
 };
