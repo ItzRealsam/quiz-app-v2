@@ -1,6 +1,6 @@
 import {
-  initializeShell
-} from '../bootstrap/initializeShell.js';
+  initializeAppShell
+} from '../bootstrap/initializeAppShell.js';
 
 import {
   initializeUser
@@ -20,7 +20,7 @@ import {
 
 export function initializeApp() {
 
-  initializeShell();
+  initializeAppShell();
 
   initializeUser();
 

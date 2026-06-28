@@ -45,6 +45,30 @@ import {
   startFreshQuiz 
 } from '../services/quiz/quizService.js';
 
+import {
+  handleNavigationAction
+} from '../events/navigationEvents.js';
+
+import {
+  handleLeaderboardAction
+} from '../events/leaderboardEvents.js';
+
+import {
+  handleProfileAction
+} from '../events/profileEvents.js';
+
+import {
+  handleQuizAction
+} from '../events/quizEvents.js';
+
+import {
+  handleResultAction
+} from '../events/resultEvents.js';
+
+import {
+  handleSettingsAction
+} from '../events/settingsEvents.js';
+
 /* =========================================================
    GLOBAL EVENT BINDINGS
    ---------------------------------------------------------
@@ -81,358 +105,70 @@ export function bindGlobalEvents() {
       const action =
         actionTarget.dataset.action;
 
-      switch (action) {
+      if (
 
-        /* ---------------------------------------------------
-           START QUIZ
-           --------------------------------------------------- */
-        case 'open-settings':
+        handleNavigationAction(
+          action,
+          actionTarget
+        )
 
-          navigateTo(
-            'settings'
-          );
+      ){
+        return;
+      }
 
-          break;
+      if (
 
-        case 'begin-custom-quiz': {
+        handleSettingsAction(
+          action,
+          actionTarget
+        )
 
-          const categorySelect =
-            document.querySelector(
-              '#quiz-category'
-            );
+      ){
+        return;
+      }
 
-          const difficultySelect =
-            document.querySelector(
-              '#quiz-difficulty'
-            );
+      if (
 
-          appState.quiz.category =
-            categorySelect?.value || 'all';
+        handleQuizAction(
+          action,
+          actionTarget
+        )
 
-          appState.quiz.difficulty =
-            difficultySelect?.value || 'all';
+      ){
+        return;
+      }
 
-          const started =
-            startFreshQuiz();
+      if (
 
-          if (!started) {
-            return;
-          }
+        handleLeaderboardAction(
+          action,
+          actionTarget
+        )
 
-          navigateTo('quiz');
+      ){
+        return;
+      }
 
-          break;
+      if (
 
-        }
-        
-        case 'start-quiz':
+        handleResultAction(
+          action,
+          actionTarget
+        )
 
-          /* -----------------------------------------
-            Prevent duplicate navigation
-            only if already actively inside quiz
-            ----------------------------------------- */
+      ){
+        return;
+      }
 
-          if (
-            appState.currentScreen ===
-            'quiz'
-          ) {
-            return;
-          }
+      if (
 
-          /* -----------------------------------------
-            Initialize fresh quiz session
-            only if quiz not already active
-            ----------------------------------------- */
+        handleProfileAction(
+          action,
+          actionTarget
+        )
 
-          startFreshQuiz();
-
-          navigateTo('quiz');
-
-          break;
-
-        /* ---------------------------------------------------
-           ANSWER SELECTION
-           --------------------------------------------------- */
-
-        case 'select-answer':
-
-          selectAnswer(
-            Number(
-              actionTarget.dataset.index
-            )
-          );
-
-          break;
-
-        /* ---------------------------------------------------
-           SUBMIT ANSWER
-           --------------------------------------------------- */
-
-        case 'submit-answer':
-
-          submitAnswer();
-
-          break;
-
-        /* ---------------------------------------------------
-           NEXT QUESTION
-           --------------------------------------------------- */
-
-        case 'next-question':
-
-          moveToNextQuestion();
-
-          break;
-
-        /* ---------------------------------------------------
-           RESTART QUIZ
-           --------------------------------------------------- */
-
-        case 'restart-quiz':
-
-          restartQuiz();
-
-          break;
-
-        /* ---------------------------------------------------
-           VIEW LEADERBOARD
-           --------------------------------------------------- */
-
-        case 'view-leaderboard':
-
-          navigateTo(
-            'leaderboard'
-          );
-
-          break;
-
-        /* ---------------------------------------------------
-           SHARE SCORE
-           --------------------------------------------------- */
-
-        case 'share-score':
-
-          navigator.clipboard
-            .writeText(
-              'I just completed the Quiz challenge!'
-            )
-
-            .then(() => {
-
-              showToast(
-                'Score copied to clipboard!'
-              );
-
-            })
-
-            .catch(() => {
-
-              showToast(
-                'Clipboard unavailable'
-              );
-
-            });
-
-          break;
-        /* ---------------------------------------------------
-           GO BACK
-           --------------------------------------------------- */
-        
-        case 'go-back': {
-
-          const previousScreen =
-            getPreviousScreen();
-
-          if (
-            !previousScreen
-          ) {
-            return;
-          }
-
-          appState.navigation
-            .isNavigatingBack =
-            true;
-
-          navigateTo(
-            previousScreen
-          );
-
-          break;
-        }
-
-        case 'toggle-leaderboard-search':
-
-          appState.ui
-            .leaderboardSearchVisible =
-            !appState.ui
-              .leaderboardSearchVisible;
-
-          renderCurrentScreen();
-
-          if (
-            appState.ui
-              .leaderboardSearchVisible
-          ) {
-
-            requestAnimationFrame(() => {
-
-              document
-                .querySelector(
-                  '.quiz__leaderboard-search input'
-                )
-                ?.focus();
-
-            });
-
-          }
-
-          break;
-        
-        case 'toggle-leaderboard-collapse':
-
-          appState.ui
-            .leaderboardCollapsed =
-            !appState.ui
-              .leaderboardCollapsed;
-
-          renderCurrentScreen();
-
-          break;
-
-        case 'locate-user': {
-
-          if (
-            appState.ui
-              .leaderboardCollapsed
-          ) {
-
-            appState.ui
-              .leaderboardCollapsed =
-              false;
-
-            renderCurrentScreen();
-
-          }
-
-          const currentRow =
-            document.querySelector(
-              '.quiz__leaderboard-item--current-user'
-            );
-
-          if (!currentRow) {
-            return;
-          }
-
-          currentRow.scrollIntoView({
-
-            behavior: 'smooth',
-
-            block: 'center'
-
-          });
-
-          currentRow.classList.add(
-            'quiz__leaderboard-item--pulse'
-          );
-
-          setTimeout(() => {
-
-            currentRow.classList.remove(
-              'quiz__leaderboard-item--pulse'
-            );
-
-          }, 2000);
-
-          break;
-        }
-
-        case 'resume-session': 
-
-          Object.assign(
-
-            appState.quiz,
-
-            appState.pendingSession.quiz
-
-          );
-
-          appState.pendingSession =
-            null;
-
-          navigateTo('quiz');
-
-          startQuestionTimer();
-
-          startQuizTimer();
-
-          break;
-        
-        case 'discard-session':
-
-          clearQuizSession();
-
-          appState.pendingSession =
-            null;
-
-          restartQuizState();
-
-          navigateTo('home');
-
-          break;
-        
-        case 'review-answers':
-
-          navigateTo(
-            'review'
-          );
-
-          break;
-
-        case 'view-profile':
-
-          navigateTo(
-            'profile'
-          );
-
-          break;
-        
-        case 'view-achievements':
-
-          navigateTo(
-            'achievements'
-          );
-
-          break;
-          
-        case 'close-level-up':
-
-          appState.ui
-            .levelUpModalVisible =
-            false;
-
-          appState.ui
-            .unlockedLevel =
-            null;
-
-          renderCurrentScreen();
-
-          break;
-
-        case 'close-achievement':
-
-          appState.ui
-            .achievementModalVisible =
-            false;
-
-          appState.ui
-            .unlockedAchievement =
-            null;
-
-          renderCurrentScreen();
-
-          break;
-        
-        
+      ){
+        return;
       }
 
     }

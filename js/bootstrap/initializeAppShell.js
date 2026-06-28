@@ -1,7 +1,7 @@
 import { renderAppShell }
   from '../ui/renderAppShell.js';
 
-export function initializeShell() {
+export function initializeAppShell() {
 
   const app =
     document.querySelector('#app');

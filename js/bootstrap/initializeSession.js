@@ -57,19 +57,5 @@ export function initializeSession() {
   else {
     clearQuizSession();
   }
-
-  /* -----------------------------------------
-    Entire quiz expired while away
-    ----------------------------------------- */
-
-  if (
-    appState.quiz.remainingQuizTime <= 0
-  ) {
-
-    clearQuizSession();
-
-    appState.currentScreen =
-      'results';
-
-  }
+  
 }

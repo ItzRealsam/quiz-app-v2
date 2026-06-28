@@ -161,13 +161,18 @@ export function navigateToRoute(
 export function initializeRouter() {
 
   window.addEventListener(
+
     'hashchange',
+
     syncRoute
+
   );
 
   if (
+
     appState.pendingSession
-  ){
+
+  ) {
 
     hydrateQuizSession(
 
@@ -175,10 +180,23 @@ export function initializeRouter() {
 
     );
 
-    
-    /* -----------------------------------------
-      Question expired while away
-      ----------------------------------------- */
+    if (
+
+      appState.quiz.remainingQuizTime <= 0
+
+    ) {
+
+      appState.pendingSession =
+
+        null;
+
+      navigateToRoute(
+        'results'
+      );
+
+      return;
+
+    }
 
     if (
 
@@ -186,7 +204,7 @@ export function initializeRouter() {
 
       !appState.quiz.isAnswerLocked
 
-    ){
+    ) {
 
       appState.quiz.isAnswerLocked =
         true;
@@ -196,65 +214,45 @@ export function initializeRouter() {
 
     }
 
-    if (
-
-      appState.quiz.remainingQuizTime <= 0
-
-    ){
-
-      clearQuizSession();
-
-      navigateToRoute(
-        'results'
-      );
-
-      appState.pendingSession =
-        null;
-
-      return;
-
-    }
-
     navigateToRoute(
 
       appState.pendingSession.currentScreen
 
     );
 
-    /* =========================================================
-      Restart Active Timers After Session Restore
-      ========================================================= */
-  
     if (
+
       appState.currentScreen ===
       'quiz'
+
     ) {
-  
+
       if (
-  
-        appState.quiz.remainingTime > 0
-  
-        &&
-  
+
+        appState.quiz.remainingTime > 0 &&
+
         !appState.quiz.isAnswerLocked
-  
+
       ) {
-  
+
         startQuestionTimer();
-  
+
       }
-  
+
       if (
+
         appState.quiz.remainingQuizTime > 0
+
       ) {
-  
+
         startQuizTimer();
-  
+
       }
-  
+
     }
-  
-    appState.pendingSession = null;
+
+    appState.pendingSession =
+      null;
 
     return;
 
