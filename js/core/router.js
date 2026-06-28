@@ -6,6 +6,7 @@ import {
 } from './render.js';
 
 import {
+  clearQuizSession,
   hydrateQuizSession
 } from '../services/auth/quizSessionService.js';
 
