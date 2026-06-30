@@ -2,6 +2,10 @@ import { appState }
   from '../core/state.js';
 
 import {
+  assetPaths
+} from '../utils/assets.js';
+
+import {
   getLeaderboard
 } from '../services/leaderboard/leaderboardService.js';
 
@@ -10,9 +14,7 @@ import {
 } from '../utils/sanitizer.js';
 
 import {
-
   getMaxPossibleScore
-
 } from '../services/quiz/quizAnalyticsService.js';
 
 import {
@@ -428,7 +430,7 @@ export function renderLeaderboardScreen() {
                       ${actualIndex === 0
                       ? `
                         <img
-                          src="./assets/images/medals/gold.png"
+                          src="${assetPaths.medals.gold}"
                           alt="1st place medal"
                           class="quiz__leaderboard-medal"
                         />
@@ -436,7 +438,7 @@ export function renderLeaderboardScreen() {
                       : actualIndex === 1
                       ? `
                         <img
-                          src="./assets/images/medals/silver.png"
+                          src="${assetPaths.medals.silver}"
                           alt="2nd place medal"
                           class="quiz__leaderboard-medal"
                         />
@@ -444,7 +446,7 @@ export function renderLeaderboardScreen() {
                       : actualIndex === 2
                       ? `
                         <img
-                          src="./assets/images/medals/bronze.png"
+                          src="${assetPaths.medals.bronze}"
                           alt="3rd place medal"
                           class="quiz__leaderboard-medal"
                         />

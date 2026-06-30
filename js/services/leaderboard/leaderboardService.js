@@ -168,9 +168,17 @@ export function submitScore({
      Persist
      ----------------------------------------- */
 
+  /*   
   setStorageItem(
 
     STORAGE_KEYS.LEADERBOARD,
+
+    trimmedLeaderboard
+
+  );
+  */
+
+  saveLeaderboard(
 
     trimmedLeaderboard
 

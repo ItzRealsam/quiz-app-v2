@@ -2,6 +2,10 @@ import { appState }
   from '../core/state.js';
 
 import {
+  assetPaths
+} from '../utils/assets.js';
+
+import {
   escapeHTML
 } from '../utils/sanitizer.js';
 
@@ -65,8 +69,7 @@ export function renderHeader() {
 
         <img
 
-          src="./assets/images/realsam_logo_light.png
-          "
+          src="${assetPaths.logo}"
 
           alt="
             The Realsam Logo

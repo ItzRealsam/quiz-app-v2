@@ -1,3 +1,7 @@
+import {
+  assetPaths
+} from '../utils/assets.js';
+
 /* =========================================================
    QUESTION TIMER
    ========================================================= */
@@ -295,9 +299,7 @@ export function renderQuizOption({
 
           <img
 
-            src="
-              ./assets/images/quiz__options/quiz__option-select.png
-            "
+            src="${assetPaths.quizSelect}"
 
             alt="Indicator"
 

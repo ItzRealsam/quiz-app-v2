@@ -15,9 +15,13 @@ export function isSessionValid(
   }
 
   if (
-    !session.quiz?.startedAt
+
+    typeof session.quiz.startedAt !== 'number'
+
   ) {
+
     return false;
+
   }
 
   const elapsedSeconds =

@@ -1,11 +1,15 @@
+import feather from 'feather-icons';
+
 export function initializeIcons() {
 
-  if (!window.feather) return;
-
   feather.replace({
+
     width: 18,
+
     height: 18,
-    strokeWidth: 2
+
+    'stroke-width': 2
+
   });
 
 }
