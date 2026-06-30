@@ -14,20 +14,27 @@ import {
   initializeRouter
 } from './router.js';
 
+import {
+  initializeAuthState
+} from '../services/auth/authStateService.js';
+
 import { 
   bindGlobalEvents 
 } from './events.js';
 
-export function initializeApp() {
+export async function initializeApp() {
 
   initializeAppShell();
 
-  initializeUser();
+  await initializeUser();
 
-  initializeSession();
+  await initializeSession();
+
+  await initializeAuthState();
 
   initializeRouter();
 
   bindGlobalEvents();
 
 }
+

@@ -3,55 +3,30 @@ import {
 } from '../core/state.js';
 
 import {
-  STORAGE_KEYS
-} from '../utils/config.js';
-
-import {
-  getStorageItem,
-  setStorageItem
-} from '../utils/storage.js';
-
-import {
-  generateUserId
-} from '../utils/generateId.js';
-
-import {
   initializeUserSession
 } from '../services/auth/userSessionService.js';
 
-export function initializeUser() {
+import {
+  getCurrentUser
+} from '../../supabase/auth.js';
 
-  const savedDisplayName =
-    getStorageItem(
-      STORAGE_KEYS.DISPLAY_NAME
-    );
+import {
+  mapSupabaseUser
+} from '../services/auth/userMapper.js';
 
-  if (savedDisplayName) {
+export async function initializeUser() {
 
-    appState.user.displayName =
-      savedDisplayName;
+  const account =
+    await getCurrentUser();
 
-  }
+  if (account) {
 
-  let savedUserId =
-    getStorageItem(
-      STORAGE_KEYS.USER_ID
-    );
+    appState.user =
+      mapSupabaseUser(account);
 
-  if (!savedUserId) {
-
-    savedUserId =
-      generateUserId();
-
-    setStorageItem(
-      STORAGE_KEYS.USER_ID,
-      savedUserId
-    );
+    return;
 
   }
-
-  appState.user.id =
-    savedUserId;
 
   appState.user =
     initializeUserSession();

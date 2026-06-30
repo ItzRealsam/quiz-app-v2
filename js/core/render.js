@@ -46,6 +46,10 @@ import {
   renderAchievementsScreen 
 } from '../screens/achievementsScreen.js';
 
+import { 
+  renderAuthScreen 
+} from '../screens/authScreen.js';
+
 export function renderCurrentScreen() {
   
   renderHeader();
@@ -75,6 +79,13 @@ export function renderCurrentScreen() {
 
         screen.innerHTML =
           renderWelcomeScreen();
+
+        break;
+
+      case 'auth':
+
+        screen.innerHTML =
+          renderAuthScreen();
 
         break;
 

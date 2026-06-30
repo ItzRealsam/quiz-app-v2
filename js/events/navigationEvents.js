@@ -41,6 +41,14 @@ export function handleNavigationAction(
 
     }
 
+    case 'open-auth':
+
+      navigateTo(
+        'auth'
+      );
+
+      return true;
+    
     case 'view-profile':
 
       navigateTo('profile');

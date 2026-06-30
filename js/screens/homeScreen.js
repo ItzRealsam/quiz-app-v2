@@ -6,9 +6,18 @@ import {
 } from '../utils/sanitizer.js';
 
 export function renderHomeScreen() {
-  const
-    displayName
-   = escapeHTML(appState.user.displayName);
+
+  const isGuest =
+    appState.user.isGuest;
+
+  const displayName =
+    escapeHTML(
+
+      appState.user.displayName ||
+
+      'Guest'
+
+    );
 
   return `
   
@@ -47,23 +56,61 @@ export function renderHomeScreen() {
 
       <div class="quiz__actions">
 
+        ${
+
+          isGuest?
+
+            `
+            <button
+
+              class="quiz__btn-secondary"
+              data-action="open-auth"
+              aria-label="Sign in"
+
+            >
+
+              Sign In
+
+            </button>
+
+            ` :
+
+            `
+
+            <button
+
+              class="quiz__btn-secondary"
+              data-action="view-profile"
+              aria-label="See profile"
+
+            >
+
+              My Profile
+
+            </button>
+
+            <button
+
+              class="quiz__btn-secondary"
+              data-action="logout"
+              aria-label="Log out"
+
+            >
+
+              Logout
+
+            </button>
+
+            `
+
+        }
+
         <button
 
-          class="quiz__btn-secondary"
-
-          data-action="view-profile"
-          aria-label="See profile"
-
-        >
-
-          Profile
-
-        </button>
-
-        <button
           class="quiz__btn-secondary"
           data-action="view-leaderboard"
           aria-label="See leaderboard"
+
         >
 
           Leaderboard
@@ -71,15 +118,19 @@ export function renderHomeScreen() {
         </button>
 
         <button
+
           class="quiz__btn-primary"
           data-action="open-settings"
           aria-label="Start quiz"
+
         >
+
           Start Quiz
+
         </button>
 
       </div>
-
+      
     </section>
 
   `;

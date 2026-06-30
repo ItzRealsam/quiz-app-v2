@@ -144,8 +144,17 @@ export function submitScore({
      ----------------------------------------- */
 
   leaderboard.sort(
-    (a, b) =>
-      b.score - a.score
+
+    ( a, b ) =>
+
+      b.score - a.score ||
+
+      b.accuracy - a.accuracy ||
+
+      a.totalDurationSeconds -
+
+      b.totalDurationSeconds
+
   );
 
   /* -----------------------------------------

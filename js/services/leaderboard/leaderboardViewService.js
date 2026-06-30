@@ -23,88 +23,6 @@ export function filterLeaderboard({
 
 }
 
-/*
-export function getVisibleLeaderboardEntries({
-
-  leaderboard,
-  currentUserId,
-  collapsed
-
-}) {
-
-  const currentUserIndex =
-    leaderboard.findIndex(
-      entry =>
-        entry.userId === currentUserId
-    );
-
-  if (!collapsed) {
-
-    if (
-      currentUserIndex <= 9
-    ) {
-
-      return leaderboard.slice(
-        0,
-        10
-      );
-
-    }
-
-    return [
-
-      ...leaderboard.slice(
-        0,
-        10
-      ),
-
-      { type: 'ellipsis' },
-
-      ...leaderboard.slice(
-
-        currentUserIndex - 1,
-
-        currentUserIndex + 2
-
-      )
-
-    ];
-
-  }
-
-  if (
-    currentUserIndex <= 4
-  ) {
-
-    return leaderboard.slice(
-      0,
-      5
-    );
-
-  }
-
-  return [
-
-    ...leaderboard.slice(
-      0,
-      5
-    ),
-
-    { type: 'ellipsis' },
-
-    ...leaderboard.slice(
-
-      currentUserIndex - 1,
-
-      currentUserIndex + 2
-
-    )
-
-  ];
-
-} 
-*/
-
 /* =========================================================
    LEADERBOARD VIEW HELPERS
    ========================================================= */
@@ -160,7 +78,29 @@ export function getVisibleLeaderboardEntries({
      Expanded Mode
      ----------------------------------------- */
 
-  if (currentUserIndex <= 9) {
+  if (
+
+    currentUserIndex === -1
+
+  ) {
+
+    return leaderboard.slice(
+
+      0,
+
+      collapsed ? 5 : 10
+
+    );
+
+  }
+
+  if (
+
+    currentUserIndex <=
+
+    (collapsed ? 4 : 9)
+
+  ) {
 
     return leaderboard.slice(0, 10);
 

@@ -1,26 +1,21 @@
 import {
-
   signUp,
-
   signIn,
-
   signOut,
-
   getSession,
-
   onAuthStateChange
-
-}
-
-from '../../../supabase/auth.js';
+} from '../../../supabase/auth.js';
 
 import {
-
   appState
+} from '../../core/state.js';
 
-}
-
-from '../../core/state.js';
+import {
+  signInWithGoogle,
+  signInWithGitHub,
+  resetPassword,
+  updateProfile
+} from '../../../supabase/auth.js';
 
 export async function registerUser({
 
@@ -116,5 +111,53 @@ export function initializeAuthListener() {
     }
 
   );
+
+}
+
+/* =========================================================
+   GOOGLE LOGIN
+   ========================================================= */
+
+export async function loginWithGoogle() {
+
+  return signInWithGoogle();
+
+}
+
+/* =========================================================
+   GITHUB LOGIN
+   ========================================================= */
+
+export async function loginWithGitHub() {
+
+  return signInWithGitHub();
+
+}
+
+/* =========================================================
+   RESET PASSWORD
+   ========================================================= */
+
+export async function sendPasswordReset(
+
+  email
+
+) {
+
+  return resetPassword(email);
+
+}
+
+/* =========================================================
+   UPDATE PROFILE
+   ========================================================= */
+
+export async function updateCurrentProfile(
+
+  profile
+
+) {
+
+  return updateProfile(profile);
 
 }

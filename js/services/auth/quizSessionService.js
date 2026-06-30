@@ -1,9 +1,6 @@
 import { 
-  navigateToRoute 
-} from '../../core/router.js';
-
-import { appState }
-  from '../../core/state.js';
+  appState 
+} from '../../core/state.js';
 
 import {
   STORAGE_KEYS,
@@ -39,9 +36,11 @@ export function saveQuizSession() {
     },
 
     quiz:{
+      /*
       questions:
         appState.quiz.questions,
-
+      */
+     
       category:
         appState.quiz.category,
 

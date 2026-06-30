@@ -1,15 +1,14 @@
-import { appState }
-  from './state.js';
+import { 
+  appState 
+} from './state.js';
 
-import { renderCurrentScreen }
-  from './render.js';
+import { 
+  renderCurrentScreen
+} from './render.js';
 
-import { navigateTo }
-  from './navigation.js';
-
-import {
-  submitScore
-} from '../services/leaderboard/leaderboardService.js';
+import { 
+  navigateTo 
+} from './navigation.js';
 
 import {
   startQuestionTimer,
@@ -18,10 +17,7 @@ import {
 } from '../services/quiz/timerService.js';
 
 import {
-
   processAnswerScore,
-  calculateAccuracy
-
 } from '../services/quiz/scoreService.js';
 
 import {
@@ -30,20 +26,12 @@ import {
 } from '../services/auth/quizSessionService.js';
 
 import {
-  updatePlayerStats
-} from '../services/player/playerStatsService.js';
-
-import { 
-  evaluateAchievements 
-} from '../services/player/achievementService.js';
-
-import { 
-  showToast 
-} from '../ui/toast.js';
-
-import {
   getLevelTitle
 } from '../services/player/playerLevelService.js';
+
+import { 
+  processCompletedQuiz 
+} from '../services/quiz/quizCompletionService.js';
 
 /* =========================================================
    ANSWER SELECTION
@@ -246,7 +234,7 @@ export function moveToNextQuestion() {
    Final analytics + leaderboard submission
    ========================================================= */
 
-function completeQuiz() {
+async function completeQuiz() {
 
   stopQuestionTimer();
 
@@ -257,106 +245,24 @@ function completeQuiz() {
 
   appState.quiz.totalDurationSeconds =
     Math.floor(
+
       (
-        appState.quiz.finishedAt
-        -
+
+        appState.quiz.finishedAt -
+
         appState.quiz.startedAt
+
       ) / 1000
-    );
-  
-  const accuracy =
-    calculateAccuracy();
-  
-  submitScore({
 
-    userId:
-      appState.user.id,
-
-    displayName:
-      appState.user.displayName ||
-      'Anonymous',
-
-    score:
-      appState.quiz.score,
-
-    accuracy,
-
-    bestStreak:
-      appState.quiz.bestStreak,
-
-    totalDurationSeconds:
-      appState.quiz.totalDurationSeconds
-
-  });
-
-  const levelResult =
-    updatePlayerStats({
-
-      score:
-        appState.quiz.score,
-
-      bestStreak:
-        appState.quiz.bestStreak,
-
-      totalDurationSeconds:
-        appState.quiz.totalDurationSeconds,
-
-      correctAnswers:
-
-        appState.quiz.answers
-          .filter(
-            answer =>
-              answer.isCorrect
-          )
-          .length,
-
-      totalQuestions:
-
-        appState.quiz.answers
-          .length,
-
-      accuracy
-
-    });
-
-  const unlockedAchievements =
-    evaluateAchievements();
-
-  if (
-    unlockedAchievements.length
-  ) {
-
-    appState.ui
-      .achievementModalVisible =
-      true;
-
-    appState.ui
-      .unlockedAchievement =
-      unlockedAchievements[0];
-
-    showToast(
-      '🏆 Achievement Unlocked'
     );
 
-  }
-
-  if (
-    levelResult.leveledUp
-  ) {
-
-    appState.ui
-      .levelUpModalVisible =
-      true;
-
-    appState.ui
-      .unlockedLevel =
-      levelResult.newLevel;
-
-  }
+  await processCompletedQuiz();
 
   clearQuizSession();
 
-  navigateTo('results');
+  navigateTo(
+    'results'
+  );
 
 }
 

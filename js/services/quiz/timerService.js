@@ -151,9 +151,11 @@ export function startQuizTimer() {
 
   stopQuizTimer();
 
+  /*
   appState.quiz.remainingQuizTime =
     appState.quiz.quizTimeLimit;
-
+  */
+ 
   appState.quiz.quizTimerIntervalId =
     setInterval(() => {
 

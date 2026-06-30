@@ -102,7 +102,7 @@ export function handleQuizAction(
 
       selectAnswer(
         Number(
-          actionTarget.dataset.index
+          target.dataset.index
         )
       );
 

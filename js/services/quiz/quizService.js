@@ -145,6 +145,9 @@ export function startFreshQuiz() {
 
   appState.quiz.bestStreak =
     0;
+  
+  appState.quiz.questionStartedAt =
+    Date.now();
 
   startQuestionTimer();
 

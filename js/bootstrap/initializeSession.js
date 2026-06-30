@@ -11,6 +11,10 @@ import {
   showToast
 } from '../ui/toast.js';
 
+import {
+  isSessionValid
+} from '../utils/sessionValidator.js';
+
 export function initializeSession() {
 
   const session =
@@ -36,26 +40,56 @@ export function initializeSession() {
   }
 
   else if (
-
     session
-
   ) {
 
-    appState.pendingSession =
-      session;
+    const status =
+      isSessionValid(
+        session
+      );
 
-    appState.currentScreen =
-      'resume';
+    if (
+      status === 'expired'
+    ) {
 
-    showToast(
-      'Previous quiz session restored.'
-    );
+      clearQuizSession();
 
-    return;
+      showToast(
+        'Your quiz expired while you were away.'
+      );
+
+      appState.currentScreen =
+        'home';
+
+      return;
+
+    }
+
+    if (
+      status === true
+    ) {
+
+      appState.pendingSession =
+        session;
+
+      appState.currentScreen =
+        'resume';
+
+      showToast(
+        'Previous quiz session restored.'
+      );
+
+      return;
+
+    }
+
+    clearQuizSession();
 
   }
+
+  /*
   else {
     clearQuizSession();
   }
-  
+  */
 }

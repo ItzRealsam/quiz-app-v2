@@ -92,39 +92,42 @@ export function savePlayerStats(
    UPDATE STATS
    ========================================================= */
 
-export function updatePlayerStats({
+export function calculatePlayerStats(
 
-  score,
+  quizResult,
 
-  bestStreak,
+  existingStats = getPlayerStats()
 
-  correctAnswers,
+) {
 
-  totalQuestions,
+  const {
 
-  totalDurationSeconds,
+    score,
 
-  accuracy
+    bestStreak,
 
-}) {
+    correctAnswers,
 
-  const stats =
-    getPlayerStats();
+    totalQuestions,
+
+    totalDurationSeconds,
+
+    accuracy
+
+  } = quizResult;
+
+  const stats = {
+
+    ...existingStats
+
+  };
 
   const previousLevel =
     stats.level;
 
-  stats.quizzesPlayed += 1;
+  stats.quizzesPlayed++;
 
   stats.totalScore += score;
-
-  if (
-    accuracy === 100
-  ) {
-
-    stats.perfectScores += 1;
-
-  }
 
   stats.highestScore =
     Math.max(
@@ -138,8 +141,8 @@ export function updatePlayerStats({
   stats.averageScore =
     Math.round(
 
-      stats.totalScore
-      /
+      stats.totalScore /
+
       stats.quizzesPlayed
 
     );
@@ -149,11 +152,9 @@ export function updatePlayerStats({
 
   stats.incorrectAnswers +=
 
-    (
-      totalQuestions
-      -
-      correctAnswers
-    );
+    totalQuestions -
+
+    correctAnswers;
 
   stats.bestStreak =
     Math.max(
@@ -168,10 +169,21 @@ export function updatePlayerStats({
 
     totalDurationSeconds;
 
-  const earnedXP =
+  if (
 
+    accuracy === 100
+
+  ) {
+
+    stats.perfectScores++;
+
+  }
+
+  const earnedXP =
     Math.round(
+
       score / 10
+
     );
 
   stats.experience +=
@@ -179,35 +191,27 @@ export function updatePlayerStats({
 
   stats.level =
     getLevelFromXP(
+
       stats.experience
+
     );
-
-  savePlayerStats(
-    stats
-  );
-
-  if (
-    stats.level >
-    previousLevel
-  ) {
-
-    return {
-
-      leveledUp: true,
-
-      newLevel:
-        stats.level
-
-    };
-
-  }
 
   return {
 
-    leveledUp: false,
+    stats,
+
+    earnedXP,
+
+    previousLevel,
 
     newLevel:
-      stats.level
+      stats.level,
+
+    leveledUp:
+
+      stats.level >
+
+      previousLevel
 
   };
 

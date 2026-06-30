@@ -1,4 +1,8 @@
 import {
+  appState
+} from '../core/state.js';
+
+import {
   getPlayerStats
 } from '../services/player/playerStatsService.js';
 
@@ -13,7 +17,12 @@ import {
 export function renderProfileScreen() {
 
   const stats =
-    getPlayerStats();
+
+    appState.user.isAuthenticated
+
+      ? appState.user.stats
+
+      : getPlayerStats();
 
   const levelTitle =
     getLevelTitle(

@@ -376,7 +376,9 @@ export function renderLeaderboardScreen() {
                         "
                       >
 
-                        ${entry.displayName}
+                        ${escapeHTML(
+                            entry.displayName
+                        )}
 
                       </span>
 

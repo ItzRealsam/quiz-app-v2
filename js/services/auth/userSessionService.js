@@ -8,7 +8,7 @@ import {
 } from '../../utils/storage.js';
 
 /* =========================================================
-   USER SESSION
+   INITIALIZE GUEST USER
    ========================================================= */
 
 export function initializeUserSession() {
@@ -24,23 +24,41 @@ export function initializeUserSession() {
       crypto.randomUUID();
 
     setStorageItem(
+
       STORAGE_KEYS.USER_ID,
+
       userId
+
     );
 
   }
 
-  const displayName =
+  let displayName =
     getStorageItem(
+
       STORAGE_KEYS.DISPLAY_NAME,
+
       ''
+
     );
 
   return {
 
     id: userId,
 
-    displayName
+    displayName,
+
+    email: '',
+
+    avatarUrl: '',
+
+    provider: 'guest',
+
+    isAuthenticated: false,
+
+    isGuest: true,
+
+    createdAt: null
 
   };
 

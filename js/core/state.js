@@ -13,7 +13,47 @@ export const appState = {
 
     id: null,
 
-    displayName: ''
+    email: '',
+
+    displayName: '',
+
+    avatarUrl: '',
+
+    provider: '',
+
+    isAuthenticated: false,
+
+    isGuest: true,
+
+    createdAt: null,
+
+    profile: {
+
+      bio: '',
+
+      country: '',
+
+      avatarUrl: '',
+
+      createdAt: null
+
+    },
+
+    stats: {
+
+      quizzesPlayed: 0,
+
+      highestScore: 0,
+
+      averageScore: 0,
+
+      bestStreak: 0,
+
+      level: 1,
+
+      experience: 0
+
+    }
 
   },
 

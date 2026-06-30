@@ -46,6 +46,10 @@ import {
 } from '../services/quiz/quizService.js';
 
 import {
+  handleAuthAction
+} from '../events/authEvents.js';
+
+import {
   handleNavigationAction
 } from '../events/navigationEvents.js';
 
@@ -91,7 +95,7 @@ export function bindGlobalEvents() {
 
   document.addEventListener(
     'click',
-    event => {
+    async event => {
 
       const actionTarget =
         event.target.closest(
@@ -104,6 +108,16 @@ export function bindGlobalEvents() {
 
       const action =
         actionTarget.dataset.action;
+
+      if (
+
+        await handleAuthAction(
+          action
+        )
+
+      ){
+        return;
+      }
 
       if (
 

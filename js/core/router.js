@@ -30,7 +30,8 @@ const VALID_ROUTES = [
   'review',
   'settings',
   'profile',
-  'achievements'
+  'achievements',
+  'auth'
 
 ];
 
